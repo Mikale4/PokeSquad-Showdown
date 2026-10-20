@@ -28391,6 +28391,9 @@ globalThis.PokeSquad = (() => {
   const WEATHER_ID = { sun: "SunnyDay", rain: "RainDance", sand: "Sandstorm", hail: "Hail", snow: "Snowscape" };
   const TERRAIN_NAME = { electric: "Electric Terrain", grassy: "Grassy Terrain", misty: "Misty Terrain", psychic: "Psychic Terrain" };
   const HZ = { sr: "Stealth Rock", spikes: "Spikes", tspikes: "Toxic Spikes", web: "Sticky Web" };
+  // the effects on a side (B.side: the turn each ends; B.tailwind) and on the whole field (Trick Room goes with the terrain: syncField)
+  const SIDE_FX = { REFLECT: "Reflect", LSCREEN: "Light Screen", VEIL: "Aurora Veil", SAFEGUARD: "Safeguard", LUCKY: "Lucky Chant", MIST: "Mist" };
+  const ROOMS = { gravity: "Gravity", wonderRoom: "Wonder Room", magicRoom: "Magic Room" };
   const TARGET = { enemy: "any", aoe_enemies: "allAdjacentFoes", self: "self", team: "allies", partners: "allies", field: "all", ally_single: "adjacentAlly" };
   // Showdown narrates these itself from its own lines: the game's message for them is left out (its line goes unsilenced instead)
   const OWN_TEXT = /^(.+) used (.+)!$|^(.+) fainted!$/;
@@ -28578,7 +28581,34 @@ globalThis.PokeSquad = (() => {
           case "side": this.syncHazards(e); break;
         }
       }
+      this.syncSides(); this.syncItems();
       if (!B.over) this.add(this.meterLine(B.waiting || null, B.units.filter(x => x.alive).map(x => [x, x.atb]), B.predictOrder(6).map(U)));
+    }
+    // (the screens, Tailwind and the rooms, as Showdown draws them: the battle text already says when each starts and ends)
+    syncSides() {
+      const B = this.B, on = {}, was = this.fxOn || {};
+      for (const t of ["A", "E"]) {
+        const side = `${SIDE[t]}: ${this.players[SIDE[t]].name}`;
+        for (const id in SIDE_FX) if (B.side && B.side[t] && B.side[t][id] > B.turn) on[`${side}|move: ${SIDE_FX[id]}`] = "side";
+        if (B.tailwind && B.tailwind[t] > B.turn) on[`${side}|move: Tailwind`] = "side";
+      }
+      for (const k in ROOMS) if (B[k] > B.turn) on[`move: ${ROOMS[k]}`] = "field";
+      for (const k in on) if (!was[k]) this.add(`|-${on[k]}start|${k}|[silent]`);
+      for (const k in was) if (!on[k]) this.add(`|-${was[k]}end|${k}|[silent]`);
+      this.fxOn = on;
+    }
+    // (a held item used up, or one that changed hands: Showdown shows it gone, or the new one)
+    syncItems() {
+      const items = this.items || (this.items = {});
+      for (const u of this.B.units) {
+        if (!u.alive) continue;
+        const now = u.held && !u.flags.itemUsed ? u.held : "", was = items[u.uid];
+        if (was === undefined) { items[u.uid] = now; continue; }
+        if (now === was) continue;
+        if (was && HELD[was]) this.add(`|-enditem|${this.ident(u)}|${HELD[was].n}|[silent]`);
+        if (now && HELD[now]) this.add(`|-item|${this.ident(u)}|${HELD[now].n}|[silent]`);
+        items[u.uid] = now;
+      }
     }
     meterLine(actor, meters, order) {
       const id = u => u && this.B.units.includes(u) ? this.ident(u) : "";
