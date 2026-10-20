@@ -28326,6 +28326,9 @@ function leadOrder(specs, foeSpecs, weather) {
 //  - Lv 100, maximum IVs and Mastery, no Badge bonus; the Stadium's rules (validateTeam: the team config's limits, the Item Clause,
 //    its bans), at most one move per slot (S1, S2, S3).
 //  - Dice: each battle has its own (seeded from Showdown's seed), used only while its rules run.
+//  - The turn meter (phase 3, 2026-10-20): |custom|-pokesquadmeter|<whose turn it is>|<each Pokémon on the field's meter, 0-100:
+//    "p1a: Name=72;p2b: Name=30">|<who acts next, in order: "p1a: Name;p2a: Name"> (no order: the last one stands). The client
+//    fork draws a meter bar under each HP bar and the order as icons. One when a Pokémon's turn starts, one after each action.
 // =====================================================================
 globalThis.PokeSquad = (() => {
   const LEVEL = 100;
@@ -28558,7 +28561,8 @@ globalThis.PokeSquad = (() => {
             if (a === b) this.add(`|-message|${a}`); else this.add("|split|p2", `|-message|${b}`, `|-message|${a}`);
             break;
           }
-          case "turn": { if (e.rd && e.rd !== this.round) { this.round = e.rd; this.add(`|turn|${e.rd}`); } break; }
+          case "turn": { if (e.rd && e.rd !== this.round) { this.round = e.rd; this.add(`|turn|${e.rd}`); }
+            if (u && e.tms) this.add(this.meterLine(u, e.tms.map(([id, v]) => [U(id), v]))); break; }
           case "act": { if (!u) break; const t = e.t != null ? U(e.t) : null; this.add(`|move|${this.ident(u)}|${MOVES[e.key] ? MOVES[e.key].n : e.name}|${t && t !== u ? this.ident(t) : ""}`); break; }
           case "dmg": if (u) { this.add(`|-damage|${this.ident(u)}|${this.cond(u)}|[silent]`); if (e.crit) this.add(`|-crit|${this.ident(u)}|[silent]`); } break;
           case "heal": case "revive": if (u) this.add(`|-heal|${this.ident(u)}|${this.cond(u)}|[silent]`); break;
@@ -28571,6 +28575,12 @@ globalThis.PokeSquad = (() => {
           case "side": this.syncHazards(e); break;
         }
       }
+      if (!B.over) this.add(this.meterLine(B.waiting || null, B.units.filter(x => x.alive).map(x => [x, x.atb]), B.predictOrder(6).map(U)));
+    }
+    meterLine(actor, meters, order) {
+      const id = u => u && this.B.units.includes(u) ? this.ident(u) : "";
+      return `|custom|-pokesquadmeter|${id(actor)}|${meters.filter(([u]) => id(u)).map(([u, v]) => `${id(u)}=${Math.round(v)}`).join(";")}`
+        + (order ? `|${order.map(id).filter(Boolean).join(";")}` : "");
     }
     syncStatus(u) {
       const id = this.ident(u), was = this.lastSt[u.uid] || { st: null, stages: {} }, now = { st: u.status || null, stages: { ...u.stages } };
