@@ -49,6 +49,7 @@ import { Utils, type ProcessManager } from '../lib';
 import {
 	Auth, GlobalAuth, PLAYER_SYMBOL, HOST_SYMBOL, type RoomPermission, type GlobalPermission,
 } from './user-groups';
+import * as PokeSquadDB from './pokesquad-db';
 
 const MINUTES = 60 * 1000;
 const IDLE_TIMER = 60 * MINUTES;
@@ -638,6 +639,17 @@ export class User extends Chat.MessageContext {
 		}
 	}
 	async validateToken(token: string, name: string, userid: ID, connection: Connection) {
+		if (Config.noguestsecurity && PokeSquadDB.enabled()) {
+			// PokeSquad Battler: no login server, so a registered name needs its password or a remembered login (pokesquad-db.ts)
+			const check = await PokeSquadDB.checkName(userid, token);
+			if (!check.ok) {
+				this.send(`|nametaken|${name}|${check.message}`);
+				return null;
+			}
+			if (check.session) connection?.send(`|pokesquadsession|${userid}|${check.session}|${check.name}`);
+			if (check.registered) return '2';
+			if (!Users.isTrusted(userid)) return '1';
+		}
 		if (!token && Config.noguestsecurity) {
 			if (Users.isTrusted(userid)) {
 				this.send(`|nametaken|${name}|You need an authentication token to log in as a trusted user.`);

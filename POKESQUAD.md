@@ -19,6 +19,12 @@ Item Clause. Showdown's own formats stay in the code, unlisted.
   `DATABASE_URL` set (a free Postgres, such as Neon: its connection string goes in Render's Environment settings, never in
   this repo) the ladder lives in its `pokesquad_ladder` table (`server/ladders-local.ts` reads and writes it there; without
   `DATABASE_URL`, or while it can't be reached, the ladder stays in `config/ladders/*.tsv`). `pg` is a regular dependency for it.
+- Registered names (no login server here): `pokesquad_names` keeps each registered name's password as a salted scrypt hash,
+  `pokesquad_sessions` the remembered logins (SHA-256 hashes of their tokens, 30 days from last use). `server/users.ts`
+  (`validateToken`) asks `checkName`: a registered name needs `/trn name,0,pspw:<URL-encoded password>` or `psst:<token>`, and
+  a right one gets `|pokesquadsession|userid|token|name` back. `server/chat-plugins/pokesquad-names.ts`: `/pokesquadregister`,
+  `/pokesquadpassword`, `/pokesquadforget` (the site's Register, Password and Log out send them). Without a database, or while
+  it can't be reached, names are open as before.
 
 Players use the PokeSquad Showdown client ([Mikale4/PokeSquad-Showdown-Client](https://github.com/Mikale4/PokeSquad-Showdown-Client)).
 Showdown's ladder never pairs two players from the same IP address: on the same Wi-Fi, challenge each other instead.
