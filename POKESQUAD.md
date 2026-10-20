@@ -40,5 +40,9 @@ Item Clause. Showdown's own formats stay in the code, unlisted.
   game's `tools/build_bot_teams.js`: never edit it here), and answers every request with `default`, which the game's engine
   plays with its own AI (the balanced one). It says which plan it brought, gg at the end, and leaves the room.
 
+- The battle log: the engine's `RULE_LINES` (the format's clauses, as `|rule|` lines), an attack's `-damage` lines unsilenced so
+  Showdown writes "(... lost 45% of its health!)", and every HP line `|split|` (exact for its own player and the full log, a
+  percentage for the other player, spectators and shared replays: HP Percentage Mod).
+
 Players use the PokeSquad Showdown client ([Mikale4/PokeSquad-Showdown-Client](https://github.com/Mikale4/PokeSquad-Showdown-Client)).
 Showdown's ladder never pairs two players from the same IP address: on the same Wi-Fi, challenge each other instead.
