@@ -28531,7 +28531,9 @@ globalThis.PokeSquad = (() => {
     order(team) { const B = this.B; return [...[0, 1, 2].map(i => B.units.find(x => x.team === team && x.slot === i)).filter(Boolean), ...B.bench[team]]; }
     sideInfo(slot) {
       const p = this.players[slot];
-      if (!this.B) return { name: p.name, id: slot, pokemon: p.team.map(m => ({ ident: `${slot}: ${OPS[m.k].n}`, details: SD.name(m.k), condition: "100/100", active: false, stats: {},
+      // (before the battle: the game's Lv 100 stats, as the battle will have them: the Pokémon's IVs, its nature, no Badges)
+      const pre = m => { const st = calcStats(m.k, LEVEL, spec(m).prog.pot, m.nat); return { hp: st.hp, stats: { atk: st.atk, def: st.def, spa: st.spa, spd: st.sdf, spe: st.spe } }; };
+      if (!this.B) return { name: p.name, id: slot, pokemon: p.team.map(m => ({ ident: `${slot}: ${OPS[m.k].n}`, details: SD.name(m.k), condition: `${pre(m).hp}/${pre(m).hp}`, active: false, stats: pre(m).stats,
         moves: m.mv.filter(Boolean), baseAbility: toID(m.ab), item: m.held || "", pokeball: "pokeball", ability: toID(m.ab) })) };
       return { name: p.name, id: slot, pokemon: this.order(TEAM[slot]).map(u => ({ ident: this.ident(u), details: this.details(u), condition: this.cond(u), active: this.B.units.includes(u),
         stats: { atk: u.max.atk, def: u.max.def, spa: u.max.spa, spd: u.max.sdf, spe: u.max.spe }, moves: u.skills.map(s => s.key), baseAbility: toID(u.passives[0] && u.passives[0].key),
