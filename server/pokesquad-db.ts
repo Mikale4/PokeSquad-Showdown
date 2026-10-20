@@ -12,6 +12,8 @@
  * - pokesquad_names: registered names (there's no Showdown login server here): each one's password, kept only as a salted
  *   scrypt hash. Taking a registered name needs its password, or a remembered session (users.ts, validateToken: checkName)
  * - pokesquad_sessions: the remembered logins, kept only as SHA-256 hashes of their tokens, for 30 days from their last use
+ * - pokesquad_replays: shared replays (Upload and share replay: server/chat-plugins/pokesquad-names.ts, savereplay), each
+ *   battle's spectator log, read by the site's replay page through GET /pokesquad-replay/<id> (httpResponse)
  */
 import * as crypto from 'crypto';
 import { PGDatabase, SQL } from '../lib/database';
@@ -57,6 +59,9 @@ function setup() {
 			userid TEXT PRIMARY KEY, name TEXT NOT NULL, salt TEXT NOT NULL, hash TEXT NOT NULL, created TEXT NOT NULL DEFAULT '')`);
 		await pg.queryExec(SQL`CREATE TABLE IF NOT EXISTS pokesquad_sessions (
 			token TEXT PRIMARY KEY, userid TEXT NOT NULL, expires BIGINT NOT NULL)`);
+		await pg.queryExec(SQL`CREATE TABLE IF NOT EXISTS pokesquad_replays (
+			id TEXT PRIMARY KEY, format TEXT NOT NULL, players TEXT NOT NULL, log TEXT NOT NULL, rating INTEGER,
+			uploaded BIGINT NOT NULL, views INTEGER NOT NULL DEFAULT 0)`);
 	})().then(() => true, err => {
 		Monitor.crashlog(err, 'PokeSquad database setup');
 		ready = null; // (it tries again next time)
@@ -221,4 +226,67 @@ export async function forgetSession(token: string) {
 	} catch (err: any) {
 		Monitor.crashlog(err, 'PokeSquad logout');
 	}
+}
+
+// ---------- shared replays ----------
+
+/** The site whose replay page plays a shared replay (POKESQUAD_SITE in Render, if it ever moves) */
+export const SITE = () => (process.env.POKESQUAD_SITE || 'https://mikale4.github.io/PokeSquad-Showdown-Client').replace(/\/+$/, '');
+
+export interface SharedReplay { id: string; format: string; players: string[]; log: string; rating: number | null; uploaded: number }
+
+/** A battle's replay, saved or saved again under the same id (an Error if the database can't take it) */
+export async function saveReplay(replay: Omit<SharedReplay, 'uploaded'>) {
+	if (!await setup()) throw new Error(`The server's database can't be reached right now. Try again in a minute.`);
+	const { id, format, log, rating } = replay, players = replay.players.join(','), uploaded = Date.now();
+	await database()!.queryExec(SQL`INSERT INTO pokesquad_replays (id, format, players, log, rating, uploaded)
+		VALUES (${id}, ${format}, ${players}, ${log}, ${rating}, ${uploaded})
+		ON CONFLICT (id) DO UPDATE SET log = EXCLUDED.log, rating = EXCLUDED.rating, uploaded = EXCLUDED.uploaded`);
+	return id;
+}
+
+/** A shared replay (null: none with that id; undefined: the database can't be reached) */
+export async function getReplay(id: string): Promise<SharedReplay | null | undefined> {
+	if (!await setup()) return undefined;
+	try {
+		const row = await database()!.queryOne<{ id: string, format: string, players: string, log: string, rating: number | null, uploaded: string }>(
+			SQL`SELECT id, format, players, log, rating, uploaded FROM pokesquad_replays WHERE id = ${id}`
+		);
+		if (!row) return null;
+		void database()!.queryExec(SQL`UPDATE pokesquad_replays SET views = views + 1 WHERE id = ${id}`).catch(() => {});
+		return { ...row, players: row.players.split(','), uploaded: Number(row.uploaded) };
+	} catch (err: any) {
+		Monitor.crashlog(err, 'PokeSquad replay read');
+		return undefined;
+	}
+}
+
+/**
+ * The site's replay page reads a shared replay here: GET /pokesquad-replay/<id> answers its JSON, for any site (CORS). Called
+ * by Config.customhttpresponse (config/config-example.js); true when it's this request's answer.
+ */
+export function httpResponse(req: { url?: string, method?: string }, res: AnyObject) {
+	const match = /^\/pokesquad-replay\/([a-z0-9-]{1,80})(?:[?#].*)?$/.exec(req.url || '');
+	if (!match) return false;
+	const send = (status: number, body: AnyObject) => {
+		res.writeHead(status, {
+			'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-cache',
+		});
+		res.end(JSON.stringify(body));
+	};
+	if (req.method === 'OPTIONS') {
+		res.writeHead(204, { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET' });
+		res.end();
+		return true;
+	}
+	if (!enabled()) {
+		send(503, { error: `This server keeps no replays: it has no database.` });
+		return true;
+	}
+	void getReplay(match[1]).then(replay => {
+		if (replay === undefined) send(503, { error: `The server's database can't be reached right now. Try again in a minute.` });
+		else if (!replay) send(404, { error: `There's no replay with that link.` });
+		else send(200, replay);
+	});
+	return true;
 }

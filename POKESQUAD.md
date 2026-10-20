@@ -25,6 +25,10 @@ Item Clause. Showdown's own formats stay in the code, unlisted.
   a right one gets `|pokesquadsession|userid|token|name` back. `server/chat-plugins/pokesquad-names.ts`: `/pokesquadregister`,
   `/pokesquadpassword`, `/pokesquadforget` (the site's Register, Password and Log out send them). Without a database, or while
   it can't be reached, names are open as before.
+- Shared replays: Upload and share replay (`savereplay` in `server/chat-plugins/pokesquad-names.ts`, replacing Showdown's, which
+  needs its replay server) saves the battle's spectator log in `pokesquad_replays` under a random id and gives a link to the
+  site's replay page (`POKESQUAD_SITE`/replay.html#id), which reads it from `GET /pokesquad-replay/<id>` (`httpResponse`, called by
+  `Config.customhttpresponse` in `config/config-example.js`).
 - Administrators: the names in `POKESQUAD_ADMINS` (`render.yaml`; "admin" if it isn't set) get the `~` rank once logged in
   with their password (`isAdmin`, `server/users.ts` `updateGroup`). `render.yaml` also lists `DATABASE_URL` with `sync: false`:
   its value is set by hand in Render and a Blueprint sync never touches it.

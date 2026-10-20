@@ -212,6 +212,18 @@ Y929lRybWEiKUr+4Yw2O1W0CAwEAAQ==
  * routes - where Pokemon Showdown is hosted.
  *   Don't change this setting - there aren't any other options right now
  */
+/**
+ * customhttpresponse - PokeSquad Battler: the site's replay page reads a shared replay from this server
+ *   (GET /pokesquad-replay/<id>: server/pokesquad-db.ts, httpResponse)
+ */
+exports.customhttpresponse = (req, res) => {
+	try {
+		return require('../dist/server/pokesquad-db').httpResponse(req, res);
+	} catch {
+		return false;
+	}
+};
+
 exports.routes = {
 	root: 'pokemonshowdown.com',
 	client: 'play.pokemonshowdown.com',
