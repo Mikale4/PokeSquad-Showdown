@@ -19156,7 +19156,7 @@ const TALK_FAQ = [
   { re: /copycat|mirror move/, a: "Copycat and Mirror Move work like Sketch here, just not for good: each comes as an S1, an S2 and an S3 move, and whoever learns one gets all three. Aim one at an opposing Pokémon and it uses that Pokémon's move in the same slot right away, with its own stats, and the Copycat or Mirror Move stays." },
   { re: /\bcounter\b|mirror coat|metal burst|comeuppance|shell trap/, a: "Counter, Mirror Coat, Metal Burst, Comeuppance and Shell Trap can't be chosen here: they go off by themselves. When an opposing attack of the right kind damages the Pokémon (physical for Counter, special for Mirror Coat, either for Metal Burst, Comeuppance and Shell Trap), it strikes back at that attacker once the attack is over, if the move is ready. That doesn't use its turn; the move just goes on cooldown. Counter and Mirror Coat hit back for twice the damage, Metal Burst and Comeuppance for 1.5 times." },
   { re: /conversion/, a: "Conversion and Conversion 2 can't be chosen here: they go off by themselves. Just before an opposing attack's damage, the Pokémon becomes a type that resists it (Conversion 2: one the attack doesn't touch at all, when there is one), if the move is ready. That doesn't use its turn; the move goes on cooldown, and the type lasts until it leaves the field. Conversion is S2, Conversion 2 is S3. Kecleon's Color Change does what Conversion does, every time, since an Ability has no cooldown." },
-  { re: /stored power|punishment|rage fist|\brage\b/, a: "Rage, Rage Fist, Punishment and Stored Power all work the same here: 50 power, plus 50 for every hit the user has taken this battle, up to 350. Take one hit and it's already 100. They're all S2 moves." },
+  { re: /stored power|punishment|rage fist|\brage\b(?! powder)/, a: "Rage, Rage Fist, Punishment and Stored Power all work the same here: 50 power, plus 50 for every hit the user has taken this battle, up to 350. Take one hit and it's already 100. They're all S2 moves." },
   { re: /triple kick/, a: "Triple Kick strikes three times at 20, 40 and 60 power, just like Triple Axel. Each strike can miss, unless it holds Loaded Dice." },
   { re: /\bpresent\b/, a: "Present is a gift of 40, 80 or 120 power, or it heals the target a quarter of its HP, and it hits with whichever is higher, the user's Attack or Sp. Atk. With Loaded Dice it's always the 120-power gift, and it never misses." },
   { re: /wing attack|60.power|\bs1\b.*(60|bite|aerial ace)/, a: "Every 60-power attack is an S1 move here, no cooldown: Wing Attack, Bite, Aerial Ace, Water Pulse, Shock Wave... The exceptions stay S2: Round, which doubles with each use like Echoed Voice, and the ones that double in their moment: Revenge and Avalanche when the user's been hit that turn, Assurance when the target has, Barb Barrage on a poisoned target, Infernal Parade on one with a status." },
@@ -19184,8 +19184,8 @@ const TALK_FAQ = [
   { re: /item clause|two choice|2 choice|same (held )?item twice/, a: "Item Clause: one Choice Band, one Choice Specs, one Choice Scarf, one Life Orb, one Muscle Band, one Wise Glasses, one Assault Vest, one Booster Energy, one Berserk Gene, one Ring Target, one Quick Claw, one King's Rock and one Razor Fang per team. Choice items don't lock moves here, and a flinch costs a whole turn, so that keeps things fair." },
   { re: /flinch|king'?s rock|razor fang|stench|inner focus/, a: "A flinch costs the Pokémon its next turn here: its turn comes up and it just flinches and can't move. Inner Focus stops it, Steadfast gets Speed +1 out of it. No S1 move can flinch (Bite, Astonish, Twister and the rest are S2), and King's Rock and Razor Fang are one per team (Item Clause)." },
   { re: /magic coat|snatch/, a: "Magic Coat and Snatch go off by themselves, you can't pick them. Magic Coat bounces a status move aimed at its user back (and any other until its next turn); Snatch steals an opposing boosting or healing move: the snatcher gets the boost or the HP, the other side used its move for nothing. Either one goes on cooldown after." },
-  { re: /bide/, a: "Bide starts by itself when its user comes in and stays up until it goes off: the moment it's been hit by two opposing attacks between its own turns, it hits the last attacker for double what those two did. Then it's done until it comes back in. You can't pick it by hand." },
-  { re: /(?<!(sleep|stun|rage|poison|cotton|bright|quick|metal|silver|magic) )powder(?! snow)|ion deluge/, a: "Powder and Ion Deluge go up by themselves on entry, and you can still use them by hand. Powder covers every opposing Pokémon on the field until it uses a Fire move: that move fails and explodes, 1/4 max HP to it and each partner beside it. Ion Deluge turns every Normal move Electric for 5 rounds, on both sides." },
+  { re: /\bbide\b/, a: "Bide starts by itself when its user comes in and stays up until it goes off: the moment it's been hit by two opposing attacks between its own turns, it hits the last attacker for double what those two did. Then it's done until it comes back in. You can't pick it by hand." },
+  { re: /(?<!(sleep|stun|rage|poison|cotton|bright|quick|metal|silver|magic) )\bpowder\b(?! snow)|ion deluge/, a: "Powder and Ion Deluge go up by themselves on entry, and you can still use them by hand. Powder covers every opposing Pokémon on the field until it uses a Fire move: that move fails and explodes, 1/4 max HP to it and each partner beside it. Ion Deluge turns every Normal move Electric for 5 rounds, on both sides." },
   { re: /rare cand/, a: "A Rare Candy gives one level, up to your level cap. Cerulean Cave in Explore drops them, and the Poké Mart sells them." },
   { re: /trainer level|account level|trainer lv/, a: "Trainer Level goes up to 100. It rises with the PP you spend, each level refills your PP, and the Growth Fund pays every 5 levels." },
   { re: /level cap|lv cap|\bcap\b/, a: "The level cap is 2 below the strongest Pokémon of your next big battle: a Gym Leader, your rival, Giovanni or the Elite Four, and after the Champion the post-game's big battles, right up to the Journey's last. It's Lv 100 once the whole Journey's done. In Unova the Striaton Gym sets it from the start: N, Bianca and Cheren before it don't. Exp. a capped Pokémon can't use gets shared with the rest of your team." },
@@ -19207,7 +19207,7 @@ const TALK_FAQ = [
   { re: /great ball ticket|ultra ball ticket|mystic ticket|\btickets?\b.*safari|safari.*\btickets?\b/, a: "Each ticket is one throw in its own event area: Great Ball Tickets in the Great Ball Safari (Tuesday and Wednesday, UTC), Ultra Ball Tickets in a Legendary Safari (Friday to Sunday), Mystic Tickets in a Mythical Distribution (a surprise). The Safari Zone shows when each area opens. The event areas (and the weekly ones) open once you've opened every region: until then it's the Whole Park." },
   { re: /synchronoise/, a: "Synchronoise only hits opposing Pokémon that share a type, its status condition, its Ability or its nature with the user (poison and bad poison count as the same). Get yourself burned or poisoned like them and it hits." },
   { re: /hidden ?power/, a: "Hidden Power takes the type of the last attack used on its user, so it changes as the battle goes; until one has been, it's the user's own first type. It's 60 power, physical when the user's Attack is higher than its Sp. Atk, special otherwise." },
-  { re: /sent in after|replacement|after a faint|comes in after|protected (when|until)/, a: "A Pokémon you send in to take a fainted one's place is protected like Protect until its first turn: moves from the other side fail on it (Feint and the like still break it). Entry hazards, the weather and its status still hurt it. A Pokémon dragged in by Roar or Dragon Tail, or coming in on U-turn or Volt Switch, gets no protection." },
+  { re: /sent in after|replacement|after a faint|comes in after|protected (when|until)|switch(ing)? (out|in)\b|when (do|should) (i|you) switch/, a: "A Pokémon you send in to take a fainted one's place is protected like Protect until its first turn: moves from the other side fail on it (Feint and the like still break it). Entry hazards, the weather and its status still hurt it. A Pokémon dragged in by Roar or Dragon Tail, or coming in on U-turn or Volt Switch, gets no protection. That's why switching out is rarely worth it here: whoever you switch in comes in with an empty turn meter and no protection, so all three on the other side get to hit it before it moves, and the switch costs your turn. A worn-down Pokémon is usually better off taking its last turn: its replacement comes in protected." },
   { re: /focus ?punch/, a: "Focus Punch never loses its focus here, getting hit doesn't stop it, but it only has 70% accuracy." },
   { re: /\bendure\b|reversal|\bflail\b|endeavor/, a: "Endure hangs on at 1 HP when a hit would knock you out. Then Reversal and Flail hit at 200 power, and Endeavor brings the target down to your HP. A Focus Sash does the same from full HP." },
   { re: /\brest\b|chesto|sleep talk|\bsnore\b/, a: "Rest heals everything but sleeps you for two turns. A Chesto or Lum Berry wakes you at once, Hydration does in rain, Shed Skin might, Early Bird halves it, and a sleeping Pokémon that knows Snore uses it by itself." },
@@ -25209,7 +25209,7 @@ const AIW = { twMix: .75, killBase: .25, killTw: .6, fuOver: .35, fuSetup: .3, r
 // bench Pokémon played out and the margin one must win by over the best matchup; how many rounds each copy plays out (the Expert
 // AI two: 55.6% against one round's 49% in head-to-heads, 2026-10-19); and what a replacement's guaranteed first turn counts for when
 // a copy ends before it (owedHit)
-const AISW = { alive: .15, margin: .1, k: 8, rounds: 3, cands: 2, status: .1, stage: .03, better: .4, repCands: 3, repMargin: .05, rounds0: 1, roundsX: 2, owed: 1 };
+const AISW = { alive: .15, margin: .5, margin0: .1, low: .5, k: 8, rounds: 3, cands: 2, status: .1, stage: .03, better: .4, repCands: 3, repMargin: .05, rounds0: 1, roundsX: 2, owed: 1 };
 function makeBattle(cfg) {
   const B = { units: [], ev: [], wave: 0, waves: cfg.waves, over: false, result: null, turn: 0, allyTurns: 0, actor: null, waiting: null,
     tally: { crits: 0, kills: 0, payday: 0, superEff: 0 }, auto: !!cfg.auto, aiStyle: cfg.aiStyle || "balanced", enemyStyle: cfg.enemyStyle || "balanced", weather: (cfg.weather === "snow" ? "hail" : cfg.weather) || null,
@@ -27050,7 +27050,12 @@ function makeBattle(cfg) {
   // Pokémon's HP and whether it's still standing (a Pokémon still standing is worth a turn later), status conditions and the stat
   // stages of those on the field. A switch has to come out ahead by a margin. It's only played out when one could pay: this one is
   // stuck, its best move is weak or its matchup is bad, or someone on the bench matches up much better. Never right after coming in
-  // (unless stuck), never a boss or a wild Pokémon, never a Trainer's Follow Me user or backup setter (the owner's rules)
+  // (unless stuck), never a boss or a wild Pokémon, never a Trainer's Follow Me user or backup setter (the owner's rules).
+  // A switch by choice is rated very low (the owner's rule, 2026-10-20): this is three on three with a turn meter, not singles, so
+  // the Pokémon that comes in starts with an empty meter and all three opposing Pokémon move before it does, and the switch costs
+  // the turn. So one at half its HP or less never switches out (it takes its last turns: the one that replaces it after it faints
+  // comes in protected), and otherwise a switch has to come out ahead by half a healthy Pokémon's worth (AISW.margin; the combo
+  // key "stay" off: the old way, AISW.margin0, for head-to-heads)
   function swValue(C, team) {
     let v = 0; const owed = combos({ team }, "owed");
     for (const x of [...C.units, ...C.bench.A, ...C.bench.E]) {
@@ -27115,6 +27120,8 @@ function makeBattle(cfg) {
     const stuck = bestV <= AIW.swStuckV;
     if ((u.fresh && !stuck) || u.boss || (B.wild && u.team === "E") || !canSwitch(u)) return null;
     if (u.npc && u.skills.some(s => REDIRECTS.has(s.M.sp))) return null;
+    const stay = combos(u, "stay");
+    if (stay && u.hp <= AISW.low * u.max.hp) return null;
     const foes = fieldFoes(u.team); if (!foes.length) return null;
     const hurts = y => y.skills.some(s => isDmgSkill(s) && foes.some(f => expectedDamage(y, f, s) > 0));
     const cur = matchup(u, foes);
@@ -27123,7 +27130,7 @@ function makeBattle(cfg) {
     if (!stuck && bestV >= AIW.swWeakV && cur > -.2 && cands[0][1] - cur < AISW.better) return null;   // (nothing to gain: no need to play it out)
     const mine = C => { const cu = C.byId(u.uid); C.waiting = cu; C.actor = cu; return cu; };
     const look = cfg.onSwitchLook ? [] : null;   // (tests: each copy's value, per option)
-    const k = lookPick(u.team, [C => { mine(C); C.playerAct(ch.slot, ch.t ? C.byId(ch.t.uid) : null); }, ...cands.map(([y]) => C => { mine(C); C.playerSwitch(y.uid); })], AISW.margin, look);
+    const k = lookPick(u.team, [C => { mine(C); C.playerAct(ch.slot, ch.t ? C.byId(ch.t.uid) : null); }, ...cands.map(([y]) => C => { mine(C); C.playerSwitch(y.uid); })], stay ? AISW.margin : AISW.margin0, look);
     const best = k ? cands[k - 1][0] : null;
     if (look) { const avg = a => a ? a.reduce((x, y) => x + y, 0) / a.length : 0; cfg.onSwitchLook(u, { stay: avg(look[0]), tried: cands.map(([y], i) => [y.n, avg(look[i + 1])]), best: best && best.n, bestV, stuck, cur }); }
     return best;
@@ -28420,7 +28427,7 @@ globalThis.PokeSquad = (() => {
       this.players = { p1: null, p2: null }; this.sides = [{ id: "p1", requestState: "" }, { id: "p2", requestState: "" }];
       this.lines = []; this.log = []; this.B = null; this.round = 0; this.ended = false; this.prngSeed = this.seed;
       this.prng = { getSeed: () => this.seed };
-      this.lastSt = {};
+      this.lastSt = {}; this.shown = {};
     }
     // (Showdown's battle-stream calls)
     setPlayer(slot, o) {
@@ -28506,7 +28513,7 @@ globalThis.PokeSquad = (() => {
       this.run(() => { UID = 0; this.B = makeBattle({ allies: t("p1"), waves: [t("p2")], auto: false, pick: true, humans: ["E"], sim: true, aiStyle: "balanced", enemyStyle: "balanced", trainer: this.players.p2.name }); });
       this.add("|start");
       // (the leads come onto the field, as in Showdown: player 1's, then player 2's)
-      for (const t of ["A", "E"]) for (const u of this.B.units.filter(x => x.team === t).sort((a, b) => a.slot - b.slot)) this.add(`|switch|${this.ident(u)}|${this.details(u)}|${this.cond(u)}`);
+      for (const t of ["A", "E"]) for (const u of this.B.units.filter(x => x.team === t).sort((a, b) => a.slot - b.slot)) { this.add(`|switch|${this.ident(u)}|${this.details(u)}|${this.cond(u)}`); this.shown[u.uid] = 1; }
       this.go();
     }
     // play on until someone has to choose (or it's over), turning the events into Showdown's lines
@@ -28577,8 +28584,9 @@ globalThis.PokeSquad = (() => {
           case "act": { if (!u) break; const t = e.t != null ? U(e.t) : null; this.add(`|move|${this.ident(u)}|${MOVES[e.key] ? MOVES[e.key].n : e.name}|${t && t !== u ? this.ident(t) : ""}`); break; }
           case "dmg": if (u) { this.add(`|-damage|${this.ident(u)}|${this.cond(u)}|[silent]`); if (e.crit) this.add(`|-crit|${this.ident(u)}|[silent]`); } break;
           case "heal": case "revive": if (u) this.add(`|-heal|${this.ident(u)}|${this.cond(u)}|[silent]`); break;
-          case "death": if (u) this.add(`|faint|${this.ident(u)}`); break;
-          case "sendin": if (u) { this.add(`|switch|${this.ident(u)}|${this.details(u)}|${this.cond(u)}`); this.lastSt[u.uid] = { st: u.status || null, stages: {} }; } break;   // (Showdown clears a Pokémon's boosts as it comes in)   // (Showdown says "Go!" from each side)
+          case "death": if (u) { this.add(`|faint|${this.ident(u)}`); delete this.shown[u.uid]; } break;
+          case "recall": if (u) delete this.shown[u.uid]; break;
+          case "sendin": if (u) { this.add(`|switch|${this.ident(u)}|${this.details(u)}|${this.cond(u)}`); this.lastSt[u.uid] = { st: u.status || null, stages: {} }; this.shown[u.uid] = 1; } break;   // (Showdown clears a Pokémon's boosts as it comes in)   // (Showdown says "Go!" from each side)
           case "status": case "fx": if (u) this.syncStatus(u); break;
           case "transform": if (u) this.add(`|-formechange|${this.ident(u)}|${SD.name(e.to || u.spr)}|${this.cond(u)}|[silent]`); break;
           case "weather": this.add(`|-weather|${WEATHER_ID[e.w] || "none"}|[silent]`); break;
@@ -28622,8 +28630,11 @@ globalThis.PokeSquad = (() => {
         + (order ? `|${order.map(id).filter(Boolean).join(";")}` : "");
     }
     syncStatus(u) {
+      if (!this.shown[u.uid]) return;   // (not before Showdown has it on the field: its switch-in line comes first)
       // (the stat badge: the stages moves made plus the ones fixed to an item, an Ability, the weather or a status, as the game shows them)
-      const id = this.ident(u), was = this.lastSt[u.uid] || { st: null, stages: {} }, now = { st: u.status || null, stages: this.B.shownStages(u) };
+      // (protection, from Protect or as a replacement after a faint until its first turn: Showdown's Protect bubble, the owner's ask)
+      const id = this.ident(u), was = this.lastSt[u.uid] || { st: null, stages: {} }, now = { st: u.status || null, stages: this.B.shownStages(u), prot: u.eff.some(e => e.id === "PROTECT") };
+      if (now.prot !== !!was.prot) this.add(`|-${now.prot ? "start" : "end"}|${id}|Protect|[silent]`);
       if (now.st !== was.st) this.add(now.st ? `|-status|${id}|${STATUS[now.st] || now.st.toLowerCase()}|[silent]` : `|-curestatus|${id}|${STATUS[was.st] || ""}|[silent]`);
       for (const k in STAT) { const d = (now.stages[k] || 0) - (was.stages[k] || 0); if (d) this.add(`|-${d > 0 ? "boost" : "unboost"}|${id}|${STAT[k]}|${Math.abs(d)}|[silent]`); }
       this.lastSt[u.uid] = now;
