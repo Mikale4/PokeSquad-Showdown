@@ -22,6 +22,10 @@ import { toID } from '../sim/dex';
 /** [userid, elo, username, w, l, t, lastUpdate], as server/ladders-local.ts keeps them */
 export type LadderRow = [string, number, string, number, number, number, string];
 
+/** The server's own bot (chat-plugins/pokesquad-bot.ts): its name, which only it can take with this process's secret token */
+export const BOT_NAME = 'PokeSquad Bot', BOT_ID = 'pokesquadbot';
+export const botToken = crypto.randomBytes(24).toString('hex');
+
 let db: PGDatabase | null = null;
 let ready: Promise<boolean> | null = null;
 

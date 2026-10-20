@@ -33,5 +33,12 @@ Item Clause. Showdown's own formats stay in the code, unlisted.
   with their password (`isAdmin`, `server/users.ts` `updateGroup`). `render.yaml` also lists `DATABASE_URL` with `sync: false`:
   its value is set by hand in Render and a Blueprint sync never touches it.
 
+- PokeSquad Bot: `server/chat-plugins/pokesquad-bot.ts` connects to the server's own websocket a few seconds after it starts
+  and logs in as PokeSquad Bot (`botToken` in `server/pokesquad-db.ts`, made fresh at each start; `server/users.ts`
+  `validateToken` turns the name down for anyone else). It accepts every [Gen 9] PokeSquad challenge (`/utm` then `/accept`),
+  turns down other formats, picks a random team from `pokesquad/bot-teams.json` (top Trainer teams, **generated** by the
+  game's `tools/build_bot_teams.js`: never edit it here), and answers every request with `default`, which the game's engine
+  plays with its own AI (the balanced one). It says which plan it brought, gg at the end, and leaves the room.
+
 Players use the PokeSquad Showdown client ([Mikale4/PokeSquad-Showdown-Client](https://github.com/Mikale4/PokeSquad-Showdown-Client)).
 Showdown's ladder never pairs two players from the same IP address: on the same Wi-Fi, challenge each other instead.

@@ -639,6 +639,12 @@ export class User extends Chat.MessageContext {
 		}
 	}
 	async validateToken(token: string, name: string, userid: ID, connection: Connection) {
+		if (Config.noguestsecurity && userid === PokeSquadDB.BOT_ID) {
+			// PokeSquad Battler: the server's own bot (chat-plugins/pokesquad-bot.ts) is the only one who can take its name
+			if (token === `psbot:${PokeSquadDB.botToken}`) return '2';
+			this.send(`|nametaken|${name}|That name belongs to the server's bot.`);
+			return null;
+		}
 		if (Config.noguestsecurity && PokeSquadDB.enabled()) {
 			// PokeSquad Battler: no login server, so a registered name needs its password or a remembered login (pokesquad-db.ts)
 			const check = await PokeSquadDB.checkName(userid, token);

@@ -1,0 +1,4262 @@
+[
+ {
+  "name": "Snow",
+  "team": [
+   {
+    "species": "Ninetales-Alola",
+    "item": "Icy Rock",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Aurora Veil",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Kyurem-Black",
+    "item": "Life Orb",
+    "ability": "Teravolt",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Beartic",
+    "item": "Loaded Dice",
+    "ability": "Slush Rush",
+    "nature": "Brave",
+    "moves": [
+     "Bulldoze",
+     "Icicle Spear",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Muscle Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Weavile",
+    "item": "Choice Band",
+    "ability": "Pressure",
+    "nature": "Adamant",
+    "moves": [
+     "Payback",
+     "Triple Axel",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Vanilluxe",
+    "item": "Wise Glasses",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Beat Up",
+     "Blizzard"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sand",
+  "team": [
+   {
+    "species": "Hippowdon",
+    "item": "Smooth Rock",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Ring Target",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Garchomp",
+    "item": "Berserk Gene",
+    "ability": "Rough Skin",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Dual Chop",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Landorus-Therian",
+    "item": "Choice Band",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Fly"
+    ]
+   },
+   {
+    "species": "Great Tusk",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Tyranitar",
+    "item": "Muscle Band",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Brutal Swing",
+     "Rock Slide",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Tailwind",
+  "team": [
+   {
+    "species": "Talonflame",
+    "item": "Quick Claw",
+    "ability": "Gale Wings",
+    "nature": "Adamant",
+    "moves": [
+     "Quick Attack",
+     "Tailwind",
+     "Brave Bird"
+    ]
+   },
+   {
+    "species": "Blissey",
+    "item": "Weakness Policy",
+    "ability": "Natural Cure",
+    "nature": "Modest",
+    "moves": [
+     "Incinerate",
+     "Light Screen",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Kyurem-White",
+    "item": "Wise Glasses",
+    "ability": "Turboblaze",
+    "nature": "Modest",
+    "moves": [
+     "Dragon Breath",
+     "Freeze-Dry",
+     "Ice Burn"
+    ]
+   },
+   {
+    "species": "Garchomp",
+    "item": "Muscle Band",
+    "ability": "Rough Skin",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Dual Chop",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Xurkitree",
+    "item": "Choice Specs",
+    "ability": "Beast Boost",
+    "nature": "Modest",
+    "moves": [
+     "Shock Wave",
+     "Dazzling Gleam",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Shock Wave",
+     "Psyshock",
+     "Hyperspace Fury"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Hyper Offense + Priority Offense",
+  "team": [
+   {
+    "species": "Lunala",
+    "item": "Wise Glasses",
+    "ability": "Shadow Shield",
+    "nature": "Modest",
+    "moves": [
+     "Confusion",
+     "Reflect",
+     "Moongeist Beam"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Choice Specs",
+    "ability": "Magician",
+    "nature": "Modest",
+    "moves": [
+     "Shock Wave",
+     "Dark Pulse",
+     "Dream Eater"
+    ]
+   },
+   {
+    "species": "Tyranitar",
+    "item": "Choice Band",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Rock Tomb",
+     "Knock Off",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Garchomp",
+    "item": "Quick Claw",
+    "ability": "Rough Skin",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Stealth Rock",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Muscle Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Swords Dance",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Volcarona",
+    "item": "Life Orb",
+    "ability": "Flame Body",
+    "nature": "Modest",
+    "moves": [
+     "Struggle Bug",
+     "Quiver Dance",
+     "Heat Wave"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sand",
+  "team": [
+   {
+    "species": "Hippowdon",
+    "item": "Smooth Rock",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Magearna",
+    "item": "Wise Glasses",
+    "ability": "Soul-Heart",
+    "nature": "Modest",
+    "moves": [
+     "Draining Kiss",
+     "Reflect",
+     "Steel Beam"
+    ]
+   },
+   {
+    "species": "Landorus-Therian",
+    "item": "Choice Band",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Fly"
+    ]
+   },
+   {
+    "species": "Great Tusk",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Garchomp",
+    "item": "Berserk Gene",
+    "ability": "Rough Skin",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Dual Chop",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Tyranitar",
+    "item": "Muscle Band",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Brutal Swing",
+     "Rock Slide",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Psychic Spam",
+  "team": [
+   {
+    "species": "Indeedee-F",
+    "item": "Terrain Extender",
+    "ability": "Psychic Surge",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Psychic"
+    ]
+   },
+   {
+    "species": "Necrozma-Dusk-Mane",
+    "item": "Twisted Spoon",
+    "ability": "Prism Armor",
+    "nature": "Brave",
+    "moves": [
+     "Bulldoze",
+     "Psychic Fangs",
+     "Prismatic Laser"
+    ]
+   },
+   {
+    "species": "Metagross",
+    "item": "Muscle Band",
+    "ability": "Light Metal",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Psychic Fangs",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Brave",
+    "moves": [
+     "Rock Tomb",
+     "Expanding Force",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Iron Valiant",
+    "item": "Booster Energy",
+    "ability": "Quark Drive",
+    "nature": "Adamant",
+    "moves": [
+     "Icy Wind",
+     "Zen Headbutt",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Indeedee",
+    "item": "Wise Glasses",
+    "ability": "Psychic Surge",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Expanding Force",
+     "Energy Ball"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Stall",
+  "team": [
+   {
+    "species": "Klefki",
+    "item": "Quick Claw",
+    "ability": "Prankster",
+    "nature": "Modest",
+    "moves": [
+     "Draining Kiss",
+     "Reflect",
+     "Steel Beam"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Wise Glasses",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Icy Wind",
+     "Thunder Wave",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Kyurem-Black",
+    "item": "Life Orb",
+    "ability": "Teravolt",
+    "nature": "Adamant",
+    "moves": [
+     "Icy Wind",
+     "Rock Slide",
+     "Freeze Shock"
+    ]
+   },
+   {
+    "species": "Buzzwole",
+    "item": "Leftovers",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Bug Bite",
+     "Roost",
+     "Superpower"
+    ]
+   },
+   {
+    "species": "Gouging Fire",
+    "item": "Black Sludge",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Morning Sun",
+     "Raging Fury"
+    ]
+   },
+   {
+    "species": "Clefable",
+    "item": "Choice Specs",
+    "ability": "Magic Guard",
+    "nature": "Modest",
+    "moves": [
+     "Draining Kiss",
+     "Stealth Rock",
+     "Meteor Beam"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Trick Room",
+  "team": [
+   {
+    "species": "Stakataka",
+    "item": "Room Service",
+    "ability": "Beast Boost",
+    "nature": "Brave",
+    "moves": [
+     "Smack Down",
+     "Trick Room",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Blissey",
+    "item": "Choice Specs",
+    "ability": "Natural Cure",
+    "nature": "Quiet",
+    "moves": [
+     "Incinerate",
+     "Light Screen",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Shock Wave",
+     "Psyshock",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Iron Hands",
+    "item": "Booster Energy",
+    "ability": "Quark Drive",
+    "nature": "Brave",
+    "moves": [
+     "Force Palm",
+     "Thunder Punch",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Ursaluna-Bloodmoon",
+    "item": "Wise Glasses",
+    "ability": "Mind's Eye",
+    "nature": "Quiet",
+    "moves": [
+     "Swift",
+     "Tera Blast",
+     "Earth Power"
+    ]
+   },
+   {
+    "species": "Calyrex-Ice",
+    "item": "Muscle Band",
+    "ability": "As One (Glastrier)",
+    "nature": "Brave",
+    "moves": [
+     "Payback",
+     "Trick Room",
+     "Glacial Lance"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sand",
+  "team": [
+   {
+    "species": "Hippowdon",
+    "item": "Smooth Rock",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Rock Tomb",
+     "Stealth Rock",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Ring Target",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Landorus-Therian",
+    "item": "Choice Band",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Fly"
+    ]
+   },
+   {
+    "species": "Garchomp",
+    "item": "Life Orb",
+    "ability": "Rough Skin",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Dual Chop",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Excadrill",
+    "item": "Berserk Gene",
+    "ability": "Mold Breaker",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Iron Head",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Tyranitar",
+    "item": "Muscle Band",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Brutal Swing",
+     "Rock Slide",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Bulky Offense",
+  "team": [
+   {
+    "species": "Salamence",
+    "item": "Muscle Band",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Dual Wingbeat",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Ring Target",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Zacian-Crowned",
+    "item": "Choice Band",
+    "ability": "Intrepid Sword",
+    "nature": "Adamant",
+    "moves": [
+     "Brutal Swing",
+     "Iron Head",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Berserk Gene",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Smart Strike",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Life Orb",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Great Tusk",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Close Combat"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Rain",
+  "team": [
+   {
+    "species": "Politoed",
+    "item": "Damp Rock",
+    "ability": "Drizzle",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Scald",
+     "Ice Beam"
+    ]
+   },
+   {
+    "species": "Blissey",
+    "item": "Weakness Policy",
+    "ability": "Natural Cure",
+    "nature": "Modest",
+    "moves": [
+     "Water Pulse",
+     "Light Screen",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Basculegion",
+    "item": "Muscle Band",
+    "ability": "Adaptability",
+    "nature": "Adamant",
+    "moves": [
+     "Flip Turn",
+     "Last Respects",
+     "Wave Crash"
+    ]
+   },
+   {
+    "species": "Raging Bolt",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Discharge",
+     "Draco Meteor"
+    ]
+   },
+   {
+    "species": "Kingdra",
+    "item": "Choice Specs",
+    "ability": "Sniper",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Scald",
+     "Draco Meteor"
+    ]
+   },
+   {
+    "species": "Kyogre",
+    "item": "Wise Glasses",
+    "ability": "Drizzle",
+    "nature": "Modest",
+    "moves": [
+     "Icy Wind",
+     "Scald",
+     "Surf"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Trick Room",
+  "team": [
+   {
+    "species": "Stakataka",
+    "item": "Room Service",
+    "ability": "Beast Boost",
+    "nature": "Brave",
+    "moves": [
+     "Smack Down",
+     "Trick Room",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Ring Target",
+    "ability": "Multitype",
+    "nature": "Quiet",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Hatterene",
+    "item": "Wise Glasses",
+    "ability": "Magic Bounce",
+    "nature": "Quiet",
+    "moves": [
+     "Magical Leaf",
+     "Dazzling Gleam",
+     "Future Sight"
+    ]
+   },
+   {
+    "species": "Iron Hands",
+    "item": "Booster Energy",
+    "ability": "Quark Drive",
+    "nature": "Brave",
+    "moves": [
+     "Force Palm",
+     "Thunder Punch",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Ursaluna",
+    "item": "Choice Band",
+    "ability": "Bulletproof",
+    "nature": "Brave",
+    "moves": [
+     "Aerial Ace",
+     "Stomping Tantrum",
+     "Giga Impact"
+    ]
+   },
+   {
+    "species": "Calyrex-Ice",
+    "item": "Muscle Band",
+    "ability": "As One (Glastrier)",
+    "nature": "Brave",
+    "moves": [
+     "Payback",
+     "Trick Room",
+     "Glacial Lance"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Psychic Spam",
+  "team": [
+   {
+    "species": "Indeedee-F",
+    "item": "Terrain Extender",
+    "ability": "Psychic Surge",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Psychic"
+    ]
+   },
+   {
+    "species": "Calyrex-Shadow",
+    "item": "Choice Specs",
+    "ability": "As One (Spectrier)",
+    "nature": "Modest",
+    "moves": [
+     "Mud Shot",
+     "Expanding Force",
+     "Astral Barrage"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Brave",
+    "moves": [
+     "Rock Tomb",
+     "Expanding Force",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Iron Valiant",
+    "item": "Booster Energy",
+    "ability": "Quark Drive",
+    "nature": "Adamant",
+    "moves": [
+     "Icy Wind",
+     "Zen Headbutt",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Metagross",
+    "item": "Muscle Band",
+    "ability": "Light Metal",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Psychic Fangs",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Indeedee",
+    "item": "Wise Glasses",
+    "ability": "Psychic Surge",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Expanding Force",
+     "Energy Ball"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sand",
+  "team": [
+   {
+    "species": "Hippowdon",
+    "item": "Smooth Rock",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Rock Tomb",
+     "Stealth Rock",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Ring Target",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Landorus-Therian",
+    "item": "Choice Band",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Fly"
+    ]
+   },
+   {
+    "species": "Garchomp",
+    "item": "Life Orb",
+    "ability": "Rough Skin",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Dual Chop",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Excadrill",
+    "item": "Berserk Gene",
+    "ability": "Mold Breaker",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Iron Head",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Tyranitar",
+    "item": "Muscle Band",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Brutal Swing",
+     "Rock Slide",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Rain",
+  "team": [
+   {
+    "species": "Politoed",
+    "item": "Damp Rock",
+    "ability": "Drizzle",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Scald",
+     "Ice Beam"
+    ]
+   },
+   {
+    "species": "Archaludon",
+    "item": "Life Orb",
+    "ability": "Stamina",
+    "nature": "Quiet",
+    "moves": [
+     "Breaking Swipe",
+     "Reflect",
+     "Steel Beam"
+    ]
+   },
+   {
+    "species": "Raging Bolt",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Discharge",
+     "Draco Meteor"
+    ]
+   },
+   {
+    "species": "Basculegion",
+    "item": "Muscle Band",
+    "ability": "Adaptability",
+    "nature": "Adamant",
+    "moves": [
+     "Flip Turn",
+     "Last Respects",
+     "Wave Crash"
+    ]
+   },
+   {
+    "species": "Manaphy",
+    "item": "Choice Specs",
+    "ability": "Hydration",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Dazzling Gleam",
+     "Surf"
+    ]
+   },
+   {
+    "species": "Kyogre",
+    "item": "Wise Glasses",
+    "ability": "Drizzle",
+    "nature": "Modest",
+    "moves": [
+     "Icy Wind",
+     "Scald",
+     "Surf"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Psychic Spam",
+  "team": [
+   {
+    "species": "Indeedee-F",
+    "item": "Terrain Extender",
+    "ability": "Psychic Surge",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Psychic"
+    ]
+   },
+   {
+    "species": "Calyrex-Shadow",
+    "item": "Choice Specs",
+    "ability": "As One (Spectrier)",
+    "nature": "Modest",
+    "moves": [
+     "Mud Shot",
+     "Expanding Force",
+     "Astral Barrage"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Brave",
+    "moves": [
+     "Rock Tomb",
+     "Expanding Force",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Armarouge",
+    "item": "Twisted Spoon",
+    "ability": "Flash Fire",
+    "nature": "Modest",
+    "moves": [
+     "Incinerate",
+     "Expanding Force",
+     "Meteor Beam"
+    ]
+   },
+   {
+    "species": "Iron Valiant",
+    "item": "Booster Energy",
+    "ability": "Quark Drive",
+    "nature": "Adamant",
+    "moves": [
+     "Icy Wind",
+     "Zen Headbutt",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Indeedee",
+    "item": "Wise Glasses",
+    "ability": "Psychic Surge",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Expanding Force",
+     "Energy Ball"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sun",
+  "team": [
+   {
+    "species": "Ninetales",
+    "item": "Heat Rock",
+    "ability": "Drought",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Reflect",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Venusaur",
+    "item": "Life Orb",
+    "ability": "Chlorophyll",
+    "nature": "Quiet",
+    "moves": [
+     "Weather Ball",
+     "Poison Jab",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Exeggutor",
+    "item": "Choice Specs",
+    "ability": "Chlorophyll",
+    "nature": "Modest",
+    "moves": [
+     "Ancient Power",
+     "Stored Power",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Choice Band",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Jaw Lock",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Volcarona",
+    "item": "Wise Glasses",
+    "ability": "Flame Body",
+    "nature": "Modest",
+    "moves": [
+     "Incinerate",
+     "Signal Beam",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Koraidon",
+    "item": "Muscle Band",
+    "ability": "Orichalcum Pulse",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Dual Wingbeat",
+     "Collision Course"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Rain",
+  "team": [
+   {
+    "species": "Pelipper",
+    "item": "Damp Rock",
+    "ability": "Drizzle",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Air Slash",
+     "Surf"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Ring Target",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Basculegion",
+    "item": "Muscle Band",
+    "ability": "Adaptability",
+    "nature": "Adamant",
+    "moves": [
+     "Flip Turn",
+     "Last Respects",
+     "Wave Crash"
+    ]
+   },
+   {
+    "species": "Kingdra",
+    "item": "Choice Specs",
+    "ability": "Sniper",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Scald",
+     "Draco Meteor"
+    ]
+   },
+   {
+    "species": "Raging Bolt",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Discharge",
+     "Draco Meteor"
+    ]
+   },
+   {
+    "species": "Kyogre",
+    "item": "Wise Glasses",
+    "ability": "Drizzle",
+    "nature": "Modest",
+    "moves": [
+     "Icy Wind",
+     "Scald",
+     "Surf"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Snow",
+  "team": [
+   {
+    "species": "Ninetales-Alola",
+    "item": "Icy Rock",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Aurora Veil",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Kyurem-Black",
+    "item": "Muscle Band",
+    "ability": "Teravolt",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Body Press",
+     "Freeze Shock"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Choice Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Cetitan",
+    "item": "Life Orb",
+    "ability": "Sheer Force",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Ice Punch",
+     "Superpower"
+    ]
+   },
+   {
+    "species": "Weavile",
+    "item": "Berserk Gene",
+    "ability": "Pressure",
+    "nature": "Adamant",
+    "moves": [
+     "Payback",
+     "Triple Axel",
+     "Focus Punch"
+    ]
+   },
+   {
+    "species": "Aurorus",
+    "item": "Wise Glasses",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Discharge",
+     "Meteor Beam"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Bulky Offense",
+  "team": [
+   {
+    "species": "Landorus-Therian",
+    "item": "Muscle Band",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Fly"
+    ]
+   },
+   {
+    "species": "Blissey",
+    "item": "Choice Specs",
+    "ability": "Natural Cure",
+    "nature": "Modest",
+    "moves": [
+     "Incinerate",
+     "Light Screen",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Choice Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Calm Mind",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Ring Target",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Bulk Up",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Raging Bolt",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Modest",
+    "moves": [
+     "Dragon Breath",
+     "Discharge",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Gholdengo",
+    "item": "Wise Glasses",
+    "ability": "Good as Gold",
+    "nature": "Modest",
+    "moves": [
+     "Charge Beam",
+     "Shadow Ball",
+     "Make It Rain"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Hazard Phazing",
+  "team": [
+   {
+    "species": "Necrozma-Dusk-Mane",
+    "item": "Ring Target",
+    "ability": "Prism Armor",
+    "nature": "Quiet",
+    "moves": [
+     "Bulldoze",
+     "Stealth Rock",
+     "Prismatic Laser"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Life Orb",
+    "ability": "Multitype",
+    "nature": "Lonely",
+    "moves": [
+     "Dragon Tail",
+     "Rock Slide",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Togekiss",
+    "item": "Wise Glasses",
+    "ability": "Super Luck",
+    "nature": "Modest",
+    "moves": [
+     "Air Cutter",
+     "Reflect",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Gouging Fire",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Roar",
+     "Raging Fury"
+    ]
+   },
+   {
+    "species": "Blissey",
+    "item": "Choice Specs",
+    "ability": "Natural Cure",
+    "nature": "Modest",
+    "moves": [
+     "Incinerate",
+     "Life Dew",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Dragonite",
+    "item": "Muscle Band",
+    "ability": "Multiscale",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Dual Wingbeat",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Tailwind",
+  "team": [
+   {
+    "species": "Tornadus",
+    "item": "Quick Claw",
+    "ability": "Prankster",
+    "nature": "Adamant",
+    "moves": [
+     "Acrobatics",
+     "Tailwind",
+     "Superpower"
+    ]
+   },
+   {
+    "species": "Snorlax",
+    "item": "Muscle Band",
+    "ability": "Thick Fat",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Reflect",
+     "Giga Impact"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Shock Wave",
+     "Psyshock",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Xurkitree",
+    "item": "Wise Glasses",
+    "ability": "Beast Boost",
+    "nature": "Modest",
+    "moves": [
+     "Shock Wave",
+     "Dazzling Gleam",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Jaw Lock",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Gholdengo",
+    "item": "Choice Specs",
+    "ability": "Good as Gold",
+    "nature": "Modest",
+    "moves": [
+     "Charge Beam",
+     "Shadow Ball",
+     "Make It Rain"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Bulky Offense",
+  "team": [
+   {
+    "species": "Rillaboom",
+    "item": "Miracle Seed",
+    "ability": "Grassy Surge",
+    "nature": "Adamant",
+    "moves": [
+     "Acrobatics",
+     "Grass Pledge",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Primarina",
+    "item": "Wise Glasses",
+    "ability": "Liquid Voice",
+    "nature": "Modest",
+    "moves": [
+     "Disarming Voice",
+     "Water Pledge",
+     "Hyper Voice"
+    ]
+   },
+   {
+    "species": "Snorlax",
+    "item": "Choice Band",
+    "ability": "Thick Fat",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Reflect",
+     "Giga Impact"
+    ]
+   },
+   {
+    "species": "Incineroar",
+    "item": "Berserk Gene",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Brutal Swing",
+     "Fire Pledge",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Landorus-Therian",
+    "item": "Muscle Band",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Fly"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Shock Wave",
+     "Psyshock",
+     "Hyperspace Fury"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Rain",
+  "team": [
+   {
+    "species": "Politoed",
+    "item": "Damp Rock",
+    "ability": "Drizzle",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Scald",
+     "Ice Beam"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Ring Target",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Basculegion",
+    "item": "Muscle Band",
+    "ability": "Adaptability",
+    "nature": "Adamant",
+    "moves": [
+     "Flip Turn",
+     "Last Respects",
+     "Wave Crash"
+    ]
+   },
+   {
+    "species": "Raging Bolt",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Discharge",
+     "Draco Meteor"
+    ]
+   },
+   {
+    "species": "Kingdra",
+    "item": "Choice Specs",
+    "ability": "Sniper",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Scald",
+     "Draco Meteor"
+    ]
+   },
+   {
+    "species": "Kyogre",
+    "item": "Wise Glasses",
+    "ability": "Drizzle",
+    "nature": "Modest",
+    "moves": [
+     "Icy Wind",
+     "Scald",
+     "Surf"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Snow",
+  "team": [
+   {
+    "species": "Ninetales-Alola",
+    "item": "Icy Rock",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Aurora Veil",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Calyrex-Ice",
+    "item": "Life Orb",
+    "ability": "As One (Glastrier)",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Icicle Spear",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Muscle Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Weavile",
+    "item": "Choice Band",
+    "ability": "Pressure",
+    "nature": "Adamant",
+    "moves": [
+     "Payback",
+     "Triple Axel",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Beartic",
+    "item": "Loaded Dice",
+    "ability": "Slush Rush",
+    "nature": "Brave",
+    "moves": [
+     "Bulldoze",
+     "Icicle Spear",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Vanilluxe",
+    "item": "Wise Glasses",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Beat Up",
+     "Blizzard"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Follow Me",
+  "team": [
+   {
+    "species": "Brute Bonnet",
+    "item": "Leftovers",
+    "ability": "Protosynthesis",
+    "nature": "Careful",
+    "moves": [
+     "Payback",
+     "Rage Powder",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Calyrex-Shadow",
+    "item": "Wise Glasses",
+    "ability": "As One (Spectrier)",
+    "nature": "Modest",
+    "moves": [
+     "Confusion",
+     "Nasty Plot",
+     "Astral Barrage"
+    ]
+   },
+   {
+    "species": "Volcarona",
+    "item": "Choice Specs",
+    "ability": "Flame Body",
+    "nature": "Modest",
+    "moves": [
+     "Struggle Bug",
+     "Quiver Dance",
+     "Heat Wave"
+    ]
+   },
+   {
+    "species": "Xurkitree",
+    "item": "Magnet",
+    "ability": "Beast Boost",
+    "nature": "Modest",
+    "moves": [
+     "Shock Wave",
+     "Tail Glow",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Muscle Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Life Orb",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Dazzling Gleam",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Follow Me",
+  "team": [
+   {
+    "species": "Togekiss",
+    "item": "Leftovers",
+    "ability": "Super Luck",
+    "nature": "Calm",
+    "moves": [
+     "Air Cutter",
+     "Follow Me",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Zacian-Crowned",
+    "item": "Muscle Band",
+    "ability": "Intrepid Sword",
+    "nature": "Adamant",
+    "moves": [
+     "Brutal Swing",
+     "Swords Dance",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Xurkitree",
+    "item": "Wise Glasses",
+    "ability": "Beast Boost",
+    "nature": "Modest",
+    "moves": [
+     "Shock Wave",
+     "Tail Glow",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Kommo-o",
+    "item": "Choice Band",
+    "ability": "Bulletproof",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Clangorous Soul",
+     "Superpower"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Shock Wave",
+     "Psyshock",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Jaw Lock",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Hazard Phazing",
+  "team": [
+   {
+    "species": "Necrozma-Dusk-Mane",
+    "item": "Ring Target",
+    "ability": "Prism Armor",
+    "nature": "Quiet",
+    "moves": [
+     "Bulldoze",
+     "Stealth Rock",
+     "Prismatic Laser"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Life Orb",
+    "ability": "Multitype",
+    "nature": "Lonely",
+    "moves": [
+     "Dragon Tail",
+     "Rock Slide",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Togekiss",
+    "item": "Wise Glasses",
+    "ability": "Super Luck",
+    "nature": "Modest",
+    "moves": [
+     "Air Cutter",
+     "Reflect",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Roar",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Milotic",
+    "item": "Choice Specs",
+    "ability": "Competitive",
+    "nature": "Modest",
+    "moves": [
+     "Icy Wind",
+     "Life Dew",
+     "Surf"
+    ]
+   },
+   {
+    "species": "Buzzwole",
+    "item": "Muscle Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Leech Life",
+     "Superpower"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Stall",
+  "team": [
+   {
+    "species": "Stakataka",
+    "item": "Room Service",
+    "ability": "Beast Boost",
+    "nature": "Brave",
+    "moves": [
+     "Smack Down",
+     "Trick Room",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Gholdengo",
+    "item": "Wise Glasses",
+    "ability": "Good as Gold",
+    "nature": "Quiet",
+    "moves": [
+     "Charge Beam",
+     "Shadow Ball",
+     "Make It Rain"
+    ]
+   },
+   {
+    "species": "Dragonite",
+    "item": "Choice Band",
+    "ability": "Multiscale",
+    "nature": "Brave",
+    "moves": [
+     "Aerial Ace",
+     "Reflect",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Ho-Oh",
+    "item": "Life Orb",
+    "ability": "Regenerator",
+    "nature": "Brave",
+    "moves": [
+     "Incinerate",
+     "Life Dew",
+     "Sky Attack"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Leftovers",
+    "ability": "Multitype",
+    "nature": "Quiet",
+    "moves": [
+     "Snarl",
+     "Recover",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Garchomp",
+    "item": "Muscle Band",
+    "ability": "Rough Skin",
+    "nature": "Brave",
+    "moves": [
+     "Breaking Swipe",
+     "Spikes",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Balance + Tailwind",
+  "team": [
+   {
+    "species": "Dialga",
+    "item": "Adamant Orb",
+    "ability": "Telepathy",
+    "nature": "Modest",
+    "moves": [
+     "Dragon Breath",
+     "Stealth Rock",
+     "Steel Beam"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Ring Target",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Talonflame",
+    "item": "Quick Claw",
+    "ability": "Gale Wings",
+    "nature": "Adamant",
+    "moves": [
+     "Quick Attack",
+     "Tailwind",
+     "Brave Bird"
+    ]
+   },
+   {
+    "species": "Salamence",
+    "item": "Muscle Band",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Dual Wingbeat",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Gholdengo",
+    "item": "Leftovers",
+    "ability": "Good as Gold",
+    "nature": "Modest",
+    "moves": [
+     "Charge Beam",
+     "Recover",
+     "Make It Rain"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Choice Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Smart Strike",
+     "Solar Blade"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Trick Room",
+  "team": [
+   {
+    "species": "Calyrex-Ice",
+    "item": "Room Service",
+    "ability": "As One (Glastrier)",
+    "nature": "Brave",
+    "moves": [
+     "Payback",
+     "Trick Room",
+     "Glacial Lance"
+    ]
+   },
+   {
+    "species": "Archaludon",
+    "item": "Weakness Policy",
+    "ability": "Stamina",
+    "nature": "Quiet",
+    "moves": [
+     "Breaking Swipe",
+     "Reflect",
+     "Steel Beam"
+    ]
+   },
+   {
+    "species": "Ursaluna",
+    "item": "Muscle Band",
+    "ability": "Bulletproof",
+    "nature": "Brave",
+    "moves": [
+     "Aerial Ace",
+     "Stomping Tantrum",
+     "Giga Impact"
+    ]
+   },
+   {
+    "species": "Iron Hands",
+    "item": "Booster Energy",
+    "ability": "Quark Drive",
+    "nature": "Brave",
+    "moves": [
+     "Force Palm",
+     "Thunder Punch",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Ursaluna-Bloodmoon",
+    "item": "Wise Glasses",
+    "ability": "Mind's Eye",
+    "nature": "Quiet",
+    "moves": [
+     "Swift",
+     "Tera Blast",
+     "Earth Power"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Thief",
+     "Trick Room",
+     "Dream Eater"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sand",
+  "team": [
+   {
+    "species": "Hippowdon",
+    "item": "Smooth Rock",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Rock Tomb",
+     "Stealth Rock",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Necrozma-Dusk-Mane",
+    "item": "Life Orb",
+    "ability": "Prism Armor",
+    "nature": "Quiet",
+    "moves": [
+     "Bulldoze",
+     "Reflect",
+     "Prismatic Laser"
+    ]
+   },
+   {
+    "species": "Garchomp",
+    "item": "Choice Band",
+    "ability": "Rough Skin",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Dual Chop",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Great Tusk",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Stoutland",
+    "item": "Berserk Gene",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Stomping Tantrum",
+     "Giga Impact"
+    ]
+   },
+   {
+    "species": "Gigalith",
+    "item": "Muscle Band",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Superpower"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Tailwind",
+  "team": [
+   {
+    "species": "Talonflame",
+    "item": "Quick Claw",
+    "ability": "Gale Wings",
+    "nature": "Adamant",
+    "moves": [
+     "Quick Attack",
+     "Tailwind",
+     "Brave Bird"
+    ]
+   },
+   {
+    "species": "Metagross",
+    "item": "Metal Coat",
+    "ability": "Light Metal",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Reflect",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Regigigas",
+    "item": "Muscle Band",
+    "ability": "Slow Start",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Giga Impact"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Shock Wave",
+     "Psyshock",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Choice Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Smart Strike",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Berserk Gene",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sand",
+  "team": [
+   {
+    "species": "Hippowdon",
+    "item": "Smooth Rock",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Rock Tomb",
+     "Stealth Rock",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Metagross",
+    "item": "Berserk Gene",
+    "ability": "Light Metal",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Reflect",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Garchomp",
+    "item": "Choice Band",
+    "ability": "Rough Skin",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Dual Chop",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Landorus",
+    "item": "Life Orb",
+    "ability": "Sheer Force",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Sludge Wave"
+    ]
+   },
+   {
+    "species": "Great Tusk",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Tyranitar",
+    "item": "Muscle Band",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Brutal Swing",
+     "Rock Slide",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Hyper Offense",
+  "team": [
+   {
+    "species": "Zacian-Crowned",
+    "item": "Quick Claw",
+    "ability": "Intrepid Sword",
+    "nature": "Adamant",
+    "moves": [
+     "Quick Attack",
+     "Iron Head",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Choice Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Vacuum Wave",
+     "Smart Strike",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Ring Target",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Muscle Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Ice Shard",
+     "Stomping Tantrum",
+     "Glaive Rush"
+    ]
+   },
+   {
+    "species": "Volcarona",
+    "item": "Wise Glasses",
+    "ability": "Flame Body",
+    "nature": "Modest",
+    "moves": [
+     "Struggle Bug",
+     "Quiver Dance",
+     "Heat Wave"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Dragon Dance",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Hazard Phazing",
+  "team": [
+   {
+    "species": "Necrozma-Dusk-Mane",
+    "item": "Ring Target",
+    "ability": "Prism Armor",
+    "nature": "Quiet",
+    "moves": [
+     "Bulldoze",
+     "Stealth Rock",
+     "Prismatic Laser"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Life Orb",
+    "ability": "Multitype",
+    "nature": "Lonely",
+    "moves": [
+     "Dragon Tail",
+     "Rock Slide",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Togekiss",
+    "item": "Choice Specs",
+    "ability": "Super Luck",
+    "nature": "Modest",
+    "moves": [
+     "Air Cutter",
+     "Reflect",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Dragonite",
+    "item": "Muscle Band",
+    "ability": "Multiscale",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Roar",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Blissey",
+    "item": "Weakness Policy",
+    "ability": "Natural Cure",
+    "nature": "Modest",
+    "moves": [
+     "Incinerate",
+     "Life Dew",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Gholdengo",
+    "item": "Wise Glasses",
+    "ability": "Good as Gold",
+    "nature": "Modest",
+    "moves": [
+     "Charge Beam",
+     "Shadow Ball",
+     "Make It Rain"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Tailwind",
+  "team": [
+   {
+    "species": "Talonflame",
+    "item": "Quick Claw",
+    "ability": "Gale Wings",
+    "nature": "Adamant",
+    "moves": [
+     "Quick Attack",
+     "Tailwind",
+     "Brave Bird"
+    ]
+   },
+   {
+    "species": "Metagross",
+    "item": "Berserk Gene",
+    "ability": "Light Metal",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Reflect",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Shock Wave",
+     "Psyshock",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Regigigas",
+    "item": "Muscle Band",
+    "ability": "Slow Start",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Giga Impact"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Choice Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Smart Strike",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Jaw Lock",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Bulky Offense",
+  "team": [
+   {
+    "species": "Primarina",
+    "item": "Wise Glasses",
+    "ability": "Liquid Voice",
+    "nature": "Modest",
+    "moves": [
+     "Disarming Voice",
+     "Water Pledge",
+     "Hyper Voice"
+    ]
+   },
+   {
+    "species": "Rillaboom",
+    "item": "Life Orb",
+    "ability": "Grassy Surge",
+    "nature": "Adamant",
+    "moves": [
+     "Acrobatics",
+     "Grass Pledge",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Stakataka",
+    "item": "Berserk Gene",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Rock Tomb",
+     "Reflect",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Emboar",
+    "item": "Weakness Policy",
+    "ability": "Blaze",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Fire Pledge",
+     "Superpower"
+    ]
+   },
+   {
+    "species": "Gyarados",
+    "item": "Choice Band",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Bounce",
+     "Power Whip"
+    ]
+   },
+   {
+    "species": "Zacian-Crowned",
+    "item": "Muscle Band",
+    "ability": "Intrepid Sword",
+    "nature": "Adamant",
+    "moves": [
+     "Brutal Swing",
+     "Iron Head",
+     "Solar Blade"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Hyper Offense + Tailwind",
+  "team": [
+   {
+    "species": "Zamazenta-Crowned",
+    "item": "Choice Band",
+    "ability": "Dauntless Shield",
+    "nature": "Adamant",
+    "moves": [
+     "Metal Claw",
+     "Reflect",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Talonflame",
+    "item": "Quick Claw",
+    "ability": "Gale Wings",
+    "nature": "Adamant",
+    "moves": [
+     "Quick Attack",
+     "Tailwind",
+     "Brave Bird"
+    ]
+   },
+   {
+    "species": "Deoxys-Attack",
+    "item": "Focus Sash",
+    "ability": "Pressure",
+    "nature": "Modest",
+    "moves": [
+     "Icy Wind",
+     "Stealth Rock",
+     "Dream Eater"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Muscle Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Swords Dance",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Dragon Dance",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Volcarona",
+    "item": "Wise Glasses",
+    "ability": "Flame Body",
+    "nature": "Modest",
+    "moves": [
+     "Struggle Bug",
+     "Quiver Dance",
+     "Heat Wave"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Trick Room",
+  "team": [
+   {
+    "species": "Stakataka",
+    "item": "Room Service",
+    "ability": "Beast Boost",
+    "nature": "Brave",
+    "moves": [
+     "Smack Down",
+     "Trick Room",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Blissey",
+    "item": "Wise Glasses",
+    "ability": "Natural Cure",
+    "nature": "Quiet",
+    "moves": [
+     "Incinerate",
+     "Light Screen",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Shock Wave",
+     "Psyshock",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Iron Hands",
+    "item": "Booster Energy",
+    "ability": "Quark Drive",
+    "nature": "Brave",
+    "moves": [
+     "Force Palm",
+     "Thunder Punch",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Ursaluna",
+    "item": "Choice Band",
+    "ability": "Bulletproof",
+    "nature": "Brave",
+    "moves": [
+     "Aerial Ace",
+     "Stomping Tantrum",
+     "Giga Impact"
+    ]
+   },
+   {
+    "species": "Calyrex-Ice",
+    "item": "Muscle Band",
+    "ability": "As One (Glastrier)",
+    "nature": "Brave",
+    "moves": [
+     "Payback",
+     "Trick Room",
+     "Glacial Lance"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sand",
+  "team": [
+   {
+    "species": "Hippowdon",
+    "item": "Smooth Rock",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Rock Tomb",
+     "Stealth Rock",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Necrozma-Dusk-Mane",
+    "item": "Life Orb",
+    "ability": "Prism Armor",
+    "nature": "Quiet",
+    "moves": [
+     "Bulldoze",
+     "Reflect",
+     "Prismatic Laser"
+    ]
+   },
+   {
+    "species": "Garchomp",
+    "item": "Berserk Gene",
+    "ability": "Rough Skin",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Dual Chop",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Excadrill",
+    "item": "Choice Band",
+    "ability": "Mold Breaker",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Iron Head",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Great Tusk",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Tyranitar",
+    "item": "Muscle Band",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Brutal Swing",
+     "Rock Slide",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Rain",
+  "team": [
+   {
+    "species": "Politoed",
+    "item": "Damp Rock",
+    "ability": "Drizzle",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Scald",
+     "Ice Beam"
+    ]
+   },
+   {
+    "species": "Metagross",
+    "item": "Muscle Band",
+    "ability": "Light Metal",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Reflect",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Keldeo",
+    "item": "Choice Specs",
+    "ability": "Justified",
+    "nature": "Modest",
+    "moves": [
+     "Icy Wind",
+     "Secret Sword",
+     "Surf"
+    ]
+   },
+   {
+    "species": "Raging Bolt",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Discharge",
+     "Draco Meteor"
+    ]
+   },
+   {
+    "species": "Kingdra",
+    "item": "Life Orb",
+    "ability": "Sniper",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Scald",
+     "Draco Meteor"
+    ]
+   },
+   {
+    "species": "Kyogre",
+    "item": "Wise Glasses",
+    "ability": "Drizzle",
+    "nature": "Modest",
+    "moves": [
+     "Icy Wind",
+     "Scald",
+     "Surf"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Snow",
+  "team": [
+   {
+    "species": "Ninetales-Alola",
+    "item": "Icy Rock",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Aurora Veil",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Calyrex-Ice",
+    "item": "Muscle Band",
+    "ability": "As One (Glastrier)",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Double Kick",
+     "Glacial Lance"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Choice Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Weavile",
+    "item": "Berserk Gene",
+    "ability": "Pressure",
+    "nature": "Adamant",
+    "moves": [
+     "Payback",
+     "Triple Axel",
+     "Focus Punch"
+    ]
+   },
+   {
+    "species": "Frosmoth",
+    "item": "Choice Specs",
+    "ability": "Ice Scales",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Dazzling Gleam",
+     "Bug Buzz"
+    ]
+   },
+   {
+    "species": "Vanilluxe",
+    "item": "Wise Glasses",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Beat Up",
+     "Blizzard"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Bulky Offense",
+  "team": [
+   {
+    "species": "Rillaboom",
+    "item": "Life Orb",
+    "ability": "Grassy Surge",
+    "nature": "Adamant",
+    "moves": [
+     "Acrobatics",
+     "Grass Pledge",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Emboar",
+    "item": "Berserk Gene",
+    "ability": "Blaze",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Fire Pledge",
+     "Superpower"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Choice Specs",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Primarina",
+    "item": "Wise Glasses",
+    "ability": "Liquid Voice",
+    "nature": "Modest",
+    "moves": [
+     "Disarming Voice",
+     "Water Pledge",
+     "Hyper Voice"
+    ]
+   },
+   {
+    "species": "Landorus-Therian",
+    "item": "Muscle Band",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Fly"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Choice Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Smart Strike",
+     "Solar Blade"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Snow",
+  "team": [
+   {
+    "species": "Ninetales-Alola",
+    "item": "Icy Rock",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Aurora Veil",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Kyurem-Black",
+    "item": "Muscle Band",
+    "ability": "Teravolt",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Body Press",
+     "Freeze Shock"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Choice Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Weavile",
+    "item": "Life Orb",
+    "ability": "Pressure",
+    "nature": "Adamant",
+    "moves": [
+     "Payback",
+     "Triple Axel",
+     "Focus Punch"
+    ]
+   },
+   {
+    "species": "Beartic",
+    "item": "Berserk Gene",
+    "ability": "Slush Rush",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Icicle Spear",
+     "Superpower"
+    ]
+   },
+   {
+    "species": "Vanilluxe",
+    "item": "Wise Glasses",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Beat Up",
+     "Blizzard"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sun",
+  "team": [
+   {
+    "species": "Ninetales",
+    "item": "Heat Rock",
+    "ability": "Drought",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Reflect",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Venusaur",
+    "item": "Life Orb",
+    "ability": "Chlorophyll",
+    "nature": "Quiet",
+    "moves": [
+     "Weather Ball",
+     "Poison Jab",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Exeggutor",
+    "item": "Choice Specs",
+    "ability": "Chlorophyll",
+    "nature": "Modest",
+    "moves": [
+     "Ancient Power",
+     "Stored Power",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Volcarona",
+    "item": "Wise Glasses",
+    "ability": "Flame Body",
+    "nature": "Modest",
+    "moves": [
+     "Incinerate",
+     "Signal Beam",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Choice Band",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Jaw Lock",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Koraidon",
+    "item": "Muscle Band",
+    "ability": "Orichalcum Pulse",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Dual Wingbeat",
+     "Collision Course"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sun",
+  "team": [
+   {
+    "species": "Ninetales",
+    "item": "Heat Rock",
+    "ability": "Drought",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Reflect",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Exeggutor",
+    "item": "Life Orb",
+    "ability": "Chlorophyll",
+    "nature": "Modest",
+    "moves": [
+     "Ancient Power",
+     "Stored Power",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Venusaur",
+    "item": "Weakness Policy",
+    "ability": "Chlorophyll",
+    "nature": "Quiet",
+    "moves": [
+     "Weather Ball",
+     "Poison Jab",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Raging Bolt",
+    "item": "Wise Glasses",
+    "ability": "Protosynthesis",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Discharge",
+     "Draco Meteor"
+    ]
+   },
+   {
+    "species": "Volcarona",
+    "item": "Choice Specs",
+    "ability": "Flame Body",
+    "nature": "Modest",
+    "moves": [
+     "Incinerate",
+     "Signal Beam",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Koraidon",
+    "item": "Muscle Band",
+    "ability": "Orichalcum Pulse",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Dual Wingbeat",
+     "Collision Course"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Stall",
+  "team": [
+   {
+    "species": "Lugia",
+    "item": "Quick Claw",
+    "ability": "Multiscale",
+    "nature": "Adamant",
+    "moves": [
+     "Icy Wind",
+     "Reflect",
+     "Sky Attack"
+    ]
+   },
+   {
+    "species": "Gholdengo",
+    "item": "Wise Glasses",
+    "ability": "Good as Gold",
+    "nature": "Modest",
+    "moves": [
+     "Charge Beam",
+     "Thunder Wave",
+     "Make It Rain"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Leftovers",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Icy Wind",
+     "Recover",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Black Sludge",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Roost",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Muscle Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Calm Mind",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Gliscor",
+    "item": "Choice Band",
+    "ability": "Hyper Cutter",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Toxic Spikes",
+     "Sky Attack"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Sand",
+  "team": [
+   {
+    "species": "Hippowdon",
+    "item": "Smooth Rock",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Gholdengo",
+    "item": "Wise Glasses",
+    "ability": "Good as Gold",
+    "nature": "Modest",
+    "moves": [
+     "Charge Beam",
+     "Reflect",
+     "Make It Rain"
+    ]
+   },
+   {
+    "species": "Great Tusk",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Garchomp",
+    "item": "Berserk Gene",
+    "ability": "Rough Skin",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Dual Chop",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Excadrill",
+    "item": "Choice Band",
+    "ability": "Mold Breaker",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Iron Head",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Tyranitar",
+    "item": "Muscle Band",
+    "ability": "Sand Stream",
+    "nature": "Adamant",
+    "moves": [
+     "Brutal Swing",
+     "Rock Slide",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Snow",
+  "team": [
+   {
+    "species": "Ninetales-Alola",
+    "item": "Icy Rock",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Aurora Veil",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Calyrex-Ice",
+    "item": "Muscle Band",
+    "ability": "As One (Glastrier)",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Double Kick",
+     "Glacial Lance"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Choice Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Weavile",
+    "item": "Life Orb",
+    "ability": "Pressure",
+    "nature": "Adamant",
+    "moves": [
+     "Payback",
+     "Triple Axel",
+     "Focus Punch"
+    ]
+   },
+   {
+    "species": "Beartic",
+    "item": "Berserk Gene",
+    "ability": "Slush Rush",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Icicle Spear",
+     "Superpower"
+    ]
+   },
+   {
+    "species": "Vanilluxe",
+    "item": "Wise Glasses",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Beat Up",
+     "Blizzard"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Balance",
+  "team": [
+   {
+    "species": "Landorus-Therian",
+    "item": "Muscle Band",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Fly"
+    ]
+   },
+   {
+    "species": "Magearna",
+    "item": "Wise Glasses",
+    "ability": "Soul-Heart",
+    "nature": "Modest",
+    "moves": [
+     "Draining Kiss",
+     "Reflect",
+     "Steel Beam"
+    ]
+   },
+   {
+    "species": "Gholdengo",
+    "item": "Leftovers",
+    "ability": "Good as Gold",
+    "nature": "Modest",
+    "moves": [
+     "Charge Beam",
+     "Recover",
+     "Make It Rain"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Jaw Lock",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Choice Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Smart Strike",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Berserk Gene",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Priority Offense",
+  "team": [
+   {
+    "species": "Grimmsnarl",
+    "item": "Choice Band",
+    "ability": "Prankster",
+    "nature": "Adamant",
+    "moves": [
+     "Thief",
+     "Thunder Wave",
+     "Superpower"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Berserk Gene",
+    "ability": "Multitype",
+    "nature": "Adamant",
+    "moves": [
+     "Quick Attack",
+     "Will-O-Wisp",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Blissey",
+    "item": "Wise Glasses",
+    "ability": "Natural Cure",
+    "nature": "Modest",
+    "moves": [
+     "Incinerate",
+     "Light Screen",
+     "Hyper Beam"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Muscle Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Detect",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Yveltal",
+    "item": "Life Orb",
+    "ability": "Dark Aura",
+    "nature": "Lonely",
+    "moves": [
+     "Snarl",
+     "Sucker Punch",
+     "Sky Attack"
+    ]
+   },
+   {
+    "species": "Flutter Mane",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Modest",
+    "moves": [
+     "Icy Wind",
+     "Hex",
+     "Moonblast"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Follow Me",
+  "team": [
+   {
+    "species": "Togekiss",
+    "item": "Leftovers",
+    "ability": "Super Luck",
+    "nature": "Calm",
+    "moves": [
+     "Air Cutter",
+     "Follow Me",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Calyrex-Shadow",
+    "item": "Choice Specs",
+    "ability": "As One (Spectrier)",
+    "nature": "Modest",
+    "moves": [
+     "Confusion",
+     "Nasty Plot",
+     "Astral Barrage"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Thief",
+     "Nasty Plot",
+     "Dream Eater"
+    ]
+   },
+   {
+    "species": "Volcarona",
+    "item": "Choice Scarf",
+    "ability": "Flame Body",
+    "nature": "Modest",
+    "moves": [
+     "Struggle Bug",
+     "Quiver Dance",
+     "Heat Wave"
+    ]
+   },
+   {
+    "species": "Xurkitree",
+    "item": "Wise Glasses",
+    "ability": "Beast Boost",
+    "nature": "Modest",
+    "moves": [
+     "Shock Wave",
+     "Dazzling Gleam",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Jaw Lock",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Trick Room",
+  "team": [
+   {
+    "species": "Stakataka",
+    "item": "Room Service",
+    "ability": "Beast Boost",
+    "nature": "Brave",
+    "moves": [
+     "Smack Down",
+     "Trick Room",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Snorlax",
+    "item": "Weakness Policy",
+    "ability": "Thick Fat",
+    "nature": "Quiet",
+    "moves": [
+     "Hidden Power",
+     "Reflect",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Shock Wave",
+     "Psyshock",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Ursaluna",
+    "item": "Choice Band",
+    "ability": "Bulletproof",
+    "nature": "Brave",
+    "moves": [
+     "Aerial Ace",
+     "Stomping Tantrum",
+     "Giga Impact"
+    ]
+   },
+   {
+    "species": "Iron Hands",
+    "item": "Booster Energy",
+    "ability": "Quark Drive",
+    "nature": "Brave",
+    "moves": [
+     "Force Palm",
+     "Thunder Punch",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Calyrex-Ice",
+    "item": "Muscle Band",
+    "ability": "As One (Glastrier)",
+    "nature": "Brave",
+    "moves": [
+     "Payback",
+     "Trick Room",
+     "Glacial Lance"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Priority Offense",
+  "team": [
+   {
+    "species": "Kartana",
+    "item": "Berserk Gene",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Detect",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Zacian-Crowned",
+    "item": "Muscle Band",
+    "ability": "Intrepid Sword",
+    "nature": "Adamant",
+    "moves": [
+     "Quick Attack",
+     "Iron Head",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Togekiss",
+    "item": "Wise Glasses",
+    "ability": "Super Luck",
+    "nature": "Modest",
+    "moves": [
+     "Air Cutter",
+     "Reflect",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Life Orb",
+    "ability": "Multitype",
+    "nature": "Adamant",
+    "moves": [
+     "Icy Wind",
+     "Extreme Speed",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Choice Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Ice Shard",
+     "Stomping Tantrum",
+     "Glaive Rush"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Jaw Lock",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Bulky Offense",
+  "team": [
+   {
+    "species": "Arcanine-Hisui",
+    "item": "Berserk Gene",
+    "ability": "Intimidate",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Raging Fury"
+    ]
+   },
+   {
+    "species": "Magearna",
+    "item": "Choice Specs",
+    "ability": "Soul-Heart",
+    "nature": "Modest",
+    "moves": [
+     "Draining Kiss",
+     "Reflect",
+     "Steel Beam"
+    ]
+   },
+   {
+    "species": "Calyrex-Shadow",
+    "item": "Wise Glasses",
+    "ability": "As One (Spectrier)",
+    "nature": "Modest",
+    "moves": [
+     "Confusion",
+     "Calm Mind",
+     "Astral Barrage"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Choice Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Calm Mind",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Jaw Lock",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Muscle Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Tailwind",
+  "team": [
+   {
+    "species": "Volbeat",
+    "item": "Quick Claw",
+    "ability": "Prankster",
+    "nature": "Adamant",
+    "moves": [
+     "Quick Attack",
+     "Tailwind",
+     "Focus Punch"
+    ]
+   },
+   {
+    "species": "Metagross",
+    "item": "Berserk Gene",
+    "ability": "Light Metal",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Reflect",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Regigigas",
+    "item": "Muscle Band",
+    "ability": "Slow Start",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Rock Slide",
+     "Giga Impact"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Quiet",
+    "moves": [
+     "Shock Wave",
+     "Psyshock",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Xurkitree",
+    "item": "Wise Glasses",
+    "ability": "Beast Boost",
+    "nature": "Modest",
+    "moves": [
+     "Shock Wave",
+     "Dazzling Gleam",
+     "Solar Beam"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Choice Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Hyper Offense",
+  "team": [
+   {
+    "species": "Calyrex-Shadow",
+    "item": "Light Clay",
+    "ability": "As One (Spectrier)",
+    "nature": "Modest",
+    "moves": [
+     "Confusion",
+     "Reflect",
+     "Astral Barrage"
+    ]
+   },
+   {
+    "species": "Arceus",
+    "item": "Quick Claw",
+    "ability": "Multitype",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Light Screen",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Kartana",
+    "item": "Choice Band",
+    "ability": "Beast Boost",
+    "nature": "Adamant",
+    "moves": [
+     "Aerial Ace",
+     "Swords Dance",
+     "Solar Blade"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Muscle Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Dragon Dance",
+     "Earthquake"
+    ]
+   },
+   {
+    "species": "Volcarona",
+    "item": "Wise Glasses",
+    "ability": "Flame Body",
+    "nature": "Modest",
+    "moves": [
+     "Struggle Bug",
+     "Quiver Dance",
+     "Heat Wave"
+    ]
+   },
+   {
+    "species": "Roaring Moon",
+    "item": "Booster Energy",
+    "ability": "Protosynthesis",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Dragon Dance",
+     "Earthquake"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Psychic Spam",
+  "team": [
+   {
+    "species": "Indeedee-F",
+    "item": "Terrain Extender",
+    "ability": "Psychic Surge",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Reflect",
+     "Psychic"
+    ]
+   },
+   {
+    "species": "Calyrex-Shadow",
+    "item": "Choice Specs",
+    "ability": "As One (Spectrier)",
+    "nature": "Modest",
+    "moves": [
+     "Mud Shot",
+     "Expanding Force",
+     "Astral Barrage"
+    ]
+   },
+   {
+    "species": "Hoopa-Unbound",
+    "item": "Life Orb",
+    "ability": "Magician",
+    "nature": "Brave",
+    "moves": [
+     "Rock Tomb",
+     "Expanding Force",
+     "Hyperspace Fury"
+    ]
+   },
+   {
+    "species": "Metagross",
+    "item": "Muscle Band",
+    "ability": "Light Metal",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Psychic Fangs",
+     "Steel Roller"
+    ]
+   },
+   {
+    "species": "Iron Valiant",
+    "item": "Booster Energy",
+    "ability": "Quark Drive",
+    "nature": "Adamant",
+    "moves": [
+     "Icy Wind",
+     "Zen Headbutt",
+     "Close Combat"
+    ]
+   },
+   {
+    "species": "Indeedee",
+    "item": "Wise Glasses",
+    "ability": "Psychic Surge",
+    "nature": "Modest",
+    "moves": [
+     "Swift",
+     "Expanding Force",
+     "Energy Ball"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Snow",
+  "team": [
+   {
+    "species": "Ninetales-Alola",
+    "item": "Icy Rock",
+    "ability": "Snow Warning",
+    "nature": "Modest",
+    "moves": [
+     "Weather Ball",
+     "Aurora Veil",
+     "Moonblast"
+    ]
+   },
+   {
+    "species": "Kyurem-Black",
+    "item": "Loaded Dice",
+    "ability": "Teravolt",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Baxcalibur",
+    "item": "Muscle Band",
+    "ability": "Thermal Exchange",
+    "nature": "Adamant",
+    "moves": [
+     "Breaking Swipe",
+     "Icicle Spear",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Weavile",
+    "item": "Choice Band",
+    "ability": "Pressure",
+    "nature": "Adamant",
+    "moves": [
+     "Payback",
+     "Triple Axel",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Cetitan",
+    "item": "Life Orb",
+    "ability": "Sheer Force",
+    "nature": "Adamant",
+    "moves": [
+     "Bulldoze",
+     "Ice Punch",
+     "Blizzard"
+    ]
+   },
+   {
+    "species": "Abomasnow",
+    "item": "Wise Glasses",
+    "ability": "Snow Warning",
+    "nature": "Sassy",
+    "moves": [
+     "Weather Ball",
+     "Bullet Seed",
+     "Earthquake"
+    ]
+   }
+  ]
+ }
+]
