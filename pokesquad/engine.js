@@ -3890,7 +3890,7 @@ const ABILITY = {
   "aura-break": ["Aura Break", "While it's on the field, Fairy Aura and Dark Aura do nothing.", { id: "AURA_BREAK" }],   // (the owner's rule)
   "power-spot": ["Power Spot", "Its partners' moves are 50% stronger.", { id: "ALLYPOW", mul: 1.5 }],   // (the owner's rule: 50%)
   battery: ["Battery", "Its partners' special moves are 50% stronger.", { id: "ALLYPOW", mul: 1.5, special: 1 }],   // (the owner's rule: 50%)
-  "supreme-overlord": ["Supreme Overlord", "Its Attack rises by 1 every time it comes onto the field (like Intrepid Sword).", { id: "ENTRY_BOOST", stat: "atk" }],   // (the owner's rule)
+  "supreme-overlord": ["Supreme Overlord", "Its Attack and Sp. Atk rise by 1 every time it comes onto the field (like Intrepid Sword).", { id: "ENTRY_BOOST", stats: ["atk", "spa"] }],   // (the owner's rule, 2026-10-20: Sp. Atk too)
   stakeout: ["Stakeout", "Its moves are twice as strong against a Pokémon that hasn't acted since coming onto the field.", { id: "STAKEOUT" }],
   "gorilla-tactics": ["Gorilla Tactics", "Attack +1 (and it can still use any of its moves).", { id: "GORILLA" }],
   merciless: ["Merciless", "Its moves always land a critical hit on a poisoned target.", { id: "MERCILESS" }],
@@ -22925,7 +22925,7 @@ function abilityValue(k, abKey, c = {}) {
     case "SOUL_HEART": return (1 - phys) * .15;
     case "OPPORTUNIST": return meta.setup * .15;
     case "COSTAR": return .02;
-    case "ENTRY_BOOST": return A.stat === "atk" ? phys * .2 : .05;
+    case "ENTRY_BOOST": return (A.stats || [A.stat]).reduce((v, s) => v + (s === "atk" ? phys * .2 : s === "spa" ? (1 - phys) * .2 : .05), 0);
     case "SCREEN_CLEANER": case "CURIOUS": return .01;
     case "HOSPITALITY": return mates.length ? .05 : .01;
     case "HONEY": return mates.length ? .02 : -.01;
@@ -25228,6 +25228,8 @@ function makeBattle(cfg) {
   // an Ability in effect: none while Gastro Acid suppresses it or another Pokémon's Neutralizing Gas is in battle
   // (speed: whether anyone in this battle, bench included, has Neutralizing Gas or Cloud Nine/Air Lock at all, checked as each step starts;
   // nobody can gain one without copying it from someone counted already, so most battles skip those scans: abScan)
+  // (a Neutralizing Gas holder leaving the field, the last one there: the games say the gas wore off)
+  const gasLeaves = u => { if (u.passives.some(p => p.id === "NEUTRAL") && !u.flags.noAbility && !B.units.some(x => x !== u && x.alive && !x.flags.noAbility && x.passives.some(p => p.id === "NEUTRAL"))) msg(psT("neutralizinggas", "end")); };
   const gasOn = u => B.gasMaybe !== false && !(u.held === "abilityshield") && B.units.some(x => x.alive && x !== u && !x.flags.noAbility && x.passives.some(p => p.id === "NEUTRAL"));
   const abScan = () => { const all = [...B.units, ...(B.bench ? [...(B.bench.A || []), ...(B.bench.E || [])] : [])]; B.gasMaybe = all.some(x => x.passives.some(p => p.id === "NEUTRAL")); B.cloudMaybe = all.some(x => x.passives.some(p => p.id === "CLOUD")); };
   const pv = (u, id) => u.flags.noAbility || gasOn(u) ? undefined : u.passives.find(p => p.id === id);
@@ -25433,6 +25435,7 @@ function makeBattle(cfg) {
       for (const p of u.passives) {
         if (p.id === "INTIMIDATE") { msg(`${Nm(u)}'s Intimidate!`); for (const f of foes) { if (pv(f, "GUARD_DOG") && !f.flags.noAbility && !gasOn(f)) { stage(f, f, "atk", 1, "Guard Dog"); continue; } const blk = !f.flags.noAbility && !gasOn(f) && f.passives.find(q => q.noIntim); if (blk) { msg(`${Nm(f)}'s ${blk.name} kept it from being intimidated!`); continue; } if (stage(u, f, "atk", -1) && pv(f, "RATTLED")) stage(f, f, "spe", 1, "Rattled"); if (item(f, "adrenalineorb")) { useUp(f, `${Nm(f)}'s Adrenaline Orb kicked in!`); stage(f, f, "spe", 1); } } }
         else if (p.id === "DOWNLOAD") { stage(u, u, "atk", 1, "Download"); stage(u, u, "spa", 1, "Download"); }
+        else if (p.id === "NEUTRAL") msg(psT("neutralizinggas", "start"));   // (as in the games: it says so; what it does is gasOn)
         else if (p.id === "ARENA_TRAP") { msg(`${Nm(u)}'s ${p.name}! The opposing team can't get away!`); for (const f of foes) if (!pv(f, "RUN_AWAY")) f.atb = 0; }
         else if (p.id === "SLOW_START") { u.flags.slowStart = 2; msg(`${Nm(u)} can't get it going!`); }   // (the owner's rule: 2 turns, then every stat +2: fixedStage)
         else if (p.id === "MAGNET_PULL") { const st = foes.filter(f => f.types.includes("Steel") && !pv(f, "RUN_AWAY")); if (st.length) { msg(`${Nm(u)}'s Magnet Pull! The opposing Steel types can't get away!`); for (const f of st) f.atb = 0; } }
@@ -25452,7 +25455,7 @@ function makeBattle(cfg) {
           for (const x of B.units) if (x.alive) formCheck(x);
         }
         else if (p.id === "SURGE" && !(B.terrain && B.terrain.t === p.t)) setTerrain(u, p.t);
-        else if (p.id === "ENTRY_BOOST") stage(u, u, p.stat, 1, p.name);
+        else if (p.id === "ENTRY_BOOST") for (const s of p.stats || [p.stat]) stage(u, u, s, 1, p.name);   // (Supreme Overlord: two stats)
         else if (p.id === "SCREEN_CLEANER") { let any = false; for (const tm of ["A", "E"]) for (const id of ["REFLECT", "LSCREEN", "VEIL"]) if ((B.side && B.side[tm] && B.side[tm][id]) || B.units.some(x => x.team === tm && has(x, id))) { clearSide(tm, id); any = true; } if (any) msg(`${Nm(u)}'s Screen Cleaner swept the screens away!`); }
         else if (p.id === "CURIOUS") for (const a of allies(u)) { if (a !== u && Object.values(a.stages).some(v => v)) { a.stages = newStages(); msg(`${Nm(a)}'s stat changes were removed!`); fxEv(a); } }
         else if (p.id === "HOSPITALITY") for (const a of allies(u)) { if (a !== u) heal(a, hpBase(a) / 4, `${Nm(a)} drank down all the matcha that ${nm(u)} made!`); }
@@ -25676,6 +25679,7 @@ function makeBattle(cfg) {
     if (u.passives[0] && u.passives[0].key === "natural-cure") { u.status = null; u.sTurn = 0; }
     u.stages = newStages(); u.eff = []; u.shield = 0; u.atb = 0; if (u.status === "TOX") u.sTurn = 1; u.flags.noAbility = false; loveEnds(u);
     if (forced !== true && !TEXT_TOKENS) msg(u.team === VIEW_ME ? `${u.n}, come back!` : `${sideName(u.team)} withdrew ${u.n}!`);
+    gasLeaves(u);
     ev({ k: "recall", u: u.uid, forced: forced === true });
     B.units.splice(B.units.indexOf(u), 1); u.slot = -1; B.bench[u.team].push(u);
     enter(x.team, slot, x, forced === true ? `${x.n} was dragged out!` : null, 0);
@@ -25950,6 +25954,7 @@ function makeBattle(cfg) {
     (B.faintT || (B.faintT = {}))[u.team] = B.turn;
     if (u.team === "E") B.tally.kills++;
     ev({ k: "death", u: u.uid }); msg(`${Nm(u)} fainted!`);
+    gasLeaves(u);
     const mx = killer && killer.alive && killer !== u && pv(killer, "MOXIE");
     if (mx) stage(killer, killer, mx.stat === "best" ? bestStat(killer) : mx.stat || "atk", 1, killer.passives[0].name);   // (Moxie, Beast Boost, the Neighs, As One)
     for (const x of B.units) if (x.alive && x !== u && pv(x, "SOUL_HEART")) stage(x, x, "spa", 1, "Soul-Heart");
@@ -28573,7 +28578,7 @@ globalThis.PokeSquad = (() => {
           case "dmg": if (u) { this.add(`|-damage|${this.ident(u)}|${this.cond(u)}|[silent]`); if (e.crit) this.add(`|-crit|${this.ident(u)}|[silent]`); } break;
           case "heal": case "revive": if (u) this.add(`|-heal|${this.ident(u)}|${this.cond(u)}|[silent]`); break;
           case "death": if (u) this.add(`|faint|${this.ident(u)}`); break;
-          case "sendin": if (u) this.add(`|switch|${this.ident(u)}|${this.details(u)}|${this.cond(u)}`); break;   // (Showdown says "Go!" from each side)
+          case "sendin": if (u) { this.add(`|switch|${this.ident(u)}|${this.details(u)}|${this.cond(u)}`); this.lastSt[u.uid] = { st: u.status || null, stages: {} }; } break;   // (Showdown clears a Pokémon's boosts as it comes in)   // (Showdown says "Go!" from each side)
           case "status": case "fx": if (u) this.syncStatus(u); break;
           case "transform": if (u) this.add(`|-formechange|${this.ident(u)}|${SD.name(e.to || u.spr)}|${this.cond(u)}|[silent]`); break;
           case "weather": this.add(`|-weather|${WEATHER_ID[e.w] || "none"}|[silent]`); break;
@@ -28581,6 +28586,7 @@ globalThis.PokeSquad = (() => {
           case "side": this.syncHazards(e); break;
         }
       }
+      for (const u of B.units) if (u.alive) this.syncStatus(u);   // (a fixed stage changes with the weather, the terrain, an item...)
       this.syncSides(); this.syncItems();
       if (!B.over) this.add(this.meterLine(B.waiting || null, B.units.filter(x => x.alive).map(x => [x, x.atb]), B.predictOrder(6).map(U)));
     }
@@ -28616,7 +28622,8 @@ globalThis.PokeSquad = (() => {
         + (order ? `|${order.map(id).filter(Boolean).join(";")}` : "");
     }
     syncStatus(u) {
-      const id = this.ident(u), was = this.lastSt[u.uid] || { st: null, stages: {} }, now = { st: u.status || null, stages: { ...u.stages } };
+      // (the stat badge: the stages moves made plus the ones fixed to an item, an Ability, the weather or a status, as the game shows them)
+      const id = this.ident(u), was = this.lastSt[u.uid] || { st: null, stages: {} }, now = { st: u.status || null, stages: this.B.shownStages(u) };
       if (now.st !== was.st) this.add(now.st ? `|-status|${id}|${STATUS[now.st] || now.st.toLowerCase()}|[silent]` : `|-curestatus|${id}|${STATUS[was.st] || ""}|[silent]`);
       for (const k in STAT) { const d = (now.stages[k] || 0) - (was.stages[k] || 0); if (d) this.add(`|-${d > 0 ? "boost" : "unboost"}|${id}|${STAT[k]}|${Math.abs(d)}|[silent]`); }
       this.lastSt[u.uid] = now;
