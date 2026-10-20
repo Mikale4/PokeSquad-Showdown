@@ -28341,6 +28341,7 @@ globalThis.PokeSquad = (() => {
   const moveKey = s => { const id = toID(s), slotted = id.replace(/^(sketch|copycat|mirrormove)s([13])$/, "$1$2");
     return MOVES[id] ? id : MOVES[slotted] ? slotted : /^hiddenpower/.test(id) && MOVES.hiddenpower ? "hiddenpower" : null; };
   const itemKey = s => { const id = toID(s); return HELD[id] ? id : null; };
+  const sdMove = k => k.replace(/^(sketch|copycat|mirrormove)([13])$/, "$1s$2");   // (a move's id on the site)
 
   // ---------- team validation (the Stadium's rules) ----------
   const RULES = () => modeRules("showdown");
@@ -28467,7 +28468,7 @@ globalThis.PokeSquad = (() => {
         if (!done) return this.err(slot, "That switch isn't possible");
       } else if (/^move\s+/.test(pick)) {
         const [, a, b] = pick.split(/\s+/), skills = u.skills.slice().sort((x, y) => x.slot - y.slot);
-        const sk = /^\d+$/.test(a) ? skills[+a - 1] : skills.find(s => toID(s.name) === toID(a) || s.key === toID(a));
+        const sk = /^\d+$/.test(a) ? skills[+a - 1] : skills.find(s => toID(s.name) === toID(a) || s.key === toID(a) || sdMove(s.key) === toID(a));
         if (!sk) return this.err(slot, "That move isn't there");
         if (!B.usable(u, sk.slot)) return this.err(slot, `${sk.name} isn't ready yet`);
         const loc = +b, foe = team === "A" ? "E" : "A";
@@ -28537,14 +28538,16 @@ globalThis.PokeSquad = (() => {
       // (before the battle: the game's Lv 100 stats, as the battle will have them: the Pokémon's IVs, its nature, no Badges)
       const pre = m => { const st = calcStats(m.k, LEVEL, spec(m).prog.pot, m.nat); return { hp: st.hp, stats: { atk: st.atk, def: st.def, spa: st.spa, spd: st.sdf, spe: st.spe } }; };
       if (!this.B) return { name: p.name, id: slot, pokemon: p.team.map(m => ({ ident: `${slot}: ${OPS[m.k].n}`, details: SD.name(m.k), condition: `${pre(m).hp}/${pre(m).hp}`, active: false, stats: pre(m).stats,
-        moves: m.mv.filter(Boolean), baseAbility: toID(m.ab), item: m.held || "", pokeball: "pokeball", ability: toID(m.ab) })) };
+        moves: m.mv.filter(Boolean).map(sdMove), baseAbility: toID(m.ab), item: m.held || "", pokeball: "pokeball", ability: toID(m.ab) })) };
       return { name: p.name, id: slot, pokemon: this.order(TEAM[slot]).map(u => ({ ident: this.ident(u), details: this.details(u), condition: this.cond(u), active: this.B.units.includes(u),
-        stats: { atk: u.max.atk, def: u.max.def, spa: u.max.spa, spd: u.max.sdf, spe: u.max.spe }, moves: u.skills.map(s => s.key), baseAbility: toID(u.passives[0] && u.passives[0].key),
+        stats: { atk: u.max.atk, def: u.max.def, spa: u.max.spa, spd: u.max.sdf, spe: u.max.spe }, moves: u.skills.map(s => sdMove(s.key)), baseAbility: toID(u.passives[0] && u.passives[0].key),
         item: u.held && !u.flags.itemUsed ? u.held : "", pokeball: "pokeball", ability: toID(u.passives[0] && u.passives[0].key) })) };
     }
     activeInfo(u) {
       const B = this.B, skills = u.skills.slice().sort((x, y) => x.slot - y.slot);
-      return { moves: skills.map(s => ({ move: s.name + (s.slot > 1 && u.cool[s.slot] > 0 ? ` (ready in ${u.cool[s.slot]})` : ""), id: s.key, pp: B.usable(u, s.slot) ? 1 : 0, maxpp: 1,
+      // (slot and cooldown: the site's move buttons show them where Showdown shows PP)
+      return { moves: skills.map(s => ({ move: sdMove(s.key) !== s.key ? `${s.name} (S${s.slot})` : s.name, id: sdMove(s.key), slot: s.slot, cooldown: s.slot > 1 ? Math.max(0, u.cool[s.slot] || 0) : 0,
+        pp: B.usable(u, s.slot) ? 1 : 0, maxpp: 1,
         target: TARGET[s.target] || "normal", disabled: !B.usable(u, s.slot) })), trapped: !B.canSwitch(u) };
     }
     // our events as Showdown's lines (silent: the text is the game's own, each message as |-message|)
