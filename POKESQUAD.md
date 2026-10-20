@@ -25,6 +25,9 @@ Item Clause. Showdown's own formats stay in the code, unlisted.
   a right one gets `|pokesquadsession|userid|token|name` back. `server/chat-plugins/pokesquad-names.ts`: `/pokesquadregister`,
   `/pokesquadpassword`, `/pokesquadforget` (the site's Register, Password and Log out send them). Without a database, or while
   it can't be reached, names are open as before.
+- Administrators: the names in `POKESQUAD_ADMINS` (`render.yaml`; "admin" if it isn't set) get the `~` rank once logged in
+  with their password (`isAdmin`, `server/users.ts` `updateGroup`). `render.yaml` also lists `DATABASE_URL` with `sync: false`:
+  its value is set by hand in Render and a Blueprint sync never touches it.
 
 Players use the PokeSquad Showdown client ([Mikale4/PokeSquad-Showdown-Client](https://github.com/Mikale4/PokeSquad-Showdown-Client)).
 Showdown's ladder never pairs two players from the same IP address: on the same Wi-Fi, challenge each other instead.

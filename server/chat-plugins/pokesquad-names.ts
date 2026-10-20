@@ -20,7 +20,7 @@ export const commands: Chat.ChatCommands = {
 		if (password === null) return this.popupReply(`That password couldn't be read.`);
 		try {
 			const token = await PokeSquadDB.register(user.id, user.name, password);
-			user.registered = true;
+			user.forceRename(user.name, true); // (registered now: an administrator's rank comes with it, POKESQUAD_ADMINS)
 			sendSession(connection, user, token);
 			this.popupReply(`"${user.name}" is registered. From now on, choosing this name asks for its password (this browser remembers you for 30 days).`);
 		} catch (err: any) {

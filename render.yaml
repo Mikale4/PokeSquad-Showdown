@@ -11,3 +11,10 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 22.18.0
+      # the database (a free Postgres, such as Neon: server/pokesquad-db.ts): its connection string is set by hand in Render's
+      # Environment settings, never in this file; sync: false keeps a Blueprint sync from ever changing or clearing it
+      - key: DATABASE_URL
+        sync: false
+      # the administrators: their names, comma-separated; each gets the rank once logged in with its password
+      - key: POKESQUAD_ADMINS
+        value: admin

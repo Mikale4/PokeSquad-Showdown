@@ -1136,6 +1136,8 @@ export class User extends Chat.MessageContext {
 		}
 		this.registered = true;
 		if (!isMerge) this.tempGroup = globalAuth.get(this.id);
+		// PokeSquad Battler: its administrators (POKESQUAD_ADMINS), logged in with their password (pokesquad-db.ts)
+		if (!isMerge && PokeSquadDB.isAdmin(this.id)) this.tempGroup = '~';
 
 		Users.Avatars?.handleLogin(this);
 

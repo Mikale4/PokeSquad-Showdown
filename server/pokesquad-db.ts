@@ -15,6 +15,7 @@
  */
 import * as crypto from 'crypto';
 import { PGDatabase, SQL } from '../lib/database';
+import { toID } from '../sim/dex';
 
 /** [userid, elo, username, w, l, t, lastUpdate], as server/ladders-local.ts keeps them */
 export type LadderRow = [string, number, string, number, number, number, string];
@@ -34,6 +35,14 @@ export function useDatabase(testDB: PGDatabase | null) {
 	ready = null;
 }
 export const enabled = () => !!database();
+
+/**
+ * The administrators: POKESQUAD_ADMINS (render.yaml), their names, comma-separated ("admin" if it isn't set). A name only
+ * gets the rank once it's logged in with its password or a remembered login (users.ts, updateGroup: registered), which needs
+ * the database.
+ */
+export const isAdmin = (userid: string) =>
+	enabled() && (process.env.POKESQUAD_ADMINS ?? 'admin').split(',').map(toID).filter(Boolean).includes(userid as ID);
 
 /** The tables, once (false: the database can't be reached, and the server carries on without it) */
 function setup() {
