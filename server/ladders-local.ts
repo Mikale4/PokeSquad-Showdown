@@ -15,6 +15,8 @@
 
 import { FS, Utils } from '../lib';
 import type { LadderUpdate } from './ladders';
+// PokeSquad Battler: with DATABASE_URL set, the ladder lives in its Postgres database (Render's free disk doesn't last)
+import * as PokeSquadDB from './pokesquad-db';
 
 // ladderCaches = {formatid: ladder OR Promise(ladder)}
 // Use Ladders(formatid).ladder to guarantee a Promise(ladder).
@@ -60,6 +62,13 @@ export class LadderStore {
 			}
 			return (this.ladder = cachedLadder as LadderRow[]);
 		}
+		if (PokeSquadDB.enabled()) {
+			const fromDB = await PokeSquadDB.loadLadder(this.formatid);
+			if (fromDB) {
+				ladderCaches.set(this.formatid, (this.ladder = fromDB));
+				return this.ladder;
+			}
+		}
 		try {
 			const data = await FS('config/ladders/' + this.formatid + '.tsv').readIfExists();
 			const ladder: LadderRow[] = [];
@@ -90,6 +99,10 @@ export class LadderStore {
 		this.saving = true;
 		const ladder = await this.getLadder();
 		if (!ladder.length) {
+			this.saving = false;
+			return;
+		}
+		if (PokeSquadDB.enabled() && await PokeSquadDB.saveLadder(this.formatid, ladder)) {
 			this.saving = false;
 			return;
 		}

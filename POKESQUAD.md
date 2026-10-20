@@ -6,7 +6,7 @@ for **PokeSquad Battler** ([Mikale4/PokeSquadBattler](https://github.com/Mikale4
 Its format **[Gen 9] PokeSquad** plays PokeSquad Battler's own battles, run by the game's own engine: three Pokémon on the
 field a side, a turn meter instead of turns (one Pokémon acts at a time), three moves each, one per slot (S1 has no cooldown,
 S2 and S3 do), and the game's house rules. Lv 100; one Legendary, one Mythical, one Ultra Beast and one Paradox Pokémon, the
-Item Clause. Every other format is Showdown's own, unchanged.
+Item Clause. Showdown's own formats stay in the code, unlisted.
 
 - `pokesquad/engine.js`: the game's engine and its translator to Showdown's battle protocol, **generated** by the game's
   build (`tools/build_engine.js` and `tools/showdown_adapter.js` there). Never edit it here: change the game, rebuild, copy.
@@ -15,6 +15,10 @@ Item Clause. Every other format is Showdown's own, unchanged.
 - `config/formats.ts`: the format, and the only one the server lists (Showdown's own stay in the file, unlisted: `AllFormats`). `config/config-example.js`: `noguestsecurity` (no login server: players pick a name),
   one process (`subprocesses: 0`), the port from `$PORT`.
 - `render.yaml`: the free Render web service this runs on.
+- `server/pokesquad-db.ts`: the database. Render's free plan wipes the disk whenever the server sleeps or redeploys, so with
+  `DATABASE_URL` set (a free Postgres, such as Neon: its connection string goes in Render's Environment settings, never in
+  this repo) the ladder lives in its `pokesquad_ladder` table (`server/ladders-local.ts` reads and writes it there; without
+  `DATABASE_URL`, or while it can't be reached, the ladder stays in `config/ladders/*.tsv`). `pg` is a regular dependency for it.
 
 Players use the PokeSquad Showdown client ([Mikale4/PokeSquad-Showdown-Client](https://github.com/Mikale4/PokeSquad-Showdown-Client)).
 Showdown's ladder never pairs two players from the same IP address: on the same Wi-Fi, challenge each other instead.

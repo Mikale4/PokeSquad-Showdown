@@ -7,6 +7,7 @@
   "dependencies": {
     "esbuild": "^0.25.0",
     "mysql2": "^3.14.2",
+    "pg": "^8.16.3",
     "preact": "^10.5.15",
     "preact-render-to-string": "^6.5.13",
     "sockjs": "^0.3.21",
@@ -18,7 +19,6 @@
     "githubhook": "^1.9.3",
     "nodemailer": "^7.0.5",
     "permessage-deflate": "^0.1.7",
-    "pg": "^8.16.3",
     "probe-image-size": "^7.2.3",
     "source-map-support": "^0.5.21",
     "sql-template-strings": "^2.2.2",
