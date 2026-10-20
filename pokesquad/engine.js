@@ -3526,8 +3526,9 @@ const SHIELD_TXT = {
 };
 // the field moves that go up by themselves as their user comes onto the field (the owner's rule, like Trick Room: autoField in a7_engine.js)
 const ENTRY_MOVES = new Set(["sunnyday", "raindance", "sandstorm", "hail", "snowscape", "terrain", "stealthrock", "spikes", "toxicspikes", "stickyweb",
-  "reflect", "lightscreen", "auroraveil", "safeguard", "mist", "luckychant", "gravity", "wonderroom", "magicroom", "iondeluge", "powder"]);   // (Ion Deluge and Powder: the owner's rules, 2026-10-19)
-const entryTxt = sp => `It goes up by itself the moment its user comes onto the field${["stealthrock", "spikes", "toxicspikes", "stickyweb"].includes(sp) ? " (with a Pokémon left on the other side's bench to hit)" : sp === "auroraveil" ? " in hail or snow" : sp === "powder" ? " (on the opposing Pokémon there that aren't covered yet)" : ""}, if it's ready (that isn't the user's turn: the move just goes on cooldown). `
+  "reflect", "lightscreen", "auroraveil", "safeguard", "mist", "luckychant", "gravity", "wonderroom", "magicroom", "iondeluge", "powder",
+  "future"]);   // (Ion Deluge and Powder: the owner's rules, 2026-10-19; Future Sight and Doom Desire, 2026-10-20)
+const entryTxt = sp => sp === "future" ? "It's used by itself the moment its user comes onto the field, if it's ready and none of the user's attacks is already on the way (that isn't the user's turn: the move just goes on cooldown); it can still be used by hand" : `It goes up by itself the moment its user comes onto the field${["stealthrock", "spikes", "toxicspikes", "stickyweb"].includes(sp) ? " (with a Pokémon left on the other side's bench to hit)" : sp === "auroraveil" ? " in hail or snow" : sp === "powder" ? " (on the opposing Pokémon there that aren't covered yet)" : ""}, if it's ready (that isn't the user's turn: the move just goes on cooldown). `
   + `While ${["stealthrock", "spikes", "toxicspikes", "stickyweb"].includes(sp) ? "every layer is" : "it's"} already up the move stays ready${["sunnyday", "raindance", "sandstorm", "hail", "snowscape", "terrain"].includes(sp) ? ", and it replaces any other " + (sp === "terrain" ? "terrain" : "weather") + ", whoever set it" : ""}; it can still be used by hand`;
 function moveDesc(sk) {
   const M = sk.M, out = [], who = sk.target === "aoe_enemies" ? "each target" : "the target";
@@ -19173,6 +19174,7 @@ const TALK_FAQ = [
   { re: /terrain|rising voltage|terrain pulse|steel roller|nature power|camouflage|floral healing|mimicry|surge surfer|hadron engine|seed sower|\bseeds?\b/, a: "Terrains last 5 rounds, 8 with a Terrain Extender, and they work on Pokémon on the ground. Electric: Electric moves ×1.5, no falling asleep (Rest and Yawn fail), Rising Voltage doubles. Grassy: Grass moves ×1.5, a little HP back each turn, Earthquake and Bulldoze halved, Floral Healing heals two thirds. Misty: no status or confusion, Dragon moves halved. Psychic: Psychic moves ×1.5, no priority moves against them, Expanding Force hits every foe. Terrain Pulse takes the terrain's type at double power, Nature Power and Camouflage follow it, a Seed is used up in its terrain, and Steel Roller, Ice Spinner and Defog end it." },
   { re: /support|sweepers?|team (layout|build)|how many (setters|sweepers)/, a: "Every Trainer team here has 1 or 2 support Pokémon, bulky ones with Reflect, Light Screen or Aurora Veil and/or Follow Me, Rage Powder or Spotlight, and they lead so the screens and the redirection are up from the start. Weather, terrain and Trick Room teams run two setters and 3 or 4 sweepers picked for them: Swift Swim and Water types in the rain, Fire types and Chlorophyll in the sun, Slush Rush and Ice types in the snow, Sand Rush and Sand Force in the sand, and so on. The lead setter is the less offensive one; the harder hitter waits on the bench as the backup. A lead setter that also has Aurora Veil, a screen or Follow Me counts as the support, which leaves room for a fourth sweeper (Alolan Ninetales, Indeedee)." },
   { re: /follow ?me|rage ?powder|spotlight|redirect/, a: "Follow Me, Rage Powder and Spotlight go off by themselves the moment their user comes onto the field, if the move is ready and a partner is out there, without using its turn (they just go on cooldown, like Trick Room). Follow Me and Rage Powder draw the other side's single-target moves to the user for as long as it stays on the field; Grass types, Overcoat and Safety Goggles ignore Rage Powder. Spotlight can't light up its own user, so it goes on the partner best able to take the hits, never one that's setting up, and that partner draws the attacks for as long as it stays out. With two up on one side, the newest one draws them. Since it lasts, the best users are just bulky: Brute Bonnet, Togekiss, Amoonguss, Clefable, or Clefairy and Togetic with an Eviolite. Speed doesn't matter for them. And we never switch them out: staying out there is the whole point, so they don't run U-turn, Teleport, an Eject Button or Emergency Exit either (Roar, Whirlwind, Dragon Tail and a Red Card can still drag them out). Their healing moves share Follow Me's slot, so Leftovers and draining attacks keep them going, and Regenerator does nothing for them." },
+  { re: /future ?sight|doom desire/, a: "Future Sight and Doom Desire go off by themselves the moment their user comes onto the field, if the move is ready and none of its attacks is already on the way, without using its turn (the move just goes on cooldown), and you can still use them by hand. Two rounds later the whole other side on the field takes the hit." },
   { re: /stealth rock|spikes|sticky web|hazards?\b|reflect\b(?! ?type)|light screen|aurora veil|screens?\b|safeguard|lucky chant|\bmist\b|gravity|wonder room|magic room|rain dance|sunny day|snowscape|tailwind|by itself|on entry|automatic/, a: "Weather moves, terrain moves, the entry hazards (Stealth Rock, Spikes, Toxic Spikes, Sticky Web), Reflect, Light Screen, Aurora Veil, Safeguard, Mist, Lucky Chant, Gravity, Wonder Room and Magic Room all go up by themselves the moment their user comes onto the field, if the move is ready, without using its turn (they just go on cooldown, like Trick Room). If it's already up, the move stays ready for later; a different weather or terrain gets replaced, even your own team's. Hazards only go up with someone on the other side's bench, Aurora Veil only in snow, and we always lead with our screen users so the screens are up from the start. At the start of a battle everyone's go off in Speed order, Abilities too, so the slower setter's weather is the one that stays. Tailwind isn't one of them: it speeds up the whole team with no catch, so you still have to use it on a turn." },
   { re: /backup setter|second setter|two setters|weather (team|setter)|drought|sand stream|snow warning|drizzle/, a: "Sun, Sand and Snow teams here bring their weather with an Ability (Drought or Koraidon's Orichalcum Pulse, Sand Stream, Snow Warning; Groudon and Koraidon count, one Legendary a team), never Sunny Day, Sandstorm or Snowscape, and the setter goes out first. Every weather, terrain and Trick Room team runs two setters: the lead one, holding the rock or the Terrain Extender, and a harder-hitting backup with an attacking item that waits on the bench. The backup only comes in to replace a Pokémon that fainted, and only once the weather, terrain or room is gone (it ran out, or the other side replaced it); we never switch it in. Pelipper leads and Kyogre waits, Hippowdon leads and Tyranitar waits, Female Indeedee leads and Indeedee waits. On Electric Terrain teams Pincurchin leads and Miraidon or Tapu Koko waits, and our Hawlucha holds an Electric Seed: the moment the terrain is up it's used, and Unburden gives Hawlucha Speed +2. A Trick Room backup never comes in while the room is up, since that would end it. Its Room Service makes the room last 8 rounds." },
   { re: /restricted|box legend|two legend|legendar(y|ies) (on|in) (a|my|your) team|mythicals? (on|in) |ultra beasts?|paradox/, a: "In every Stadium battle, Ranked, Link or Friendly, a team can have one Legendary, one Mythical, one Ultra Beast and one Paradox Pokémon at most, so one of each is fine. Koraidon and Miraidon count only as Legendary. The Journey and Explore have no such limit." },
@@ -25521,6 +25523,8 @@ function makeBattle(cfg) {
     if (sp === "wonderroom" || sp === "magicroom") return !fieldOn(sp === "wonderroom" ? "wonderRoom" : "magicRoom");
     if (sp === "iondeluge") return !fieldOn("ionDeluge");
     if (sp === "powder") return enemies(u).some(x => x.alive && !has(x, "POWDER") && !powderProof(u, x));
+    // Future Sight and Doom Desire (the owner's rule, 2026-10-20): unless one of the user's is still on the way
+    if (sp === "future") return enemies(u).some(x => x.alive) && !(B.future || []).some(f => f.by === u.uid);
     return false;
   }
   function autoField(u) {
@@ -25643,7 +25647,7 @@ function makeBattle(cfg) {
     for (const id in (B.side && B.side[team]) || {}) if (B.side[team][id] > B.turn) addEff(x, id, 99, null, true);   // (Reflect, Light Screen...: the side's)
     if (!B.sim && team === "E") dexSee(x.key);
     if (!TEXT_TOKENS || line) msg(line || (team === VIEW_ME ? `Go! ${x.n}!` : B.wild ? `A wild ${x.n} appeared!` : `${sideName(team)} sent out ${x.n}!`));   // (Showdown says its own)
-    ev({ k: "sendin", u: x.uid, team, slot });
+    ev({ k: "sendin", u: x.uid, team, slot, hp: x.hp });
     arrive(x); terrainSeeds();
     startEffects([x]);
     // (the screen draws every newcomer afresh: its badge and icons as it arrives, Tailwind's Speed, the weather's and the field's
@@ -28578,12 +28582,14 @@ globalThis.PokeSquad = (() => {
     // (Showdown's names: a Pokémon on the field is p1a/p1b/p1c by its place, one on the bench just p1)
     ident(u) { return `${SIDE[u.team]}${u.slot >= 0 && this.B.units.includes(u) ? POS[u.slot] : ""}: ${u.n}`; }
     details(u) { return SD.name(u.spr || u.key) + (u.lvl !== 100 ? `, L${u.lvl}` : ""); }
-    cond(u) { return u.alive ? `${Math.max(0, u.hp)}/${u.max.hp}${u.status && STATUS[u.status] ? " " + STATUS[u.status] : ""}` : "0 fnt"; }
+    // (hp: what it had at that moment, an event's own: a line written later in the same update mustn't show what came after it, so
+    // Stealth Rock as a Pokémon comes in shows its damage)
+    cond(u, hp = u.alive ? u.hp : 0) { return hp > 0 ? `${hp}/${u.max.hp}${u.status && STATUS[u.status] ? " " + STATUS[u.status] : ""}` : "0 fnt"; }
     // (as a percentage, the way Showdown shows the other side's Pokémon: rounded up, 99 until it's full)
-    condPub(u) { if (!u.alive || u.hp <= 0) return "0 fnt"; let p = Math.ceil(100 * u.hp / u.max.hp); if (p >= 100 && u.hp < u.max.hp) p = 99; return `${Math.max(1, p)}/100${u.status && STATUS[u.status] ? " " + STATUS[u.status] : ""}`; }
+    condPub(u, hp = u.alive ? u.hp : 0) { if (hp <= 0) return "0 fnt"; let p = Math.ceil(100 * hp / u.max.hp); if (p >= 100 && hp < u.max.hp) p = 99; return `${Math.max(1, p)}/100${u.status && STATUS[u.status] ? " " + STATUS[u.status] : ""}`; }
     // a line with a Pokémon's HP: exact for its own player (and the full log), a percentage for the other player and spectators
     // (Showdown's |split|, its HP Percentage Mod)
-    hp(u, line) { this.add(`|split|${SIDE[u.team]}`, line(this.cond(u)), line(this.condPub(u))); }
+    hp(u, line, hp) { this.add(`|split|${SIDE[u.team]}`, line(this.cond(u, hp)), line(this.condPub(u, hp))); }
     order(team) { const B = this.B; return [...[0, 1, 2].map(i => B.units.find(x => x.team === team && x.slot === i)).filter(Boolean), ...B.bench[team]]; }
     sideInfo(slot) {
       const p = this.players[slot];
@@ -28626,13 +28632,13 @@ globalThis.PokeSquad = (() => {
           case "act": { if (!u) break; const t = e.t != null ? U(e.t) : null; this.add(`|move|${this.ident(u)}|${MOVES[e.key] ? MOVES[e.key].n : e.name}|${t && t !== u ? this.ident(t) : ""}`); break; }
           case "dmg": if (u) {
             // an attack's damage says how much it took (Showdown's text); poison, recoil, hazards... keep only the game's own line
-            if (!e.dot && !e.sub && e.n > 0) { const id = this.ident(u); if (e.crit) pend.push(`|-crit|${id}|[silent]`); pend.push(`|split|${SIDE[u.team]}`, `|-damage|${id}|${this.cond(u)}`, `|-damage|${id}|${this.condPub(u)}`); }
-            else this.hp(u, c => `|-damage|${this.ident(u)}|${c}|[silent]`);
+            if (!e.dot && !e.sub && e.n > 0) { const id = this.ident(u); if (e.crit) pend.push(`|-crit|${id}|[silent]`); pend.push(`|split|${SIDE[u.team]}`, `|-damage|${id}|${this.cond(u, e.hp)}`, `|-damage|${id}|${this.condPub(u, e.hp)}`); }
+            else this.hp(u, c => `|-damage|${this.ident(u)}|${c}|[silent]`, e.hp);
           } break;
-          case "heal": case "revive": if (u) this.hp(u, c => `|-heal|${this.ident(u)}|${c}|[silent]`); break;
+          case "heal": case "revive": if (u) this.hp(u, c => `|-heal|${this.ident(u)}|${c}|[silent]`, e.hp); break;
           case "death": if (u) { this.add(`|faint|${this.ident(u)}`); delete this.shown[u.uid]; } break;
           case "recall": if (u) delete this.shown[u.uid]; break;
-          case "sendin": if (u) { this.hp(u, c => `|switch|${this.ident(u)}|${this.details(u)}|${c}`); this.lastSt[u.uid] = { st: u.status || null, stages: {} }; this.shown[u.uid] = 1; } break;   // (Showdown clears a Pokémon's boosts as it comes in)   // (Showdown says "Go!" from each side)
+          case "sendin": if (u) { this.hp(u, c => `|switch|${this.ident(u)}|${this.details(u)}|${c}`, e.hp); this.lastSt[u.uid] = { st: u.status || null, stages: {} }; this.shown[u.uid] = 1; } break;   // (Showdown clears a Pokémon's boosts as it comes in)   // (Showdown says "Go!" from each side)
           case "status": case "fx": if (u) this.syncStatus(u); break;
           case "transform": if (u) this.hp(u, c => `|-formechange|${this.ident(u)}|${SD.name(e.to || u.spr)}|${c}|[silent]`); break;
           case "weather": this.add(`|-weather|${WEATHER_ID[e.w] || "none"}|[silent]`); break;
