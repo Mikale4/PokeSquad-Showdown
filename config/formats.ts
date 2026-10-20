@@ -17,7 +17,7 @@ New sections will be added to the bottom of the specified column.
 The column value will be ignored for repeat sections.
 */
 
-export const Formats: import('../sim/dex-formats').FormatList = [
+const AllFormats: import('../sim/dex-formats').FormatList = [
 
 	// PokeSquad Battler
 	///////////////////////////////////////////////////////////////////
@@ -6097,3 +6097,13 @@ export const Formats: import('../sim/dex-formats').FormatList = [
 		ruleset: ['HP Percentage Mod', 'Cancel Mod', 'Desync Clause Mod', 'Max Team Size = 24', 'Max Move Count = 24', 'Max Level = 9999', 'Default Level = 100'],
 	},
 ];
+
+// PokeSquad Battler's server lists [Gen 9] PokeSquad alone (the owner's pick, 2026-10-20). Showdown's own formats stay above,
+// unlisted, so updates from Showdown still merge cleanly.
+export const Formats: import('../sim/dex-formats').FormatList = (() => {
+	let section = '';
+	return AllFormats.filter(entry => {
+		if ('section' in entry && entry.section) section = entry.section;
+		return section === 'PokeSquad Battler';
+	});
+})();

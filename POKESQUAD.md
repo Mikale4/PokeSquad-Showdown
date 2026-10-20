@@ -12,7 +12,7 @@ Item Clause. Every other format is Showdown's own, unchanged.
   build (`tools/build_engine.js` and `tools/showdown_adapter.js` there). Never edit it here: change the game, rebuild, copy.
 - `server/pokesquad.ts`: loads it in a sandbox, maps species to Showdown's names, checks teams by the game's rules.
 - `server/room-battle.ts`: starts a PokeSquad battle for the format instead of Showdown's simulator.
-- `config/formats.ts`: the format. `config/config-example.js`: `noguestsecurity` (no login server: players pick a name),
+- `config/formats.ts`: the format, and the only one the server lists (Showdown's own stay in the file, unlisted: `AllFormats`). `config/config-example.js`: `noguestsecurity` (no login server: players pick a name),
   one process (`subprocesses: 0`), the port from `$PORT`.
 - `render.yaml`: the free Render web service this runs on.
 
