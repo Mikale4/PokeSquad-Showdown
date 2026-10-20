@@ -3662,7 +3662,7 @@ function moveDesc(sk) {
     painsplit: "Shares out the user's and the target's HP evenly", healingwish: "The user faints; the next Pokémon sent in is fully healed",
     memento: "The user faints; the target's Attack and Sp. Atk −2", tailwind: "Your team's Speed +2 for about 4 rounds, and +10% turn meter at once for the user and its partners on the field",
     auroraveil: "In hail or snow: your team takes a third less damage for 5 turns", luckychant: "Your team can't take critical hits for 5 turns",
-    trickroom: "For about five rounds the slowest Pokémon move first. It sets itself up the moment its user comes onto the field, if it's ready (that isn't the user's turn: the move just goes on cooldown); it can still be used by hand, and while a Trick Room is up it ends it (automatic or not)", terrain: "Sets the terrain for about five rounds", snowscape: "Hail and snow (one weather) for about five rounds: all but Ice types lose 1/16 of their max HP each turn, and Ice types' Defense +1",
+    trickroom: "For about five rounds the slowest Pokémon move first. It sets itself up the moment its user comes onto the field, if it's ready (that isn't the user's turn: the move just goes on cooldown); it can still be used by hand, and while a Trick Room is up it ends it (automatic or not)", terrain: sk.key === "mistyterrain" ? "Sets Misty Terrain for about five rounds: Pokémon on the ground can't get a status condition or confusion, and it cures the ones they already have (a house rule); Dragon moves against them do half damage" : "Sets the terrain for about five rounds", snowscape: "Hail and snow (one weather) for about five rounds: all but Ice types lose 1/16 of their max HP each turn, and Ice types' Defense +1",
     yawn: "Makes the target drowsy: it falls asleep at the end of its next turn", curse: "Ghost types: lose half their HP to curse the target (1/4 HP every turn); others: Attack and Defense +1, Speed −1",
     taunt: "The target can only use damaging moves for 3 turns", gastroacid: "Suppresses the target's Ability", worryseed: "Changes the target's Ability to Insomnia",
     soak: "Makes the target pure Water type", reflecttype: "The user takes on the target's types", conversion: "It can't be chosen: just before an opposing attack's damage, the user becomes a type that resists it, if this is ready (that isn't the user's turn: the move just goes on cooldown; the type lasts until it leaves the field)",
@@ -19171,7 +19171,7 @@ const TALK_FAQ = [
   { re: /sand(storm)?.{0,40}(boost|sp\.? ?def|special defen[cs]e|ground|steel)|(ground|steel).{0,40}sand/, a: "A sandstorm gives Rock, Ground and Steel types Sp. Def +1 here (in the main games it's only Rock types), for as long as it lasts, and none of the three take its damage. Everyone else loses 1/16 of their max HP a turn, unless their Ability or Safety Goggles keep it off. It lasts 5 rounds, 8 with a Smooth Rock." },
   { re: /king'?s shield|spiky shield|baneful bunker|obstruct|silk trap|burning bulwark|protect.{0,20}status/, a: "Protect, Detect, Spiky Shield and Baneful Bunker stop status moves too; King's Shield, Obstruct, Silk Trap and Burning Bulwark only stop attacks. A contact move one of them stops costs the attacker: King's Shield Attack −2 (its Generation 6 effect here), Spiky Shield 1/8 of its HP, Baneful Bunker poison, Obstruct Defense −2, Silk Trap Speed −1, Burning Bulwark a burn. Protective Pads keep all of that off." },
   { re: /psychic (terrain|surge|seed)|expanding force|unburden/, a: "Psychic Terrain (Psychic Surge or the move) lasts 5 rounds, 8 with a Terrain Extender. Pokémon on the ground get ×1.5 on Psychic moves, Expanding Force hits every foe at ×1.5, and priority moves from the other side can't touch a Pokémon on the ground, as in the main games. A Psychic Seed is used up the moment the terrain is up (Sp. Def +1), and with Unburden that's Speed +2 for as long as it holds nothing." },
-  { re: /terrain|rising voltage|terrain pulse|steel roller|nature power|camouflage|floral healing|mimicry|surge surfer|hadron engine|seed sower|\bseeds?\b/, a: "Terrains last 5 rounds, 8 with a Terrain Extender, and they work on Pokémon on the ground. Electric: Electric moves ×1.5, no falling asleep (Rest and Yawn fail), Rising Voltage doubles. Grassy: Grass moves ×1.5, a little HP back each turn, Earthquake and Bulldoze halved, Floral Healing heals two thirds. Misty: no status or confusion, Dragon moves halved. Psychic: Psychic moves ×1.5, no priority moves against them, Expanding Force hits every foe. Terrain Pulse takes the terrain's type at double power, Nature Power and Camouflage follow it, a Seed is used up in its terrain, and Steel Roller, Ice Spinner and Defog end it." },
+  { re: /terrain|rising voltage|terrain pulse|steel roller|nature power|camouflage|floral healing|mimicry|surge surfer|hadron engine|seed sower|\bseeds?\b/, a: "Terrains last 5 rounds, 8 with a Terrain Extender, and they work on Pokémon on the ground. Electric: Electric moves ×1.5, no falling asleep (Rest and Yawn fail), Rising Voltage doubles. Grassy: Grass moves ×1.5, a little HP back each turn, Earthquake and Bulldoze halved, Floral Healing heals two thirds. Misty: no status or confusion, Dragon moves halved, and it even cures ones a Pokémon on the ground already has (when it goes up, when one comes in, at its turn: our house rule). Psychic: Psychic moves ×1.5, no priority moves against them, Expanding Force hits every foe. Terrain Pulse takes the terrain's type at double power, Nature Power and Camouflage follow it, a Seed is used up in its terrain, and Steel Roller, Ice Spinner and Defog end it." },
   { re: /support|sweepers?|team (layout|build)|how many (setters|sweepers)/, a: "Every Trainer team here has 1 or 2 support Pokémon, bulky ones with Reflect, Light Screen or Aurora Veil and/or Follow Me, Rage Powder or Spotlight, and they lead so the screens and the redirection are up from the start. Weather, terrain and Trick Room teams run two setters and 3 or 4 sweepers picked for them: Swift Swim and Water types in the rain, Fire types and Chlorophyll in the sun, Slush Rush and Ice types in the snow, Sand Rush and Sand Force in the sand, and so on. The lead setter is the less offensive one; the harder hitter waits on the bench as the backup. A lead setter that also has Aurora Veil, a screen or Follow Me counts as the support, which leaves room for a fourth sweeper (Alolan Ninetales, Indeedee)." },
   { re: /follow ?me|rage ?powder|spotlight|redirect/, a: "Follow Me, Rage Powder and Spotlight go off by themselves the moment their user comes onto the field, if the move is ready and a partner is out there, without using its turn (they just go on cooldown, like Trick Room). Follow Me and Rage Powder draw the other side's single-target moves to the user for as long as it stays on the field; Grass types, Overcoat and Safety Goggles ignore Rage Powder. Spotlight can't light up its own user, so it goes on the partner best able to take the hits, never one that's setting up, and that partner draws the attacks for as long as it stays out. With two up on one side, the newest one draws them. Since it lasts, the best users are just bulky: Brute Bonnet, Togekiss, Amoonguss, Clefable, or Clefairy and Togetic with an Eviolite. Speed doesn't matter for them. And we never switch them out: staying out there is the whole point, so they don't run U-turn, Teleport, an Eject Button or Emergency Exit either (Roar, Whirlwind, Dragon Tail and a Red Card can still drag them out). Their healing moves share Follow Me's slot, so Leftovers and draining attacks keep them going, and Regenerator does nothing for them." },
   { re: /future ?sight|doom desire/, a: "Future Sight and Doom Desire go off by themselves the moment their user comes onto the field, if the move is ready and none of its attacks is already on the way, without using its turn (the move just goes on cooldown), and you can still use them by hand. Two rounds later the whole other side on the field takes the hit." },
@@ -25490,6 +25490,7 @@ function makeBattle(cfg) {
     for (const u of list) autoField(u);   // (so do the weather, terrain, entry hazards, screens and rooms: the owner's rule)
     for (const u of list) autoRedirect(u);   // (so do Follow Me, Rage Powder and Spotlight: the owner's rule)
     for (const u of list) autoBide(u);   // (and Bide starts storing energy: the owner's rule, 2026-10-19)
+    for (const u of list) mistyCure(u);   // (coming into Misty Terrain cures it: the owner's house rule)
   }
   // Bide (the owner's rule, 2026-10-19): it can't be chosen. Its user starts storing energy by itself the moment it comes onto the
   // field, if the move is ready, and keeps storing until it goes off (bideStrikes); once a time on the field
@@ -25585,6 +25586,7 @@ function makeBattle(cfg) {
   function setTerrain(u, tt) {
     B.terrain = { t: tt, until: fieldRounds(item(u, "terrainextender") ? 8 : 5) }; msg(TERRAIN[tt].start); ev({ k: "terrain", t: tt, tr: B.trickRoom > B.turn ? 1 : 0 }); terrainSeeds();
     for (const x of B.units) if (x.alive) formCheck(x);   // (Mimicry)
+    if (tt === "misty") for (const x of B.units) mistyCure(x);   // (the owner's house rule)
   }
   // a terrain ends (its rounds are up, Ice Spinner, Steel Roller, Defog): Mimicry and Quark Drive follow
   function endTerrain() {
@@ -25898,6 +25900,15 @@ function makeBattle(cfg) {
   // infatuation ends when the Pokémon it's for faints or leaves the field
   function loveEnds(u) {
     for (const x of B.units) { const l = x.alive && x !== u && effOf(x, "INFAT"); if (l && l.src === u.uid) { removeEff(x, "INFAT"); msg(psT("attract", "end", { POKEMON: nm(x) })); } }
+  }
+  // Misty Terrain cures (the owner's house rule, 2026-10-20): a grounded Pokémon in it has no status condition, confusion or
+  // drowsiness. It's cured as the terrain goes up, as it comes onto the field while the terrain is up, and at the start of its turn
+  // (one Smack Down or Gravity brought down); new ones are blocked as in the games (tryStatus)
+  function mistyCure(u) {
+    if (!u.alive || !B.units.includes(u) || !inTerrain("misty", u)) return;
+    if (u.status) { const s = u.status; u.status = null; u.sTurn = 0; msg(psT(PS_ST[s], "end", { POKEMON: nm(u) }) || `${Nm(u)} was cured!`); fxEv(u); }
+    if (has(u, "CNF")) { removeEff(u, "CNF"); msg(psT("confusion", "end", { POKEMON: nm(u) })); }
+    if (has(u, "YAWN")) removeEff(u, "YAWN");
   }
   function cureAll(u) { u.status = null; u.sTurn = 0; u.eff = u.eff.filter(e => !["CNF", "INFAT"].includes(e.id)); fxEv(u); }
   // stat stages; returns true if anything changed
@@ -28243,6 +28254,7 @@ function makeBattle(cfg) {
     ev({ k: "turn", u: u.uid, tms: B.units.filter(x => x.alive).map(x => [x.uid, x.atb]), rd, fx: fieldTimers() });
     for (const s in u.cool) if (u.cool[s] > 0) u.cool[s]--;
     if (u.orig && u.orig.cool) for (const s in u.orig.cool) if (u.orig.cool[s] > 0) u.orig.cool[s]--;
+    mistyCure(u);   // (Misty Terrain, the owner's house rule: say Smack Down grounded it since)
     const up = upkeep(u);
     // Flame Orb and Toxic Orb: the holder starts its turn burned or badly poisoned (the first damage comes next turn)
     if (up && u.alive && !u.status && item(u, "toxicorb")) { msg(`${Nm(u)}'s Toxic Orb activated!`); tryStatus(u, u, "TOX", false); }
