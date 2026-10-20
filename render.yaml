@@ -1,0 +1,13 @@
+# Render (https://render.com) runs this server from this file: New > Blueprint, pick this repo. Free plan: it sleeps after 15
+# minutes without anyone connected and takes about a minute to wake up for the first one.
+services:
+  - type: web
+    name: pokesquad-showdown
+    runtime: node
+    plan: free
+    buildCommand: npm install --omit=optional --no-audit --no-fund && node build
+    startCommand: node pokemon-showdown start --skip-build
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 22.18.0
