@@ -27895,7 +27895,7 @@ function makeBattle(cfg) {
         [u.held, t.held] = [t.held, u.held]; [u.flags.itemUsed, t.flags.itemUsed] = [t.flags.itemUsed, u.flags.itemUsed];
         msg(`${Nm(u)} switched items with its target!`); if (!u.held) u.flags.unburden = true; if (!t.held) t.flags.unburden = true; return true;
       }
-      case "helpinghand": { const a = allies(u).find(x => x !== u); if (!a) return fail(); addEff(a, "HELPED", 2, u, true); msg(`${Nm(u)} is ready to help ${nm(a)}!`); return true; }
+      case "helpinghand": { const a = t && t !== u && t.alive && t.team === u.team && B.units.includes(t) ? t : allies(u).find(x => x !== u); if (!a) return fail(); addEff(a, "HELPED", 2, u, true); msg(`${Nm(u)} is ready to help ${nm(a)}!`); return true; }   // (the partner it's aimed at, any partner: the owner's rule)
       case "followme": addEff(u, "FOLLOWME", 99, u, true); { const fe = effOf(u, "FOLLOWME"); if (fe) { fe.powder = !!sk.M.pw; fe.at = B.fmSeq = (B.fmSeq || 0) + 1; } } msg(`${Nm(u)} became the center of attention!`); return true;   // (until the user leaves the field: the owner's rule)
       case "venomdrench": {
         const ps = targets.filter(x => x.status === "PSN" || x.status === "TOX"); if (!ps.length) return fail();
