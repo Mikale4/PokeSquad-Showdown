@@ -388,7 +388,7 @@ const FX = {
   SLP: { n: "Sleep", s: "SLP", c: "#8a90a0", major: 1, d: "Can't move until it wakes up." },
   FRZ: { n: "Freeze", s: "FRZ", c: "#58c8e0", major: 1, d: "Can't move. Each turn it has a 20% chance to thaw; a Fire move thaws it at once." },
   CNF: { n: "Confusion", s: "CNF", c: "#c86ab8", d: "Each turn there is a 33% chance it hurts itself in its confusion instead of moving." },
-  INFAT: { n: "Infatuation", s: "LOV", c: "#f26aa8", d: "Each turn there is a 50% chance it is immobilized by love." },
+  INFAT: { n: "Infatuation", s: "LOV", c: "#f26aa8", d: "Like confusion, but each turn there is a 1 in 3 chance it attacks one of its partners instead of moving (itself, with no partner beside it). 2 to 4 turns, over sooner if the one it's in love with leaves the field." },
   SEED: { n: "Leech Seed", s: "SED", c: "#5aa83a", d: "Loses 1/8 of its max HP every turn; the Pokémon that planted it gets the HP." },
   TRAP: { n: "Bound", s: "BND", c: "#a87a4a", d: "Squeezed every turn for 1/8 of its max HP." },
   DISABLE: { n: "Disable", s: "DIS", c: "#6a7286", d: "Can't use its S2 or S3 moves." },
@@ -19174,6 +19174,7 @@ const TALK_FAQ = [
   { re: /terrain|rising voltage|terrain pulse|steel roller|nature power|camouflage|floral healing|mimicry|surge surfer|hadron engine|seed sower|\bseeds?\b/, a: "Terrains last 5 rounds, 8 with a Terrain Extender, and they work on Pokémon on the ground. Electric: Electric moves ×1.5, no falling asleep (Rest and Yawn fail), Rising Voltage doubles. Grassy: Grass moves ×1.5, a little HP back each turn, Earthquake and Bulldoze halved, Floral Healing heals two thirds. Misty: no status or confusion, Dragon moves halved, and it even cures ones a Pokémon on the ground already has (when it goes up, when one comes in, at its turn: our house rule). Psychic: Psychic moves ×1.5, no priority moves against them, Expanding Force hits every foe. Terrain Pulse takes the terrain's type at double power, Nature Power and Camouflage follow it, a Seed is used up in its terrain, and Steel Roller, Ice Spinner and Defog end it." },
   { re: /support|sweepers?|team (layout|build)|how many (setters|sweepers)/, a: "Every Trainer team here has 1 or 2 support Pokémon, bulky ones with Reflect, Light Screen or Aurora Veil and/or Follow Me, Rage Powder or Spotlight, and they lead so the screens and the redirection are up from the start. Weather, terrain and Trick Room teams run two setters and 3 or 4 sweepers picked for them: Swift Swim and Water types in the rain, Fire types and Chlorophyll in the sun, Slush Rush and Ice types in the snow, Sand Rush and Sand Force in the sand, and so on. The lead setter is the less offensive one; the harder hitter waits on the bench as the backup. A lead setter that also has Aurora Veil, a screen or Follow Me counts as the support, which leaves room for a fourth sweeper (Alolan Ninetales, Indeedee)." },
   { re: /follow ?me|rage ?powder|spotlight|redirect/, a: "Follow Me, Rage Powder and Spotlight go off by themselves the moment their user comes onto the field, if the move is ready and a partner is out there, without using its turn (they just go on cooldown, like Trick Room). Follow Me and Rage Powder draw the other side's single-target moves to the user for as long as it stays on the field; Grass types, Overcoat and Safety Goggles ignore Rage Powder. Spotlight can't light up its own user, so it goes on the partner best able to take the hits, never one that's setting up, and that partner draws the attacks for as long as it stays out. With two up on one side, the newest one draws them. Since it lasts, the best users are just bulky: Brute Bonnet, Togekiss, Amoonguss, Clefable, or Clefairy and Togetic with an Eviolite. Speed doesn't matter for them. And we never switch them out: staying out there is the whole point, so they don't run U-turn, Teleport, an Eject Button or Emergency Exit either (Roar, Whirlwind, Dragon Tail and a Red Card can still drag them out). Their healing moves share Follow Me's slot, so Leftovers and draining attacks keep them going, and Regenerator does nothing for them." },
+  { re: /attract\b|infatuat|in love|cute charm/, a: "Infatuation works like confusion here (our house rule), except the hit goes to a partner: each turn there's a 1 in 3 chance the infatuated Pokémon attacks one of its partners instead of moving (itself if nobody's beside it) and loses its turn. It lasts 2 to 4 turns, and ends sooner if the one it's in love with leaves the field. Attract and Cute Charm cause it; the Mental Herb, Oblivious and Aroma Veil stop it." },
   { re: /future ?sight|doom desire/, a: "Future Sight and Doom Desire go off by themselves the moment their user comes onto the field, if the move is ready and none of its attacks is already on the way, without using its turn (the move just goes on cooldown), and you can still use them by hand. Two rounds later the whole other side on the field takes the hit." },
   { re: /stealth rock|spikes|sticky web|hazards?\b|reflect\b(?! ?type)|light screen|aurora veil|screens?\b|safeguard|lucky chant|\bmist\b|gravity|wonder room|magic room|rain dance|sunny day|snowscape|tailwind|by itself|on entry|automatic/, a: "Weather moves, terrain moves, the entry hazards (Stealth Rock, Spikes, Toxic Spikes, Sticky Web), Reflect, Light Screen, Aurora Veil, Safeguard, Mist, Lucky Chant, Gravity, Wonder Room and Magic Room all go up by themselves the moment their user comes onto the field, if the move is ready, without using its turn (they just go on cooldown, like Trick Room). If it's already up, the move stays ready for later; a different weather or terrain gets replaced, even your own team's. Hazards only go up with someone on the other side's bench, Aurora Veil only in snow, and we always lead with our screen users so the screens are up from the start. At the start of a battle everyone's go off in Speed order, Abilities too, so the slower setter's weather is the one that stays. Tailwind isn't one of them: it speeds up the whole team with no catch, so you still have to use it on a turn." },
   { re: /backup setter|second setter|two setters|weather (team|setter)|drought|sand stream|snow warning|drizzle/, a: "Sun, Sand and Snow teams here bring their weather with an Ability (Drought or Koraidon's Orichalcum Pulse, Sand Stream, Snow Warning; Groudon and Koraidon count, one Legendary a team), never Sunny Day, Sandstorm or Snowscape, and the setter goes out first. Every weather, terrain and Trick Room team runs two setters: the lead one, holding the rock or the Terrain Extender, and a harder-hitting backup with an attacking item that waits on the bench. The backup only comes in to replace a Pokémon that fainted, and only once the weather, terrain or room is gone (it ran out, or the other side replaced it); we never switch it in. Pelipper leads and Kyogre waits, Hippowdon leads and Tyranitar waits, Female Indeedee leads and Indeedee waits. On Electric Terrain teams Pincurchin leads and Miraidon or Tapu Koko waits, and our Hawlucha holds an Electric Seed: the moment the terrain is up it's used, and Unburden gives Hawlucha Speed +2. A Trick Room backup never comes in while the room is up, since that would end it. Its Room Service makes the room last 8 rounds." },
@@ -25882,7 +25883,7 @@ function makeBattle(cfg) {
       if (pv(tar, "SYNC") && src && src !== tar && src.alive && ["BRN", "PSN", "TOX", "PAR"].includes(what)) { msg(`${Nm(tar)}'s Synchronize!`); tryStatus(tar, src, what, false); }
       if ((what === "PSN" || what === "TOX") && src && src !== tar && pv(src, "PUPPETEER")) tryStatus(src, tar, "CNF", false);   // Poison Puppeteer
     } else {
-      const turns = { CNF: ri(2, 4), INFAT: 3, SEED: 99, TRAP: src && item(src, "gripclaw") ? 7 : ri(2, 4), DISABLE: 2 }[what] || 2;
+      const turns = { CNF: ri(2, 4), INFAT: ri(2, 4), SEED: 99, TRAP: src && item(src, "gripclaw") ? 7 : ri(2, 4), DISABLE: 2 }[what] || 2;
       tar.eff.push({ id: what, turns, skip: tar === B.actor, src: src && src.uid });
       msg(statusLine(what, tar, src)); fxEv(tar);
     }
@@ -27373,7 +27374,21 @@ function makeBattle(cfg) {
     }
     if (stun) { msg(`${Nm(u)} flinched and couldn't move!`); ev({ k: "txt", u: u.uid, s: "Flinch", c: "debuff" }); return false; }
     if (u.status === "PAR" && R() < .25) { msg(`${Nm(u)} is paralyzed! It can't move!`); ev({ k: "txt", u: u.uid, s: "PAR", c: "debuff" }); return false; }
-    if (has(u, "INFAT") && R() < .5) { msg(`${Nm(u)} is immobilized by love!`); return false; }
+    // Infatuation (the owner's house rule, 2026-10-20): it works like confusion, but the hit goes to a partner: a 1 in 3 chance each
+    // turn that it attacks one of its partners on the field instead of moving (confusion's 40-power typeless hit, its Attack against
+    // the partner's Defense) and loses its turn; with no partner there it hits itself. It lasts 2 to 4 turns (tryStatus), over
+    // sooner if the one it's in love with leaves the field (loveEnds)
+    if (has(u, "INFAT")) {
+      const lv = effOf(u, "INFAT"), by = lv && lv.src != null ? B.byId(lv.src) : null;
+      if (by) msg(psT("attract", "activate", { POKEMON: nm(u), TARGET: nm(by) }));
+      if (R() < 1 / 3) {
+        const mates = allies(u).filter(x => x !== u && x.alive && B.units.includes(x)), tg = mates.length ? pick(mates) : u;
+        msg(tg === u ? `${Nm(u)} hurt itself in its infatuation!` : `${Nm(u)} attacked ${nm(tg)} in its infatuation!`);
+        const d = Math.max(1, Math.round((((2 * u.lvl / 5 + 2) * 40 * statOf(u, "atk") / Math.max(1, statOf(tg, "def"))) / 50 + 2) * DMG_SCALE));
+        applyDamage(null, tg, d, { trueDmg: true });
+        return false;
+      }
+    }
     if (has(u, "CNF")) {
       msg(`${Nm(u)} is confused!`);
       if (R() < 1 / 3) {
@@ -28449,6 +28464,15 @@ globalThis.PokeSquad = (() => {
   const WEATHER_ID = { sun: "SunnyDay", rain: "RainDance", sand: "Sandstorm", hail: "Hail", snow: "Snowscape" };
   const TERRAIN_NAME = { electric: "Electric Terrain", grassy: "Grassy Terrain", misty: "Misty Terrain", psychic: "Psychic Terrain" };
   const HZ = { sr: "Stealth Rock", spikes: "Spikes", tspikes: "Toxic Spikes", web: "Sticky Web" };
+  // a Pokémon's effects as Showdown's volatiles (the badges on its HP bar: "Confused", "Leech Seed", "Drowsy"...; the owner's ask,
+  // 2026-10-20), by the names Showdown's client knows them by; Protect is its bubble too; the Perish count by the turns left
+  const VOL = { CNF: "confusion", INFAT: "Attract", SEED: "Leech Seed", TRAP: "Bind", TAUNT: "Taunt", ENCORE: "Encore", DISABLE: "Disable",
+    HEALBLOCK: "Heal Block", TORMENT: "Torment", EMBARGO: "Embargo", YAWN: "Yawn", CURSE: "Curse", NIGHTMARE: "Nightmare", INGRAIN: "Ingrain",
+    AQUARING: "Aqua Ring", MAGNETRISE: "Magnet Rise", SMACKDOWN: "Smack Down", FOCUS: "Focus Energy", CHARGE: "Charge", FLASHFIRE: "Flash Fire",
+    IMPRISON: "Imprison", TELEKINESIS: "Telekinesis", OCTOLOCK: "Octolock", SALTCURE: "Salt Cure", POWDER: "Powder", ELECTRIFY: "Electrify",
+    LASER: "Laser Focus", FOLLOWME: "Follow Me", MAGICCOAT: "Magic Coat", SNATCH: "Snatch", GRUDGE: "Grudge", DBOND: "Destiny Bond",
+    ENDURE: "Endure", BIDE: "Bide", THROAT: "Throat Chop", HELPED: "Helping Hand", SUB: "Substitute", PROTECT: "Protect" };
+  const volOf = e => e.id === "PERISH" ? `perish${Math.max(0, Math.min(3, e.turns))}` : VOL[e.id] || null;
   // the effects on a side (B.side: the turn each ends; B.tailwind) and on the whole field (Trick Room goes with the terrain: syncField)
   const SIDE_FX = { REFLECT: "Reflect", LSCREEN: "Light Screen", VEIL: "Aurora Veil", SAFEGUARD: "Safeguard", LUCKY: "Lucky Chant", MIST: "Mist" };
   const ROOMS = { gravity: "Gravity", wonderRoom: "Wonder Room", magicRoom: "Magic Room" };
@@ -28697,9 +28721,10 @@ globalThis.PokeSquad = (() => {
     syncStatus(u) {
       if (!this.shown[u.uid]) return;   // (not before Showdown has it on the field: its switch-in line comes first)
       // (the stat badge: the stages moves made plus the ones fixed to an item, an Ability, the weather or a status, as the game shows them)
-      // (protection, from Protect or as a replacement after a faint until its first turn: Showdown's Protect bubble, the owner's ask)
-      const id = this.ident(u), was = this.lastSt[u.uid] || { st: null, stages: {} }, now = { st: u.status || null, stages: this.B.shownStages(u), prot: u.eff.some(e => e.id === "PROTECT") };
-      if (now.prot !== !!was.prot) this.add(`|-${now.prot ? "start" : "end"}|${id}|Protect|[silent]`);
+      // (its effects as Showdown's volatiles: the badges on its HP bar, Protect's bubble, a Substitute's doll: VOL)
+      const id = this.ident(u), was = this.lastSt[u.uid] || { st: null, stages: {} }, now = { st: u.status || null, stages: this.B.shownStages(u), vol: [...new Set(u.eff.map(volOf).filter(Boolean))] };
+      for (const v of was.vol || []) if (!now.vol.includes(v)) this.add(`|-end|${id}|${v}|[silent]`);
+      for (const v of now.vol) if (!(was.vol || []).includes(v)) this.add(`|-start|${id}|${v}|[silent]`);
       if (now.st !== was.st) this.add(now.st ? `|-status|${id}|${STATUS[now.st] || now.st.toLowerCase()}|[silent]` : `|-curestatus|${id}|${STATUS[was.st] || ""}|[silent]`);
       for (const k in STAT) { const d = (now.stages[k] || 0) - (was.stages[k] || 0); if (d) this.add(`|-${d > 0 ? "boost" : "unboost"}|${id}|${STAT[k]}|${Math.abs(d)}|[silent]`); }
       this.lastSt[u.uid] = now;
