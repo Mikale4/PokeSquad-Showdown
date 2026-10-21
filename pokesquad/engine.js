@@ -28564,7 +28564,8 @@ function leadOrder(specs, foeSpecs, weather) {
 //    its bans), at most one move per slot (S1, S2, S3).
 //  - Dice: each battle has its own (seeded from Showdown's seed), used only while its rules run.
 //  - The turn meter (phase 3, 2026-10-20): |custom|-pokesquadmeter|<whose turn it is>|<each Pokémon on the field's meter, 0-100:
-//    "p1a: Name=72;p2b: Name=30">|<who acts next, in order: "p1a: Name;p2a: Name"> (no order: the last one stands). The client
+//    "p1a: Name=72;p2b: Name=30", then each one's cooldowns and the hits it has taken: =<move:n,...>=<hits>)>|<who acts next, in order:
+//    "p1a: Name;p2a: Name"> (no order: the last one stands). The client
 //    fork draws a meter bar under each HP bar and the order as icons. One when a Pokémon's turn starts, one after each action.
 // =====================================================================
 globalThis.PokeSquad = (() => {
@@ -28767,7 +28768,9 @@ globalThis.PokeSquad = (() => {
     getDebugLog() { return this.log.join("\n"); }
     sendUpdates() { if (this.lines.length) { this.send("update", this.lines); this.lines = []; } }
     err(slot, text) { this.send("sideupdate", `${slot}\n|error|[Invalid choice] ${text}`); return false; }
-    request(slot, r) { this.sides[+slot.slice(1) - 1].requestState = r.wait ? "wait" : r.teamPreview ? "teampreview" : r.forceSwitch ? "switch" : "move"; this.send("sideupdate", `${slot}\n|request|${JSON.stringify(r)}`); }
+    // (the lines so far go out first, as Showdown sends them: a request ahead of the battle's first lines found a client that didn't
+    // know the battle was a triple yet, so the first move of a battle went off with no target to choose: Double Kick, Temper Flare)
+    request(slot, r) { this.sendUpdates(); this.sides[+slot.slice(1) - 1].requestState = r.wait ? "wait" : r.teamPreview ? "teampreview" : r.forceSwitch ? "switch" : "move"; this.send("sideupdate", `${slot}\n|request|${JSON.stringify(r)}`); }
     ai(u) { const prev = R; R = Math.random; try { return this.B.aiChoice(u); } finally { R = prev; } }   // (the timer ran out: the AI's choice, on its own random numbers)
     // the battle's rules run on its own dice
     run(f) { const prev = R; R = this.dice; try { return f(); } finally { R = prev; } }
@@ -28914,8 +28917,9 @@ globalThis.PokeSquad = (() => {
     cooldowns(u) { return u.skills.map(s => `${sdMove(s.key)}:${s.slot > 1 ? Math.max(0, u.cool[s.slot] || 0) : 0}`).join(","); }
     meterLine(actor, meters, order) {
       const id = u => u && this.B.units.includes(u) ? this.ident(u) : "";
-      // (each Pokémon on the field: ident=meter=its cooldowns, so the site's tooltips show cooldowns where Showdown shows PP)
-      return `|custom|-pokesquadmeter|${id(actor)}|${meters.filter(([u]) => id(u)).map(([u, v]) => `${id(u)}=${Math.round(v)}=${this.cooldowns(u)}`).join(";")}`
+      // (each Pokémon on the field: ident=meter=its cooldowns=the hits it has taken, so the site's tooltips show cooldowns where
+      // Showdown shows PP, and the power of Rage Fist and the moves like it: Stored Power, Rage, Punishment, Payback)
+      return `|custom|-pokesquadmeter|${id(actor)}|${meters.filter(([u]) => id(u)).map(([u, v]) => `${id(u)}=${Math.round(v)}=${this.cooldowns(u)}=${u.hitsTaken || 0}`).join(";")}`
         + (order ? `|${order.map(id).filter(Boolean).join(";")}` : "");
     }
     syncStatus(u) {
