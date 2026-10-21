@@ -28610,7 +28610,7 @@ globalThis.PokeSquad = (() => {
       this.players = { p1: null, p2: null }; this.sides = [{ id: "p1", requestState: "" }, { id: "p2", requestState: "" }];
       this.lines = []; this.log = []; this.B = null; this.round = 0; this.ended = false; this.prngSeed = this.seed;
       this.prng = { getSeed: () => this.seed };
-      this.lastSt = {}; this.shown = {};
+      this.lastSt = {}; this.shown = {}; this.posOf = {};
     }
     // (Showdown's battle-stream calls)
     setPlayer(slot, o) {
@@ -28681,6 +28681,8 @@ globalThis.PokeSquad = (() => {
     tiebreak() { this.finish(null); }
     resetRNG() {}
     showOpenTeamSheets() {}
+    // (the room's battle stream lets go of the battle as the room closes, Showdown's battle.destroy(): nothing is sent after it)
+    destroy() { this.ended = true; this.B = null; this.lines = []; this.send = () => {}; }
     add(...lines) { for (const l of lines) { this.lines.push(l); this.log.push(l); } }
     getDebugLog() { return this.log.join("\n"); }
     sendUpdates() { if (this.lines.length) { this.send("update", this.lines); this.lines = []; } }
@@ -28696,7 +28698,7 @@ globalThis.PokeSquad = (() => {
       this.run(() => { UID = 0; this.B = makeBattle({ allies: t("p1"), waves: [t("p2")], auto: false, pick: true, humans: ["E"], sim: true, aiStyle: "balanced", enemyStyle: "balanced", trainer: this.players.p2.name }); });
       this.add("|start");
       // (the leads come onto the field, as in Showdown: player 1's, then player 2's)
-      for (const t of ["A", "E"]) for (const u of this.B.units.filter(x => x.team === t).sort((a, b) => a.slot - b.slot)) { this.hp(u, c => `|switch|${this.ident(u)}|${this.details(u)}|${c}`); this.shown[u.uid] = 1; }
+      for (const t of ["A", "E"]) for (const u of this.B.units.filter(x => x.team === t).sort((a, b) => a.slot - b.slot)) { this.placed(u, u.slot); this.hp(u, c => `|switch|${this.ident(u)}|${this.details(u)}|${c}`); this.shown[u.uid] = 1; }
       this.go();
     }
     // play on until someone has to choose (or it's over), turning the events into Showdown's lines
@@ -28727,7 +28729,10 @@ globalThis.PokeSquad = (() => {
         score: [alive("A"), alive("E")], inputLog: this.inputLog, log: this.log }));
     }
     // (Showdown's names: a Pokémon on the field is p1a/p1b/p1c by its place, one on the bench just p1)
-    ident(u) { return `${SIDE[u.team]}${u.slot >= 0 && this.B.units.includes(u) ? POS[u.slot] : ""}: ${u.n}`; }
+    // (a Pokémon's place is where Showdown last saw it come in, until it's told it left: a move's lines are written once the move is
+    // over, and Dragon Tail, Roar or a Red Card may have taken its target off the field by then)
+    ident(u) { const p = this.posOf[u.uid] || (u.slot >= 0 && this.B.units.includes(u) ? POS[u.slot] : ""); return `${SIDE[u.team]}${p}: ${u.n}`; }
+    placed(u, slot) { for (const id in this.posOf) { const x = this.B.byId(+id); if (x && x !== u && x.team === u.team && this.posOf[id] === POS[slot]) delete this.posOf[id]; } this.posOf[u.uid] = POS[slot]; }
     details(u) { return SD.name(u.spr || u.key) + (u.lvl !== 100 ? `, L${u.lvl}` : ""); }
     // (hp: what it had at that moment, an event's own: a line written later in the same update mustn't show what came after it, so
     // Stealth Rock as a Pokémon comes in shows its damage)
@@ -28784,9 +28789,9 @@ globalThis.PokeSquad = (() => {
             else this.hp(u, c => `|-damage|${this.ident(u)}|${c}|[silent]`, e.hp);
           } break;
           case "heal": case "revive": if (u) this.hp(u, c => `|-heal|${this.ident(u)}|${c}|[silent]`, e.hp); break;
-          case "death": if (u) { this.add(`|faint|${this.ident(u)}`); delete this.shown[u.uid]; } break;
-          case "recall": if (u) delete this.shown[u.uid]; break;
-          case "sendin": if (u) { this.hp(u, c => `|switch|${this.ident(u)}|${this.details(u)}|${c}`, e.hp); this.lastSt[u.uid] = { st: u.status || null, stages: {} }; this.shown[u.uid] = 1; } break;   // (Showdown clears a Pokémon's boosts as it comes in)   // (Showdown says "Go!" from each side)
+          case "death": if (u) { this.add(`|faint|${this.ident(u)}`); delete this.shown[u.uid]; delete this.posOf[u.uid]; } break;
+          case "recall": if (u) { delete this.shown[u.uid]; delete this.posOf[u.uid]; } break;
+          case "sendin": if (u) { this.placed(u, e.slot != null ? e.slot : u.slot); this.hp(u, c => `|switch|${this.ident(u)}|${this.details(u)}|${c}`, e.hp); this.lastSt[u.uid] = { st: u.status || null, stages: {} }; this.shown[u.uid] = 1; } break;   // (Showdown clears a Pokémon's boosts as it comes in)   // (Showdown says "Go!" from each side)
           case "status": case "fx": if (u) this.syncStatus(u); break;
           case "transform": if (u) this.hp(u, c => `|-formechange|${this.ident(u)}|${SD.name(e.to || u.spr)}|${c}|[silent]`); break;
           case "weather": this.add(`|-weather|${WEATHER_ID[e.w] || "none"}|[silent]`); break;
