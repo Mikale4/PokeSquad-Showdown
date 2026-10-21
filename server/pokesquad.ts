@@ -7,8 +7,10 @@
  * the engine plus a translator that takes Showdown's battle-stream commands and answers in Showdown's battle protocol.
  * It runs in a sandbox (the game was written for a browser: these are the stand-ins it needs).
  *
- * The format is "[Gen 9] PokeSquad" (config/formats.ts); RoomBattleStream (room-battle.ts) starts a PokeSquad battle for it
- * instead of Showdown's own simulator.
+ * The formats are "[Gen 9] PokeSquad" and its two Random Battles (config/formats.ts); RoomBattleStream (room-battle.ts) starts a
+ * PokeSquad battle for them instead of Showdown's own simulator. A Random Battle's teams come from pools the game's own team builder
+ * makes ahead of time (pokesquad/random-teams.json and random-trainer-teams.json, from tools/build_random_teams.js in
+ * Mikale4/PokeSquadBattler): each player gets one, drawn by the battle's seed.
  */
 import * as fs from 'fs';
 import * as path from 'path';
@@ -17,7 +19,12 @@ import { Dex, toID } from '../sim/dex';
 import { Teams } from '../sim/teams';
 
 export const FORMAT = 'gen9pokesquad';
-export const isPokeSquad = (formatid: string) => toID(formatid) === FORMAT;
+/** The Random Battles: each format's pool of teams */
+export const RANDOM_FORMATS: { [formatid: string]: string } = {
+	gen9pokesquadrandombattle: 'random-teams.json',
+	gen9pokesquadrandomtrainerbattle: 'random-trainer-teams.json',
+};
+export const isPokeSquad = (formatid: string) => toID(formatid) === FORMAT || toID(formatid) in RANDOM_FORMATS;
 
 let ctx: AnyObject | null = null;
 function engine(): AnyObject {
@@ -58,13 +65,49 @@ function engine(): AnyObject {
 
 const slim = (s: PokemonSet) => ({ name: s.name, species: s.species, item: s.item, ability: s.ability, nature: s.nature, moves: s.moves });
 
+type PoolTeam = { name: string, team: PokemonSet[] };
+const pools: { [file: string]: PoolTeam[] } = {};
+function pool(file: string): PoolTeam[] {
+	if (pools[file]) return pools[file];
+	const f = [path.resolve(__dirname, '../../pokesquad', file), path.resolve(__dirname, '../pokesquad', file)].find(x => fs.existsSync(x));
+	return (pools[file] = f ? JSON.parse(fs.readFileSync(f, 'utf8')) : []);
+}
+/** Which plan a Random Battle team is (its pool's name for it: "Random" for six random Pokémon), from its species' ids */
+export function poolPlan(species: string) {
+	for (const file of Object.values(RANDOM_FORMATS)) {
+		const t = pool(file).find(x => x.team.map(s => toID(s.species)).sort().join() === species);
+		if (t) return t.name;
+	}
+	return '';
+}
+/** A Random Battle team: one from its format's pool, by the battle's seed (the same battle draws the same teams; never both the same) */
+export function randomTeam(formatid: string, seed: unknown, slot: string): PokemonSet[] {
+	const teams = pool(RANDOM_FORMATS[toID(formatid)] || '');
+	if (!teams.length) return [];
+	const index = (side: string) => {
+		const key = `${Array.isArray(seed) ? seed.join(',') : String(seed)}:${side}`;
+		let h = 7;
+		for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
+		// (mixed, so the two sides' draws don't sit next to each other in the pool)
+		h = Math.imul((h ^ (h >>> 16)) >>> 0, 0x45d9f3b) >>> 0;
+		h = (h ^ (h >>> 16)) >>> 0;
+		return h % teams.length;
+	};
+	let i = index(slot);
+	if (slot === 'p2' && i === index('p1')) i = (i + 1) % teams.length;
+	return teams[i].team;
+}
+
 /** A PokeSquad battle, with the methods Showdown's BattleStream calls. */
 export function newBattle(options: AnyObject) {
 	const b = new (engine().PokeSquad.Battle)(options);
 	const setPlayer = b.setPlayer.bind(b);
-	b.setPlayer = (slot: string, o: AnyObject) => setPlayer(slot, {
-		...o, team: (typeof o.team === 'string' ? Teams.unpack(o.team) || [] : o.team || []).map(slim),
-	});
+	b.setPlayer = (slot: string, o: AnyObject) => {
+		let team: PokemonSet[] = typeof o.team === 'string' ? Teams.unpack(o.team) || [] : o.team || [];
+		// (a Random Battle's team, drawn by the battle's own seed: the battle keeps it in its input log)
+		if (!team.length && RANDOM_FORMATS[toID(options.formatid)]) team = randomTeam(options.formatid, b.seed, slot);
+		return setPlayer(slot, { ...o, team: team.map(slim) });
+	};
 	return b;
 }
 

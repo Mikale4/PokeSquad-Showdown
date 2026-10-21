@@ -28554,9 +28554,16 @@ globalThis.PokeSquad = (() => {
   // the format's rules as Showdown lists a format's clauses at the start of a battle (|rule|Name: what it does): the ones readTeam
   // checks and the battle keeps, in Showdown's words where it has the same rule (the owner's ask, 2026-10-20)
   const LIMIT_N = { legendary: ["Legendary Clause", "Legendary Pokémon"], mythical: ["Mythical Clause", "Mythical Pokémon"], ultraBeast: ["Ultra Beast Clause", "Ultra Beast"], paradox: ["Paradox Clause", "Paradox Pokémon"] };
-  const RULE_LINES = () => {
+  // (the server's PokeSquad formats; the Random Battles' teams come from pools the game's tools/build_random_teams.js makes, one
+  // drawn for each player by the fork's server/pokesquad.ts)
+  const FORMAT_NAME = { gen9pokesquad: "[Gen 9] PokeSquad", gen9pokesquadrandombattle: "[Gen 9] PokeSquad Random Battle", gen9pokesquadrandomtrainerbattle: "[Gen 9] PokeSquad Random Trainer Battle" };
+  const RANDOM_TEAMS = {
+    gen9pokesquadrandombattle: "Random teams: six random fully evolved Pokémon, their sets built as a team by PokeSquad Battler's optimizer, no team preview",
+    gen9pokesquadrandomtrainerbattle: "Random teams: a top Trainer's team from PokeSquad Battler's team builder (each one's plan), no team preview" };
+  const RULE_LINES = format => {
     const R = RULES(), n = x => ["no", "one", "two", "three", "four", "five", "six"][x] || x, bans = Object.values(R.ban).reduce((a, b) => a + b.size, 0);
     return ["PokeSquad Battler: three on the field, the turn meter, S1/S2/S3 cooldowns, the house rules",
+      ...(RANDOM_TEAMS[format] ? [RANDOM_TEAMS[format]] : []),
       "Species Clause: Limit one of each Pokémon",
       ...Object.entries(R.limits).map(([g, x]) => LIMIT_N[g] ? `${LIMIT_N[g][0]}: Limit ${n(x)} ${LIMIT_N[g][1]}${x > 1 && g === "ultraBeast" ? "s" : ""}` : `${g}: Limit ${n(x)}`),
       `Item Clause: Limit one each of ${[...ITEM_CLAUSE].map(h => HELD[h] ? HELD[h].n : h).join(", ")}`,
@@ -28604,8 +28611,10 @@ globalThis.PokeSquad = (() => {
   // ---------- a battle ----------
   class Battle {
     constructor(options) {
-      this.send = options.send; this.format = options.formatid; this.inputLog = [`>start ${JSON.stringify({ formatid: options.formatid, seed: options.seed })}`];
-      this.seed = options.seed || [1, 2, 3, 4];
+      // (each battle its own dice: Showdown passes a seed only to replay a battle, so one is drawn here and kept in the input log)
+      this.seed = options.seed || [0, 0, 0, 0].map(() => Math.floor(Math.random() * 0x10000));
+      this.send = options.send; this.format = options.formatid; this.inputLog = [`>start ${JSON.stringify({ formatid: options.formatid, seed: this.seed })}`];
+      this.random = !!RANDOM_TEAMS[this.format];
       this.dice = seeded((this.seed.reduce ? this.seed.reduce((a, b) => (a * 31 + (+b || 0)) >>> 0, 7) : +this.seed) || 1);
       this.players = { p1: null, p2: null }; this.sides = [{ id: "p1", requestState: "" }, { id: "p2", requestState: "" }];
       this.lines = []; this.log = []; this.B = null; this.round = 0; this.ended = false; this.prngSeed = this.seed;
@@ -28623,8 +28632,11 @@ globalThis.PokeSquad = (() => {
     }
     preview() {
       this.previewed = true;
-      this.add("|gametype|triples", "|gen|9", "|tier|[Gen 9] PokeSquad", ...RULE_LINES().map(r => `|rule|${r}`),
-        `|teamsize|p1|${this.players.p1.team.length}`, `|teamsize|p2|${this.players.p2.team.length}`, "|clearpoke");
+      this.add("|gametype|triples", "|gen|9", `|tier|${FORMAT_NAME[this.format] || FORMAT_NAME.gen9pokesquad}`, ...RULE_LINES(this.format).map(r => `|rule|${r}`),
+        `|teamsize|p1|${this.players.p1.team.length}`, `|teamsize|p2|${this.players.p2.team.length}`);
+      // (a Random Battle has no team preview, as on Showdown: each team's first three lead)
+      if (this.random) { for (const s of ["p1", "p2"]) this.players[s].order = this.players[s].team.map((_, i) => i); this.begin(); return; }
+      this.add("|clearpoke");
       for (const s of ["p1", "p2"]) for (const m of this.players[s].team) this.add(`|poke|${s}|${SD.name(m.k)}|${m.held ? "item" : ""}`);
       this.add("|teampreview|6");
       for (const s of ["p1", "p2"]) this.request(s, { teamPreview: true, maxChosenTeamSize: this.players[s].team.length, side: this.sideInfo(s) });

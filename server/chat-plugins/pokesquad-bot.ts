@@ -3,15 +3,16 @@
  * battle themselves. It runs in the server itself: at startup it connects to the server's own websocket as "PokeSquad Bot" (a
  * name only it can take: pokesquad-db.ts, botToken; users.ts), and accepts every [Gen 9] PokeSquad challenge with one of the
  * game's top Trainers' teams (pokesquad/bot-teams.json, made by the game's tools/build_bot_teams.js: each archetype's plan,
- * optimized at Lv 100). It plays with the game's own battle AI: every choice it sends is Showdown's "default", which the game's
+ * optimized at Lv 100), and every challenge in its two Random Battles with a random team of its own (server/pokesquad.ts). It plays with the game's own battle AI: every choice it sends is Showdown's "default", which the game's
  * engine answers with its AI (tools/showdown_adapter.js, the same one that plays for a player whose timer runs out).
  */
 import * as fs from 'fs';
 import * as path from 'path';
 import { Teams } from '../../sim/teams';
 import * as PokeSquadDB from '../pokesquad-db';
+import * as PokeSquad from '../pokesquad';
 
-const FORMAT = 'gen9pokesquad';
+const FORMAT = PokeSquad.FORMAT;
 const THINK_MS = 700; // (a moment before each choice, so its moves don't land on top of each other)
 
 let teams: { name: string, team: PokemonSet[] }[] = [];
@@ -32,14 +33,20 @@ let socket: AnyObject | null = null;
 function planOf(request: AnyObject) {
 	const species = (request.side?.pokemon || []).map((p: AnyObject) => toID(String(p.details).split(',')[0])).sort().join();
 	const team = teams.find(t => t.team.map(s => toID(s.species)).sort().join() === species);
-	return team ? team.name : '';
+	return team ? team.name : PokeSquad.poolPlan(species);
 }
 
 function send(line: string) {
 	if (socket && socket.readyState === 1) socket.send(line);
 }
 
-function accept(challenger: string) {
+function accept(challenger: string, format: string) {
+	// (a Random Battle: no team of its own to bring, the server draws one, as Showdown's client clears its team for them)
+	if (PokeSquad.RANDOM_FORMATS[format]) {
+		send(`|/utm null`);
+		send(`|/accept ${challenger}`);
+		return;
+	}
 	if (!teams.length) loadTeams();
 	if (!teams.length) return send(`|/pm ${challenger}, Sorry, I have no teams right now.`);
 	const pick = teams[Math.floor(Math.random() * teams.length)];
@@ -59,10 +66,10 @@ function receive(data: string) {
 			if (!from || from === PokeSquadDB.BOT_ID) continue;
 			if (message.startsWith('/challenge')) {
 				const format = toID(message.slice(10).split('|')[0]);
-				if (format === FORMAT) accept(from);
+				if (format === FORMAT || PokeSquad.RANDOM_FORMATS[format]) accept(from, format);
 				else send(`|/reject ${from}`);
 			} else if (!message.startsWith('/')) {
-				send(`|/pm ${from}, Hi! Challenge me to a [Gen 9] PokeSquad battle and I'll play one of the game's top Trainer teams.`);
+				send(`|/pm ${from}, Hi! Challenge me to a [Gen 9] PokeSquad battle and I'll play one of the game's top Trainer teams, or to one of its Random Battles.`);
 			}
 		} else if (roomid.startsWith('battle-')) {
 			if (line.startsWith('|request|') && line.length > 10) {
@@ -75,7 +82,7 @@ function receive(data: string) {
 				if (!greeted.has(roomid)) {
 					greeted.add(roomid);
 					const plan = planOf(request);
-					setTimeout(() => send(`${roomid}|Good luck!${plan ? ` I'm playing a ${plan} team.` : ''}`), 1500);
+					setTimeout(() => send(`${roomid}|Good luck!${plan === 'Random' ? ` My team's random too.` : plan ? ` I'm playing a ${plan} team.` : ''}`), 1500);
 				}
 				if (request.wait) continue;
 				const choice = request.teamPreview ? 'team 123456' : 'default';

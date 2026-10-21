@@ -37,6 +37,25 @@ const AllFormats: import('../sim/dex-formats').FormatList = [
 			return require('../server/pokesquad').validateTeam(team);
 		},
 	},
+	{
+		name: "[Gen 9] PokeSquad Random Battle",
+		desc: `PokeSquad Battler's battles with random teams: six random fully evolved Pok&eacute;mon a player, their sets built as a team by ` +
+			`the game's optimizer (a move per slot, Ability, nature, held item). Lv 100. One Legendary, one Mythical, one Ultra Beast and one ` +
+			`Paradox Pok&eacute;mon at most, the Item Clause. No team preview: the first three lead.`,
+		mod: 'gen9',
+		gameType: 'triples',
+		team: 'random',
+		ruleset: [],
+	},
+	{
+		name: "[Gen 9] PokeSquad Random Trainer Battle",
+		desc: `PokeSquad Battler's battles with random teams: a top Trainer's team from the game's own team builder for each player, ` +
+			`each with its plan (weather, Trick Room, Tailwind, hazards...). Lv 100. No team preview: the team's leads go first.`,
+		mod: 'gen9',
+		gameType: 'triples',
+		team: 'random',
+		ruleset: [],
+	},
 
 	// S/V Singles
 	///////////////////////////////////////////////////////////////////
