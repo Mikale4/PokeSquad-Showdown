@@ -28619,7 +28619,7 @@ globalThis.PokeSquad = (() => {
       this.players = { p1: null, p2: null }; this.sides = [{ id: "p1", requestState: "" }, { id: "p2", requestState: "" }];
       this.lines = []; this.log = []; this.B = null; this.round = 0; this.ended = false; this.prngSeed = this.seed;
       this.prng = { getSeed: () => this.seed };
-      this.lastSt = {}; this.shown = {}; this.posOf = {};
+      this.lastSt = {}; this.shown = {}; this.posOf = {}; this.lastTy = {};
     }
     // (Showdown's battle-stream calls)
     setPlayer(slot, o) {
@@ -28803,7 +28803,7 @@ globalThis.PokeSquad = (() => {
           case "heal": case "revive": if (u) this.hp(u, c => `|-heal|${this.ident(u)}|${c}|[silent]`, e.hp); break;
           case "death": if (u) { this.add(`|faint|${this.ident(u)}`); delete this.shown[u.uid]; delete this.posOf[u.uid]; } break;
           case "recall": if (u) { delete this.shown[u.uid]; delete this.posOf[u.uid]; } break;
-          case "sendin": if (u) { this.placed(u, e.slot != null ? e.slot : u.slot); this.hp(u, c => `|switch|${this.ident(u)}|${this.details(u)}|${c}`, e.hp); this.lastSt[u.uid] = { st: u.status || null, stages: {} }; this.shown[u.uid] = 1; } break;   // (Showdown clears a Pokémon's boosts as it comes in)   // (Showdown says "Go!" from each side)
+          case "sendin": if (u) { this.placed(u, e.slot != null ? e.slot : u.slot); this.hp(u, c => `|switch|${this.ident(u)}|${this.details(u)}|${c}`, e.hp); this.lastSt[u.uid] = { st: u.status || null, stages: {} }; delete this.lastTy[u.uid]; this.shown[u.uid] = 1; } break;   // (Showdown clears a Pokémon's boosts as it comes in)   // (Showdown says "Go!" from each side)
           case "status": case "fx": if (u) this.syncStatus(u); break;
           case "transform": if (u) this.hp(u, c => `|-formechange|${this.ident(u)}|${SD.name(e.to || u.spr)}|${c}|[silent]`); break;
           case "weather": this.add(`|-weather|${WEATHER_ID[e.w] || "none"}|[silent]`); break;
@@ -28860,6 +28860,16 @@ globalThis.PokeSquad = (() => {
       if (now.st !== was.st) this.add(now.st ? `|-status|${id}|${STATUS[now.st] || now.st.toLowerCase()}|[silent]` : `|-curestatus|${id}|${STATUS[was.st] || ""}|[silent]`);
       for (const k in STAT) { const d = (now.stages[k] || 0) - (was.stages[k] || 0); if (d) this.add(`|-${d > 0 ? "boost" : "unboost"}|${id}|${STAT[k]}|${Math.abs(d)}|[silent]`); }
       this.lastSt[u.uid] = now;
+      this.syncTypes(u);
+    }
+    // its types as they are now (Protean, Libero, Color Change, Soak, Conversion, Reflect Type, Burn Up...): Showdown's typechange, and
+    // typeadd for Forest's Curse and Trick-or-Treat; back to its own types, the end of it (the site shows its types above its name)
+    syncTypes(u) {
+      const id = this.ident(u), add = u.flags.addType || "", base = ((OPS[u.spr] || OPS[u.key] || {}).types || []).join("/");
+      const now = (add ? u.types.filter(t => t !== add) : u.types).join("/"), was = this.lastTy[u.uid] || { t: base, add: "" };
+      if (now !== was.t) this.add(now === base ? `|-end|${id}|typechange|[silent]` : `|-start|${id}|typechange|${now}|[silent]`);
+      if (add !== was.add) this.add(add ? `|-start|${id}|typeadd|${add}|[silent]` : `|-end|${id}|typeadd|[silent]`);
+      this.lastTy[u.uid] = { t: now, add };
     }
     syncField(e) {
       const ter = e.t ? TERRAIN_NAME[e.t] : null, tr = !!e.tr;
