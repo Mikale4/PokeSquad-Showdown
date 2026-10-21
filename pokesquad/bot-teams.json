@@ -365,7 +365,7 @@
     "moves": [
      "Swift",
      "Reflect",
-     "Psychic"
+     "Stored Power"
     ]
    },
    {
@@ -420,7 +420,7 @@
     "moves": [
      "Swift",
      "Expanding Force",
-     "Energy Ball"
+     "Stored Power"
     ]
    }
   ]
@@ -862,7 +862,7 @@
     "moves": [
      "Swift",
      "Reflect",
-     "Psychic"
+     "Stored Power"
     ]
    },
    {
@@ -917,7 +917,7 @@
     "moves": [
      "Swift",
      "Expanding Force",
-     "Energy Ball"
+     "Stored Power"
     ]
    }
   ]
@@ -1075,7 +1075,7 @@
     "moves": [
      "Swift",
      "Reflect",
-     "Psychic"
+     "Stored Power"
     ]
    },
    {
@@ -1130,7 +1130,7 @@
     "moves": [
      "Swift",
      "Expanding Force",
-     "Energy Ball"
+     "Stored Power"
     ]
    }
   ]
@@ -1653,7 +1653,7 @@
     "nature": "Modest",
     "moves": [
      "Ancient Power",
-     "Stored Power",
+     "Psyshock",
      "Solar Beam"
     ]
    },
@@ -2669,7 +2669,7 @@
     "nature": "Modest",
     "moves": [
      "Ancient Power",
-     "Stored Power",
+     "Psyshock",
      "Solar Beam"
     ]
    },
@@ -3226,7 +3226,7 @@
     "nature": "Modest",
     "moves": [
      "Ancient Power",
-     "Stored Power",
+     "Psyshock",
      "Solar Beam"
     ]
    },
@@ -3368,7 +3368,7 @@
     "nature": "Mild",
     "moves": [
      "Bulldoze",
-     "Stored Power",
+     "Psyshock",
      "Astral Barrage"
     ]
    },
