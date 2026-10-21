@@ -27361,12 +27361,9 @@ function makeBattle(cfg) {
   function endTurn(u) {
     releaseKO(); B.koOn = false;   // (the move is done: its knockouts first)
     // its residuals (the owner's rule, 2026-10-21): after its own turn, whether it moved or not, as Showdown has them at the end of
-    // the turn (the weather, its status, Leech Seed, binding, Leftovers...); then the Flame and Toxic Orbs, whose first damage
-    // comes at the end of its next turn. A Pokémon that left the field on its turn (a switch, U-turn) has none
-    if (u.alive && B.units.includes(u) && upkeep(u)) {
-      if (!u.status && item(u, "toxicorb")) { msg(`${Nm(u)}'s Toxic Orb activated!`); tryStatus(u, u, "TOX", false); }
-      else if (!u.status && item(u, "flameorb")) { msg(`${Nm(u)}'s Flame Orb activated!`); tryStatus(u, u, "BRN", false); }
-    }
+    // the turn (the weather, its status, Leech Seed, binding, Leftovers...). A Pokémon that left the field on its turn (a switch,
+    // U-turn) has none. (The Flame and Toxic Orbs go off at the start of its turn: B.step)
+    if (u.alive && B.units.includes(u)) upkeep(u);
     syncFx();   // (fixed stages its move changed: the weather, a status, an item lost...)
     if (u.flags.cud) { if (u.flags.cud.skip) u.flags.cud.skip = false; else { const k = u.flags.cud.key; u.flags.cud = null; if (u.alive && pv(u, "CUD_CHEW") && B.units.includes(u)) eatAgain(u, k); } }   // (Cud Chew: the end of its next turn)
     if (u.alive && pv(u, "HUNGER") && B.units.includes(u)) { u.flags.hangry = !u.flags.hangry; msg(u.flags.hangry ? `${Nm(u)} got hangry!` : `${Nm(u)} is full again!`); }   // Hunger Switch
@@ -28450,6 +28447,11 @@ function makeBattle(cfg) {
     for (const s in u.cool) if (u.cool[s] > 0) u.cool[s]--;
     if (u.orig && u.orig.cool) for (const s in u.orig.cool) if (u.orig.cool[s] > 0) u.orig.cool[s]--;
     mistyCure(u);   // (Misty Terrain, the owner's house rule: say Smack Down grounded it since)
+    // Flame Orb and Toxic Orb (the owner's house rule, kept over Showdown's end of the turn, 2026-10-21): the holder starts its turn
+    // burned or badly poisoned, before it chooses a move, so it moves with Guts, Flare Boost or Toxic Boost on; the first damage
+    // comes with its residuals at the end of that turn (endTurn)
+    if (u.alive && !u.status && item(u, "toxicorb")) { msg(`${Nm(u)}'s Toxic Orb activated!`); tryStatus(u, u, "TOX", false); }
+    else if (u.alive && !u.status && item(u, "flameorb")) { msg(`${Nm(u)}'s Flame Orb activated!`); tryStatus(u, u, "BRN", false); }
     const up = u.alive;   // (its residuals come after its turn: endTurn)
     if (up && commanding(u)) { ev({ k: "end", u: u.uid }); endTurn(u); return "acted"; }   // (Commander: inside Dondozo, it doesn't act)
     if (!up || !canMove(u)) { if (u.flags.semi) { u.flags.semi = null; ev({ k: "semi", u: u.uid, on: 0 }); } ev({ k: "end", u: u.uid }); endTurn(u); return "acted"; }
