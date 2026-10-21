@@ -28635,7 +28635,8 @@ globalThis.PokeSquad = (() => {
         moves: m.mv.filter(Boolean).map(sdMove), baseAbility: toID(m.ab), item: m.held || "", pokeball: "pokeball", ability: toID(m.ab) })) };
       return { name: p.name, id: slot, pokemon: this.order(TEAM[slot]).map(u => ({ ident: this.ident(u), details: this.details(u), condition: this.cond(u), active: this.B.units.includes(u),
         stats: { atk: u.max.atk, def: u.max.def, spa: u.max.spa, spd: u.max.sdf, spe: u.max.spe }, moves: u.skills.map(s => sdMove(s.key)), baseAbility: toID(u.passives[0] && u.passives[0].key),
-        item: u.held && !u.flags.itemUsed ? u.held : "", pokeball: "pokeball", ability: toID(u.passives[0] && u.passives[0].key) })) };
+        item: u.held && !u.flags.itemUsed ? u.held : "", pokeball: "pokeball", ability: toID(u.passives[0] && u.passives[0].key),
+        pokesquadCooldowns: Object.fromEntries(this.cooldowns(u).split(",").map(x => x.split(":")).map(([m, n]) => [m, +n])) })) };
     }
     activeInfo(u) {
       const B = this.B, skills = u.skills.slice().sort((x, y) => x.slot - y.slot);
@@ -28713,9 +28714,12 @@ globalThis.PokeSquad = (() => {
         items[u.uid] = now;
       }
     }
+    // (each move's cooldown, the turns of its own until it's ready: "trickroom:2,glaciallance:0"; S1 moves have none)
+    cooldowns(u) { return u.skills.map(s => `${sdMove(s.key)}:${s.slot > 1 ? Math.max(0, u.cool[s.slot] || 0) : 0}`).join(","); }
     meterLine(actor, meters, order) {
       const id = u => u && this.B.units.includes(u) ? this.ident(u) : "";
-      return `|custom|-pokesquadmeter|${id(actor)}|${meters.filter(([u]) => id(u)).map(([u, v]) => `${id(u)}=${Math.round(v)}`).join(";")}`
+      // (each Pokémon on the field: ident=meter=its cooldowns, so the site's tooltips show cooldowns where Showdown shows PP)
+      return `|custom|-pokesquadmeter|${id(actor)}|${meters.filter(([u]) => id(u)).map(([u, v]) => `${id(u)}=${Math.round(v)}=${this.cooldowns(u)}`).join(";")}`
         + (order ? `|${order.map(id).filter(Boolean).join(";")}` : "");
     }
     syncStatus(u) {
