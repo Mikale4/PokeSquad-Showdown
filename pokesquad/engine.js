@@ -25223,7 +25223,13 @@ function makeBattle(cfg) {
   // other lines, "It's super effective!", recoil, drain, come first, as in the games and on Showdown; they come out before the end
   // of the turn's own lines and before anyone leaves or comes onto the field: B.koQ, kill and act)
   const KO_OUT = new Set(["recall", "sendin", "end", "turn"]);
-  const releaseKO = () => { if (B.koQ && B.koQ.length) B.ev.push(...B.koQ.splice(0)); };
+  // (each knockout in order: its lines, then what it sets off, Moxie's boost and the like: koAfter in kill0, the owner's ask,
+  // 2026-10-21, so a spread move hits all its targets before its user's Attack rises)
+  const releaseKO = () => {
+    if (!(B.koQ && B.koQ.length)) return;
+    const was = B.koOn; B.koOn = false;
+    try { while (B.koQ.length) { const g = B.koQ.shift(); B.ev.push(...g.evs); if (g.fx) g.fx(); } } finally { B.koOn = was; }
+  };
   const ev = e => { if (B.koQ && B.koQ.length && KO_OUT.has(e.k)) releaseKO(); B.ev.push(e); };
   const msg = (t, extra) => { if (B.acting && /But it failed!|avoided the attack!|doesn't affect|is unaffected!/.test(t)) B.failed = true; ev({ k: "msg", t, ...(extra || {}) }); };
   const has = (u, id) => u.eff.some(e => e.id === id);
@@ -25966,11 +25972,12 @@ function makeBattle(cfg) {
 
   // ---------- damage ----------
   function kill(u, killer) {
-    if (!B.koOn || B.koIn) return kill0(u, killer);
-    const at = B.ev.length; B.koIn = true;
-    try { return kill0(u, killer); } finally { B.koIn = false; (B.koQ || (B.koQ = [])).push(...B.ev.splice(at)); }
+    if (!B.koOn || B.koIn) return void kill0(u, killer);
+    const at = B.ev.length; B.koIn = true; let fx = null;
+    try { fx = kill0(u, killer, true) || null; } finally { B.koIn = false; (B.koQ || (B.koQ = [])).push({ evs: B.ev.splice(at), fx }); }
   }
-  function kill0(u, killer) {
+  // defer (a knockout by a move): it faints at once, but what its knockout sets off waits for the move to end (returned, for kill)
+  function kill0(u, killer, defer) {
     if (u.orig && u.alive) { untransform(u, true); return; }   // (Transform's copy takes the knockout: the owner's rule)
     const bond = has(u, "DBOND"), grudge = has(u, "GRUDGE");
     if (grudge && killer && killer.alive && killer !== u && killer.lastSkill && killer.lastSkill.key !== "struggle") {
@@ -25981,24 +25988,30 @@ function makeBattle(cfg) {
     if (u.team === "E") B.tally.kills++;
     ev({ k: "death", u: u.uid }); msg(`${Nm(u)} fainted!`);
     gasLeaves(u);
-    const mx = killer && killer.alive && killer !== u && pv(killer, "MOXIE");
-    if (mx) stage(killer, killer, mx.stat === "best" ? bestStat(killer) : mx.stat || "atk", 1, killer.passives[0].name);   // (Moxie, Beast Boost, the Neighs, As One)
-    for (const x of B.units) if (x.alive && x !== u && pv(x, "SOUL_HEART")) stage(x, x, "spa", 1, "Soul-Heart");
-    // Power of Alchemy, Receiver (the owner's rule): a partner on the field with it takes the fainted ally's Ability
-    const ua = u.passives[0];
-    if (ua && !["RECEIVER", "TRACE", "IMPOSTER", "ILLUSION", "WONDER_GUARD", "NONE", "FORECAST", "HUNGER", "COMMANDER", ...NO_OVERWRITE].includes(ua.id))
-      for (const x of B.units) if (x.alive && x !== u && x.team === u.team && pv(x, "RECEIVER")) { x.passives = [abilityOf(ua.key)]; msg(`${Nm(x)} took over ${nm(u)}'s ${ua.name}!`); }
-    // Battle Bond (the owner's rule: Generations 7 and 8's form change and Generation 9's boost): its first knockout of an opposing
-    // Pokémon makes it Ash-Greninja for the rest of the battle (its Water Shuriken a Triple Axel), and every knockout raises its
-    // Attack, Sp. Atk and Speed by 1
-    if (killer && killer.alive && killer !== u && killer.team !== u.team && pv(killer, "BATTLE_BOND")) {
-      if (!killer.flags.bonded && OPS.greninjaash) {
-        killer.flags.bonded = true; msg(`${Nm(killer)} became fully charged due to its bond with its Trainer!`);
-        becomeForm(killer, "greninjaash", `${Nm(killer)} became Ash-Greninja!`); ashShuriken(killer);
+    // what the knockout sets off: Moxie and its kin, Soul-Heart, Receiver, Battle Bond, Destiny Bond. In the games these come
+    // after the move is done, so a spread move's later targets aren't hit harder by a boost from an earlier one (the owner's ask)
+    const koAfter = () => {
+      const mx = killer && killer.alive && killer !== u && pv(killer, "MOXIE");
+      if (mx) stage(killer, killer, mx.stat === "best" ? bestStat(killer) : mx.stat || "atk", 1, killer.passives[0].name);   // (Moxie, Beast Boost, the Neighs, As One)
+      for (const x of B.units) if (x.alive && x !== u && pv(x, "SOUL_HEART")) stage(x, x, "spa", 1, "Soul-Heart");
+      // Power of Alchemy, Receiver (the owner's rule): a partner on the field with it takes the fainted ally's Ability
+      const ua = u.passives[0];
+      if (ua && !["RECEIVER", "TRACE", "IMPOSTER", "ILLUSION", "WONDER_GUARD", "NONE", "FORECAST", "HUNGER", "COMMANDER", ...NO_OVERWRITE].includes(ua.id))
+        for (const x of B.units) if (x.alive && x !== u && x.team === u.team && pv(x, "RECEIVER")) { x.passives = [abilityOf(ua.key)]; msg(`${Nm(x)} took over ${nm(u)}'s ${ua.name}!`); }
+      // Battle Bond (the owner's rule: Generations 7 and 8's form change and Generation 9's boost): its first knockout of an opposing
+      // Pokémon makes it Ash-Greninja for the rest of the battle (its Water Shuriken a Triple Axel), and every knockout raises its
+      // Attack, Sp. Atk and Speed by 1
+      if (killer && killer.alive && killer !== u && killer.team !== u.team && pv(killer, "BATTLE_BOND")) {
+        if (!killer.flags.bonded && OPS.greninjaash) {
+          killer.flags.bonded = true; msg(`${Nm(killer)} became fully charged due to its bond with its Trainer!`);
+          becomeForm(killer, "greninjaash", `${Nm(killer)} became Ash-Greninja!`); ashShuriken(killer);
+        }
+        for (const s of ["atk", "spa", "spe"]) stage(killer, killer, s, 1, "Battle Bond");
       }
-      for (const s of ["atk", "spa", "spe"]) stage(killer, killer, s, 1, "Battle Bond");
-    }
-    if (bond && killer && killer.alive && killer !== u && killer.team !== u.team) { msg(`${Nm(u)} took its attacker down with it!`); killer.hp = 0; ev({ k: "dmg", u: killer.uid, n: 0, hp: 0, sh: 0, dot: 1 }); kill(killer, null); }
+      if (bond && killer && killer.alive && killer !== u && killer.team !== u.team) { msg(`${Nm(u)} took its attacker down with it!`); killer.hp = 0; ev({ k: "dmg", u: killer.uid, n: 0, hp: 0, sh: 0, dot: 1 }); kill(killer, null); }
+    };
+    if (defer) return koAfter;
+    koAfter();
   }
   function applyDamage(att, tar, dmg, meta) {
     if (!tar.alive) return 0;
