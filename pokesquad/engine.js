@@ -387,10 +387,10 @@ const FX = {
   PAR: { n: "Paralysis", s: "PAR", c: "#e8b818", major: 1, d: "Speed −2, and each turn there is a 25% chance it can't move." },
   SLP: { n: "Sleep", s: "SLP", c: "#8a90a0", major: 1, d: "Can't move until it wakes up." },
   FRZ: { n: "Freeze", s: "FRZ", c: "#58c8e0", major: 1, d: "Can't move. Each turn it has a 20% chance to thaw; a Fire move thaws it at once." },
-  CNF: { n: "Confusion", s: "CNF", c: "#c86ab8", d: "Each turn there is a 33% chance it hurts itself in its confusion instead of moving." },
+  CNF: { n: "Confusion", s: "CNF", c: "#c86ab8", d: "For 3 or 4 turns: each turn there is a 33% chance it hurts itself in its confusion instead of moving." },
   INFAT: { n: "Infatuation", s: "LOV", c: "#f26aa8", d: "Like confusion, but each turn there is a 1 in 3 chance it attacks one of its partners instead of moving (itself, with no partner beside it). 2 to 4 turns, over sooner if the one it's in love with leaves the field." },
   SEED: { n: "Leech Seed", s: "SED", c: "#5aa83a", d: "Loses 1/8 of its max HP every turn; the Pokémon that planted it gets the HP." },
-  TRAP: { n: "Bound", s: "BND", c: "#a87a4a", d: "Squeezed every turn for 1/8 of its max HP." },
+  TRAP: { n: "Bound", s: "BND", c: "#a87a4a", d: "Squeezed every turn for 1/8 of its max HP for 4 or 5 turns, while its binder stays on the field. It can't switch out." },
   DISABLE: { n: "Disable", s: "DIS", c: "#6a7286", d: "Can't use its S2 or S3 moves." },
   RECHARGE: { n: "Recharge", s: "RCH", c: "#6a7286", d: "Must recharge and loses its next turn." },
   SUB: { n: "Substitute", b: 1, s: "SUB", c: "#5a9a6a", d: "A decoy takes the damage until it breaks." },
@@ -405,15 +405,15 @@ const FX = {
   AQUARING: { n: "Aqua Ring", b: 1, s: "AQR", c: "#6390f0", d: "Restores 1/16 of its max HP every turn." },
   INGRAIN: { n: "Ingrain", b: 1, s: "ING", c: "#7ac74c", d: "Rooted: restores 1/16 of its max HP every turn, but can't be switched out." },
   MAGNETRISE: { n: "Magnet Rise", b: 1, s: "MGR", c: "#f7d02c", d: "Floating: Ground-type moves can't hit it." },
-  LOCKON: { n: "Lock-On", b: 1, s: "LOK", c: "#e8a03a", d: "Its next move can't miss." },
-  LASER: { n: "Laser Focus", b: 1, s: "LSR", c: "#e8a03a", d: "Its next move is a critical hit." },
+  LOCKON: { n: "Lock-On", b: 1, s: "LOK", c: "#e8a03a", d: "Its next attack can't miss, until the end of its next turn." },
+  LASER: { n: "Laser Focus", b: 1, s: "LSR", c: "#e8a03a", d: "Its next attack is a critical hit, until the end of its next turn." },
   HELPED: { n: "Helping Hand", b: 1, s: "HLP", c: "#f2c14e", d: "Its next move is 50% stronger." },
   FOLLOWME: { n: "Center of attention", b: 1, s: "CTR", c: "#f2a6c8", d: "Opposing moves aimed at its team hit it instead, until its next turn." },
   DBOND: { n: "Destiny Bond", b: 1, s: "DBD", c: "#735797", d: "If a move knocks it out before its next turn, the attacker faints too." },
   WISH: { n: "Wish", b: 1, s: "WSH", c: "#f2d86a", d: "Half of the wisher's max HP comes back at the end of this Pokémon's next turn." },
   TAUNT: { n: "Taunt", s: "TNT", c: "#c22e28", d: "Taunted: can only use damaging moves." },
   THROAT: { n: "Throat Chop", s: "THR", c: "#705746", d: "Can't use sound moves." },
-  HEALBLOCK: { n: "Heal Block", s: "HBK", c: "#f95587", d: "Can't restore HP or use healing moves." },
+  HEALBLOCK: { n: "Heal Block", s: "HBK", c: "#f95587", d: "Can't restore HP or use healing moves (5 turns; 2 from Psychic Noise)." },
   CHARGE: { n: "Charge", b: 1, s: "CHG", c: "#f7d02c", d: "Its next Electric move has double power." },
   SALTCURE: { n: "Salt Cure", s: "SLT", c: "#b6a136", d: "Loses 1/8 of its max HP every turn (1/4 for Water and Steel types)." },
   ENCORE: { n: "Encore", s: "ENC", c: "#f95587", d: "Can only use its last move." }, TORMENT: { n: "Torment", s: "TRM", c: "#705746", d: "Can't use the same move twice in a row." },
@@ -3454,7 +3454,7 @@ const METRONOME = ["absorb", "accelerock", "acid", "acidspray", "acrobatics", "a
 // =====================================================================
 const CAT_N = { P: "Physical", S: "Special", X: "Status" };
 const CD = { 1: 0, 2: 3, 3: 4 };
-const SPREAD = .75; // moves that hit every opposing Pokémon deal 75% damage, as in Double Battles
+const SPREAD = .75; // moves that hit every opposing Pokémon deal 75% damage when they hit two or more, as in Double Battles
 function moveTarget(M) {
   if (M.tg === "foes") return "aoe_enemies";
   if (M.tg === "self") return "self";
@@ -3527,8 +3527,9 @@ const SHIELD_TXT = {
 // the field moves that go up by themselves as their user comes onto the field (the owner's rule, like Trick Room: autoField in a7_engine.js)
 const ENTRY_MOVES = new Set(["sunnyday", "raindance", "sandstorm", "hail", "snowscape", "terrain", "stealthrock", "spikes", "toxicspikes", "stickyweb",
   "reflect", "lightscreen", "auroraveil", "safeguard", "mist", "luckychant", "gravity", "wonderroom", "magicroom", "iondeluge", "powder",
-  "future"]);   // (Ion Deluge and Powder: the owner's rules, 2026-10-19; Future Sight and Doom Desire, 2026-10-20)
-const entryTxt = sp => sp === "future" ? "It's used by itself the moment its user comes onto the field, if it's ready and none of the user's attacks is already on the way (that isn't the user's turn: the move just goes on cooldown); it can still be used by hand" : `It goes up by itself the moment its user comes onto the field${["stealthrock", "spikes", "toxicspikes", "stickyweb"].includes(sp) ? " (with a Pokémon left on the other side's bench to hit)" : sp === "auroraveil" ? " in hail or snow" : sp === "powder" ? " (on the opposing Pokémon there that aren't covered yet)" : ""}, if it's ready (that isn't the user's turn: the move just goes on cooldown). `
+  "future", "laserfocus", "lockon"]);   // (Ion Deluge and Powder: the owner's rules, 2026-10-19; Future Sight and Doom Desire, 2026-10-20; Laser Focus and Lock-On, 2026-10-21)
+const entryTxt = sp => sp === "future" ? "It's used by itself the moment its user comes onto the field, if it's ready and none of the user's attacks is already on the way (that isn't the user's turn: the move just goes on cooldown); it can still be used by hand" :
+  sp === "laserfocus" || sp === "lockon" ? "It's used by itself the moment its user comes onto the field, if it's ready (that isn't the user's turn: the move just goes on cooldown), and lasts until the end of the user's next turn; it can still be used by hand" : `It goes up by itself the moment its user comes onto the field${["stealthrock", "spikes", "toxicspikes", "stickyweb"].includes(sp) ? " (with a Pokémon left on the other side's bench to hit)" : sp === "auroraveil" ? " in hail or snow" : sp === "powder" ? " (on the opposing Pokémon there that aren't covered yet)" : ""}, if it's ready (that isn't the user's turn: the move just goes on cooldown). `
   + `While ${["stealthrock", "spikes", "toxicspikes", "stickyweb"].includes(sp) ? "every layer is" : "it's"} already up the move stays ready${["sunnyday", "raindance", "sandstorm", "hail", "snowscape", "terrain"].includes(sp) ? ", and it replaces any other " + (sp === "terrain" ? "terrain" : "weather") + ", whoever set it" : ""}; it can still be used by hand`;
 function moveDesc(sk) {
   const M = sk.M, out = [], who = sk.target === "aoe_enemies" ? "each target" : "the target";
@@ -3536,7 +3537,7 @@ function moveDesc(sk) {
     psywave: "Deals random damage between half and 1.5× the user's level (Loaded Dice: always 1.5×)", superfang: "Takes half the target's current HP", endeavor: "Cuts the target's HP down to the user's" }[M.sp];
   if (fixed) out.push(fixed + " (+6% per Mastery rank)");
   if (M.crash) out.push("If it misses, the user crashes and loses a quarter of its max HP");
-  if (sk.target === "aoe_enemies" && M.p) out.push(`Hits every opposing Pokémon (${P(SPREAD)} damage each)`);
+  if (sk.target === "aoe_enemies" && M.p) out.push(`Hits every opposing Pokémon (${P(SPREAD)} damage each when it hits two or more)`);
   if (M.hit && M.sp !== "tripleaxel") out.push(M.hit[0] === M.hit[1] ? `Strikes ${M.hit[0]} times` : `Strikes ${M.hit[0]} to ${M.hit[1]} times`);
   if (M.pri > 0) out.push(`Priority +${M.pri}: the user gets +${M.pri * 10}% turn meter when it's sent out (each priority move it knows adds its own)`);
   if (M.n === "Thunder" || M.n === "Hurricane") out.push("Never misses in rain; 50% accuracy in harsh sunlight");
@@ -3557,7 +3558,7 @@ function moveDesc(sk) {
   if (M.dr < 0) out.push(`The user takes ${-M.dr}% of the damage dealt as recoil`);
   if (M.hl && sk.target !== "partners" && sk.target !== "team") out.push(`Restores ${M.hl}% of the user's max HP (+6% per Mastery rank)`);
   const sp = { transform: "Transforms into the target: copies its types, stats, stat changes and moves. The copy has an HP bar of its own, as big as the user's max HP: when it's knocked out, the user turns back into itself with the HP and status it had (the stat changes stay)", metronome: "Uses a random damaging move",
-    splash: "But nothing happens!", haze: "Resets the stat changes of every Pokémon in battle", rest: "Fully restores HP and cures status, then sleeps for 2 turns",
+    splash: "But nothing happens!", haze: "Resets the stat changes of every Pokémon in battle", rest: "Fully restores HP and cures status, then sleeps through its next turn (fails at full HP)",
     reflect: "Reflect: your team takes a third less physical damage for 5 turns", lightscreen: "Light Screen: your team takes a third less special damage for 5 turns",
     substitute: "Uses 1/4 of the user's max HP to make a Substitute that takes hits for it", mist: "Mist: your team's stats can't be lowered for 5 turns",
     focusenergy: "Focus Energy: the user's critical-hit ratio rises sharply",
@@ -3599,7 +3600,7 @@ function moveDesc(sk) {
     eruption: "Random power from 10 to 150, like Magnitude (Loaded Dice: always 150)", metalburst: "It can't be chosen: when an opposing attack damages the user, it hits back at that attacker by itself for 1.5 times the damage once the attack is over, if it's ready (that isn't the user's turn: the move just goes on cooldown)",
     present: "A gift of 40 (40%), 80 (30%) or 120 power (10%), or it restores 1/4 of the target's max HP (20%); physical when the user's Attack is higher than its Sp. Atk, special otherwise; with Loaded Dice, always the 120-power gift, and it never misses",
     fusion: "Double power if the other Fusion move (Fusion Flare or Fusion Bolt) was used since the user's last turn",
-    smellingsalts: "Double power against a paralyzed target, and cures its paralysis", healblock: "The other side can't restore HP for 4 turns",
+    smellingsalts: "Double power against a paralyzed target, and cures its paralysis", healblock: "The other side can't restore HP for 5 turns",
     strengthsap: "Restores HP equal to the target's Attack stat, then lowers its Attack", partingshot: "Lowers the target's Attack and Sp. Atk, then the user switches out",
     hiddenpower: "Takes the type of the last attack used on the user (its own first type until then), and it's physical when the user's Attack is higher than its Sp. Atk (a house rule)", sketch: "Copies the move the opposing Pokémon has in this Sketch's slot (S1 Sketch its S1 move, S2 Sketch its S2, S3 Sketch its S3) and uses it at once. The copied move takes Sketch's place for good, in every battle; the Move Reminder teaches Sketch again",
     hazardhit: M.n === "Stone Axe" ? "Leaves pointed stones around the other side (Stealth Rock)" : "Leaves a layer of spikes around the other side (Spikes)",
@@ -3657,7 +3658,7 @@ function moveDesc(sk) {
     toxicspikes: "Poisons each Pokémon sent in on the other side (2 layers: badly)", stealthrock: "Pointed stones hurt each Pokémon sent in on the other side, more for Rock weaknesses",
     defog: "Clears hazards, the target's screens and the terrain, and lowers the target's evasiveness", roost: "Restores half of the user's max HP",
     synthesis: "Restores half the user's max HP (2/3 in harsh sunlight, 1/4 in other weather)", wish: "Half of the user's max HP comes back to its place at the end of its next turn",
-    aquaring: "Restores 1/16 of the user's max HP every turn", ingrain: "Restores 1/16 of the user's max HP every turn, but it can't be switched out",
+    aquaring: "Restores 1/16 of the user's max HP every turn", ingrain: "Restores 1/16 of the user's max HP every turn, but it can't be switched out; nothing can drag it out, and it's on the ground",
     lifedew: "Restores 1/4 of the max HP of the user and its teammates on the field", healpulse: "Restores half of the max HP of each of the user's partners on the field",
     painsplit: "Shares out the user's and the target's HP evenly", healingwish: "The user faints; the next Pokémon sent in is fully healed",
     memento: "The user faints; the target's Attack and Sp. Atk −2", tailwind: "Your team's Speed +2 for about 4 rounds, and +10% turn meter at once for the user and its partners on the field",
@@ -3667,8 +3668,8 @@ function moveDesc(sk) {
     taunt: "The target can only use damaging moves for 3 turns", gastroacid: "Suppresses the target's Ability", worryseed: "Changes the target's Ability to Insomnia",
     soak: "Makes the target pure Water type", reflecttype: "The user takes on the target's types", conversion: "It can't be chosen: just before an opposing attack's damage, the user becomes a type that resists it, if this is ready (that isn't the user's turn: the move just goes on cooldown; the type lasts until it leaves the field)",
     camouflage: "The user takes the terrain's type (Electric, Grass, Fairy or Psychic), or becomes Normal type with none", magnetrise: "The user floats: Ground moves can't hit it for 5 turns", meanlook: "The target can't be switched out",
-    destinybond: "If a move knocks the user out before its next turn, the attacker faints too", lockon: "The user's next move can't miss",
-    laserfocus: "The user's next move is a critical hit", acupressure: "A random stat of the user's +2", powerswap: "Swaps Attack and Sp. Atk changes with the target",
+    destinybond: "If a move knocks the user out before its next turn, the attacker faints too", lockon: "The user's next attack can't miss, until the end of its next turn",
+    laserfocus: "The user's next attack is a critical hit, until the end of its next turn", acupressure: "A random stat of the user's +2", powerswap: "Swaps Attack and Sp. Atk changes with the target",
     guardswap: "Swaps Defense and Sp. Def changes with the target", speedswap: "Swaps Speed stats with the target", roleplay: "Copies the target's Ability",
     skillswap: "Swaps Abilities with the target", trick: "Swaps held items with the target", helpinghand: "A teammate's next move is 50% stronger",
     followme: "Draws the other side's single-target moves to the user for as long as it stays on the field (with two up on one side, the newest draws them). It goes up by itself the moment its user comes onto the field with a partner beside it, if it's ready (that isn't the user's turn: the move just goes on cooldown)", mirrormove: "Uses the move the opposing target has in this Mirror Move's slot, at once and with the user's own stats, this one time: the Mirror Move stays (S1, S2 and S3 Mirror Move; a house rule)",
@@ -19197,14 +19198,14 @@ const TALK_FAQ = [
   { re: /solar ?(beam|blade)/, a: "Solar Beam and Solar Blade hit the same turn here: ×1.5 in harsh sunlight, half power in rain, sandstorm or hail." },
   { re: /sky attack|razor wind|skull bash|meteor beam|two.?turn|charg(e|ing) turn/, a: "No charging turns here: Sky Attack, Razor Wind, Skull Bash and Meteor Beam hit at once, and Skull Bash and Meteor Beam raise Defense or Sp. Atk by 1 before the hit." },
   { re: /phantom force|out of reach|semi.?invuln|\b(use|uses|using|used) (fly|bounce|dig|dive)\b|\b(fly|bounce|dig|dive) (move|users?|turn)\b/, a: "Fly, Bounce, Dig, Dive and Phantom Force take you out of reach until your next turn, then land by themselves. Only the games' exceptions reach you: Thunder, Hurricane, Gust, Twister, Sky Uppercut and Smack Down a flier, Earthquake, Magnitude and Fissure a digger, Surf and Whirlpool a diver, some for double damage. Phantom Force breaks Protect." },
-  { re: /outrage|thrash|petal dance/, a: "Outrage, Thrash and Petal Dance are plain attacks here: no lock-in, no confusion." },
+  { re: /outrage|thrash|petal dance/, a: "Outrage, Thrash, Petal Dance and Raging Fury are plain attacks here, no lock-in, but they leave their user confused after the hit (3 or 4 turns)." },
   { re: /uproar/, a: "Uproar keeps everyone on the field awake for 3 rounds, and Rest fails meanwhile." },
   { re: /rollout|fury cutter|echoed voice|the move round|\bround (move|power)/, a: "Rollout, Fury Cutter, Echoed Voice and Round double every time you use them in a battle, other moves in between or not, up to 16×. Defense Curl doubles Rollout again." },
   { re: /magnitude|psywave|loaded dice/, a: "Magnitude rolls 4 to 10 (10 to 150 power). Loaded Dice makes it a 10, Psywave always does its most, and multi-strike moves always strike the most times at 100% accuracy (double and triple strikes too: once the first lands, they all do)." },
   { re: /secret power/, a: "Secret Power's 30% extra effect comes from the field: Electric Terrain paralyzes, Grassy puts to sleep, Misty lowers Sp. Atk, Psychic lowers Speed; sun burns, rain lowers Attack, sandstorm accuracy, hail freezes. With both up you get both, and a plain field paralyzes." },
   { re: /pledge/, a: "Pledges combine: if a teammate used a different Pledge since your last turn, yours becomes a 150-power combined move, with a sea of fire, a swamp or a rainbow for 4 rounds." },
   { re: /heal pulse|pollen puff/, a: "Heal Pulse heals all your partners on the field at once. Pollen Puff still hits its target and also heals every partner by half their max HP." },
-  { re: /\bhail\b|\bsnow|icy rock/, a: "Hail and snow are one weather here: everyone but Ice types loses 1/16 HP a turn, and Ice types get Defense +1. Hail and Snowscape both start it, an Icy Rock makes it about 8 rounds, and Ice Body and Snow Cloak go together." },
+  { re: /\bhail\b|\bsnow|icy rock/, a: "Hail and snow are one weather here: everyone but Ice types loses 1/16 HP a turn, and Ice types get Defense +1. Hail and Snowscape both start it, an Icy Rock makes it about 8 rounds, and Ice Body and Snow Cloak go together. Slush Rush keeps the hail off too, our house rule." },
   { re: /\btransform|\bimposter|\bditto\b/, a: "Transform is an S3 move here, and a strong one: the copy is a body of its own, with an HP bar as big as your own max HP. Knock out the copy and the Pokémon just turns back into itself, with the HP and status it had before (it keeps its stat changes). Imposter works the same way." },
   { re: /\bsketch|smeargle/, a: "Smeargle's Sketch comes in three, one for each slot, and it knows all three from the start. Use S1 Sketch on an opposing Pokémon and it copies that Pokémon's S1 move (S2 Sketch its S2 move, S3 Sketch its S3), for good, and uses it right away, the same turn. That's in every battle, even Friendly ones. So a Smeargle can learn any move in the game; the Move Reminder teaches Sketch again if you want to redo a slot. Ours come already sketched." },
   { re: /great ball ticket|ultra ball ticket|mystic ticket|\btickets?\b.*safari|safari.*\btickets?\b/, a: "Each ticket is one throw in its own event area: Great Ball Tickets in the Great Ball Safari (Tuesday and Wednesday, UTC), Ultra Ball Tickets in a Legendary Safari (Friday to Sunday), Mystic Tickets in a Mythical Distribution (a surprise). The Safari Zone shows when each area opens. The event areas (and the weekly ones) open once you've opened every region: until then it's the Whole Park." },
@@ -19213,7 +19214,7 @@ const TALK_FAQ = [
   { re: /sent in after|replacement|after a faint|comes in after|protected (when|until)|switch(ing)? (out|in)\b|when (do|should) (i|you) switch/, a: "A Pokémon you send in to take a fainted one's place is protected like Protect until its first turn: moves from the other side fail on it (Feint and the like still break it). Entry hazards, the weather and its status still hurt it. A Pokémon dragged in by Roar or Dragon Tail, or coming in on U-turn or Volt Switch, gets no protection. That's why switching out is rarely worth it here: whoever you switch in comes in with an empty turn meter and no protection, so all three on the other side get to hit it before it moves, and the switch costs your turn. A worn-down Pokémon is usually better off taking its last turn: its replacement comes in protected." },
   { re: /focus ?punch/, a: "Focus Punch never loses its focus here, getting hit doesn't stop it, but it only has 70% accuracy." },
   { re: /\bendure\b|reversal|\bflail\b|endeavor/, a: "Endure hangs on at 1 HP when a hit would knock you out. Then Reversal and Flail hit at 200 power, and Endeavor brings the target down to your HP. A Focus Sash does the same from full HP." },
-  { re: /\brest\b|chesto|sleep talk|\bsnore\b/, a: "Rest heals everything but sleeps you for two turns. A Chesto or Lum Berry wakes you at once, Hydration does in rain, Shed Skin might, Early Bird halves it, and a sleeping Pokémon that knows Snore uses it by itself." },
+  { re: /\brest\b|chesto|sleep talk|\bsnore\b/, a: "Rest heals everything, then you sleep through your next turn (sleep is shorter here than in the main games). It fails at full HP, when you're already asleep, or when you can't fall asleep (Insomnia, Electric or Misty Terrain). A Chesto or Lum Berry wakes you at once, Hydration does in rain, Shed Skin might, Early Bird wakes you twice as fast, and a sleeping Pokémon that knows Snore uses it by itself." },
   { re: /belly ?drum/, a: "Belly Drum maxes your Attack for half your HP. A Sitrus Berry gives a quarter back straight away." },
   { re: /\btrick\b|switcheroo/, a: "Choice items don't lock your move here, so Tricking one onto a foe just powers it up. Trick a Flame Orb, Toxic Orb, Iron Ball, Lagging Tail or Sticky Barb instead." },
   { re: /weather ?ball/, a: "Weather Ball takes the weather's type and doubles to 100 power: Fire in harsh sunlight, Water in rain, Rock in a sandstorm, Ice in the snow. It's a special move, so on weather teams our special attackers run it and the physical ones never do." },
@@ -19231,7 +19232,7 @@ const TALK_FAQ = [
   { re: /gluttony/, a: "Gluttony eats its HP Berry the moment it takes any damage." },
   { re: /arena trap|magnet pull|run away|trapped|can'?t switch/, a: "Arena Trap stops grounded opposing Pokémon switching out and slows their turn meters; Magnet Pull does that to Steel types. Run Away is never trapped by anything, and Shed Shell always gets out." },
   { re: /intimidate/, a: "Intimidate lowers Attack by 1 on the way in. Inner Focus, Own Tempo, Oblivious and Scrappy ignore it, and Rattled gets faster from it." },
-  { re: /sturdy/, a: "Sturdy holds on at 1 HP from full HP. There are no one-hit KO moves here to stop: Fissure, Horn Drill, Guillotine and Sheer Cold take half the target's HP, like Super Fang." },
+  { re: /sturdy/, a: "Sturdy holds on at 1 HP from full HP, every time it's hit at full HP. There are no one-hit KO moves here to stop: Fissure, Horn Drill, Guillotine and Sheer Cold take half the target's HP, like Super Fang." },
   { re: /fissure|horn drill|guillotine|sheer cold|one-?hit ko|ohko|super fang|ruination|nature'?s madness/, a: "Fissure, Horn Drill, Guillotine and Sheer Cold work like Super Fang, Ruination and Nature's Madness here: they take half the target's current HP, at 90% accuracy. Types still decide who they can hit (Fissure can't touch Flying-types or Levitate), and Sheer Cold hits Ice-types too." },
   { re: /dry skin/, a: "Dry Skin soaks up Water moves, heals 1/8 a turn in rain, loses 1/8 in harsh sunlight, and takes 25% more from Fire." },
   { re: /assault vest/, a: "Assault Vest gives Sp. Def +1, a stat stage that stays as long as it's held, and here its holder can still use status moves. One per team (Item Clause)." },
@@ -25345,6 +25346,7 @@ function makeBattle(cfg) {
     const PL = u.held && HELD[u.held]; if (u.passives[0] && u.passives[0].id === "MULTITYPE" && PL && (u.passives[0].memory ? PL.memory : /plate$/.test(u.held) && PL.boost)) { u.plateType = PL.memory || PL.boost; u.types = [u.plateType]; u.el = u.plateType; }
     if (spec.maxHp) u.chipHp = baseHp;
     if (dmax && !u.chipHp) u.chipHp = hp1;
+    u.abBase = u.passives.slice();   // (the Ability it goes back to when it leaves the field: switchOut)
     return u;
   }
   // ---------- forms that change in battle ----------
@@ -25424,6 +25426,7 @@ function makeBattle(cfg) {
   }
   function startEffects(list) {
     for (const u of list) {
+      if (!u.alive) continue;   // (knocked out by a hazard on the way in: its item and Ability do nothing, as on Showdown)
       // Illusion: it comes in looking like the last Pokémon on its bench, until a damaging move hits it
       if (pv(u, "ILLUSION")) u.flags.illusionReady = true;   // (Illusion, the owner's rule: the first single-target opposing move goes for one of the attacker's partners)
       formCheck(u);
@@ -25446,8 +25449,9 @@ function makeBattle(cfg) {
       const pxb = pv(u, "PARADOX");   // Booster Energy (the owner's rule): the Paradox Ability's boost without the sun or the terrain, for as long as it's held (fixedStage)
       if (pxb && item(u, "boosterenergy") && !(pxb.w ? inWeather(pxb.w) : inTerrain(pxb.t))) msg(`${Nm(u)}'s Booster Energy activated its ${u.passives[0].name}!`);
       const foes = enemies(u);
-      for (const p of u.passives) {
-        if (p.id === "INTIMIDATE") { msg(`${Nm(u)}'s Intimidate!`); for (const f of foes) { if (pv(f, "GUARD_DOG") && !f.flags.noAbility && !gasOn(f)) { stage(f, f, "atk", 1, "Guard Dog"); continue; } const blk = !f.flags.noAbility && !gasOn(f) && f.passives.find(q => q.noIntim); if (blk) { msg(`${Nm(f)}'s ${blk.name} kept it from being intimidated!`); continue; } if (stage(u, f, "atk", -1) && pv(f, "RATTLED")) stage(f, f, "spe", 1, "Rattled"); if (item(f, "adrenalineorb")) { useUp(f, `${Nm(f)}'s Adrenaline Orb kicked in!`); stage(f, f, "spe", 1); } } }
+      // (Neutralizing Gas on the field, or its own Ability suppressed: no entry Ability, as on Showdown)
+      for (const p of (u.flags.noAbility || gasOn(u) ? [] : u.passives)) {
+        if (p.id === "INTIMIDATE") { msg(`${Nm(u)}'s Intimidate!`); for (const f of foes) { if (f.shield > 0) { msg(`It doesn't affect ${nm(f)}...`); continue; } if (pv(f, "GUARD_DOG") && !f.flags.noAbility && !gasOn(f)) { stage(f, f, "atk", 1, "Guard Dog"); continue; } const blk = !f.flags.noAbility && !gasOn(f) && f.passives.find(q => q.noIntim); if (blk) { msg(`${Nm(f)}'s ${blk.name} kept it from being intimidated!`); continue; } if (stage(u, f, "atk", -1) && pv(f, "RATTLED")) stage(f, f, "spe", 1, "Rattled"); if (item(f, "adrenalineorb")) { useUp(f, `${Nm(f)}'s Adrenaline Orb kicked in!`); stage(f, f, "spe", 1); } } }
         else if (p.id === "DOWNLOAD") { stage(u, u, "atk", 1, "Download"); stage(u, u, "spa", 1, "Download"); }
         else if (p.id === "NEUTRAL") msg(psT("neutralizinggas", "start"));   // (as in the games: it says so; what it does is gasOn)
         else if (p.id === "ARENA_TRAP") { msg(`${Nm(u)}'s ${p.name}! The opposing team can't get away!`); for (const f of foes) if (!pv(f, "RUN_AWAY")) f.atb = 0; }
@@ -25524,7 +25528,7 @@ function makeBattle(cfg) {
     const sp = s.M.sp;
     if (WX_MOVE[sp]) return B.weather !== WX_MOVE[sp];
     if (sp === "terrain") return !!TERRAIN_MOVE[s.key] && !(B.terrain && B.terrain.t === TERRAIN_MOVE[s.key]);
-    if (ENTRY_HZ[sp]) return benchOf(foeTeam(u)).length > 0 && !ENTRY_HZ[sp](sideHz(foeTeam(u)));
+    if (ENTRY_HZ[sp]) return benchOf(foeTeam(u)).length > 0 && !ENTRY_HZ[sp](sideHz(foeTeam(u))) && !enemies(u).some(x => x.alive && pv(x, "MAGIC_BOUNCE"));
     if (sp === "auroraveil" && !(inWeather("hail") || inWeather("snow"))) return false;
     if (ENTRY_SIDE[sp]) return !has(u, ENTRY_SIDE[sp]);
     if (sp === "gravity") return !fieldOn("gravity");
@@ -25533,6 +25537,9 @@ function makeBattle(cfg) {
     if (sp === "powder") return enemies(u).some(x => x.alive && !has(x, "POWDER") && !powderProof(u, x));
     // Future Sight and Doom Desire (the owner's rule, 2026-10-20): unless one of the user's is still on the way
     if (sp === "future") return enemies(u).some(x => x.alive) && !(B.future || []).some(f => f.by === u.uid);
+    // Laser Focus and Lock-On (the owner's rule, 2026-10-21): unless it's already focused or taking aim
+    if (sp === "laserfocus") return !has(u, "LASER");
+    if (sp === "lockon") return !has(u, "LOCKON") && enemies(u).some(x => x.alive);
     return false;
   }
   function autoField(u) {
@@ -25649,7 +25656,7 @@ function makeBattle(cfg) {
   const aliveCount = team => B.units.filter(x => x.team === team && x.alive).length + benchOf(team).length;
   const sideName = team => TEXT_TOKENS ? `\u0006${team}\u0007` : team === VIEW_ME ? "You" : B.trainer || "The opponent";
   // a Pokémon from the bench takes a place on the field (events: the line, then "sendin" for the Poké Ball)
-  function enter(team, slot, x, line, atb) {
+  function enter(team, slot, x, line, atb, pre) {
     B.bench[team].splice(B.bench[team].indexOf(x), 1);
     x.slot = slot; x.atb = atb; x.fresh = true;
     B.units.push(x);
@@ -25657,6 +25664,7 @@ function makeBattle(cfg) {
     if (!B.sim && team === "E") dexSee(x.key);
     if (!TEXT_TOKENS || line) msg(line || (team === VIEW_ME ? `Go! ${x.n}!` : B.wild ? `A wild ${x.n} appeared!` : `${sideName(team)} sent out ${x.n}!`));   // (Showdown says its own)
     ev({ k: "sendin", u: x.uid, team, slot, hp: x.hp });
+    if (pre) pre(x);   // (Baton Pass: what it passes, before the hazards and the entry effects)
     arrive(x); terrainSeeds();
     startEffects([x]);
     // (the screen draws every newcomer afresh: its badge and icons as it arrives, Tailwind's Speed, the weather's and the field's
@@ -25667,13 +25675,17 @@ function makeBattle(cfg) {
   function arrive(x) {
     const hz = B.hazards && B.hazards[x.team];
     if (B.healWish && B.healWish[x.team]) { B.healWish[x.team] = false; x.status = null; heal(x, x.max.hp, `The healing wish came true for ${nm(x)}!`); fxEv(x); }
-    if (!hz || pv(x, "MAGIC_GUARD") || item(x, "heavydutyboots")) return;
-    if (hz.sr) chip(x, hpBase(x) * typeEff("Rock", x.types) / 8, `Pointed stones dug into ${nm(x)}!`);
-    if (x.alive && hz.spikes && grounded(x)) chip(x, hpBase(x) * [0, 1 / 8, 1 / 6, 1 / 4][hz.spikes], `${Nm(x)} was hurt by the spikes!`);
-    if (x.alive && hz.web && grounded(x)) { msg(`${Nm(x)} was caught in a sticky web!`); stage(null, x, "spe", -1); }
+    if (!hz) return;
+    // (as on Showdown: Heavy-Duty Boots keep every hazard off; Magic Guard only their damage, so Sticky Web and Toxic Spikes still
+    // work on it; a grounded Poison type clears Toxic Spikes even in boots; the web's Speed drop and the poison come from the other
+    // side, so Defiant, Competitive, Clear Body, Mist, Mirror Armor and Safeguard all count, and Synchronize doesn't)
+    const boots = item(x, "heavydutyboots"), mg = pv(x, "MAGIC_GUARD"), src = enemies(x).find(f => f.alive && B.units.includes(f)) || null;
+    if (hz.sr && !boots && !mg) chip(x, hpBase(x) * typeEff("Rock", x.types) / 8, `Pointed stones dug into ${nm(x)}!`);
+    if (x.alive && hz.spikes && grounded(x) && !boots && !mg) chip(x, hpBase(x) * [0, 1 / 8, 1 / 6, 1 / 4][hz.spikes], `${Nm(x)} was hurt by the spikes!`);
+    if (x.alive && hz.web && grounded(x) && !boots) { msg(`${Nm(x)} was caught in a sticky web!`); stage(src, x, "spe", -1); }
     if (x.alive && hz.tspikes && grounded(x)) {
       if (x.types.includes("Poison")) { hz.tspikes = 0; msg(psT("toxicspikes", "end", { TEAM: psTeam(x.team) })); hzEv(x.team); }
-      else tryStatus(null, x, hz.tspikes > 1 ? "TOX" : "PSN", false);
+      else if (!boots) tryStatus(src, x, hz.tspikes > 1 ? "TOX" : "PSN", false, { hazard: true });
     }
   }
   // a Pokémon sent in to take a fainted one's place (the owner's rule): protected like Protect until its first turn (moves from the
@@ -25686,8 +25698,13 @@ function makeBattle(cfg) {
     if (x.alive && B.units.includes(x) && !has(x, "PROTECT")) { addEff(x, "PROTECT", 99, x, true); const pe = effOf(x, "PROTECT"); if (pe) pe.shield = "replace"; msg(`${Nm(x)} is protected until its first turn!`); ev({ k: "aura", u: x.uid }); }
   }
   // leaving the field ends stat changes and volatile effects (a status condition stays), as in the games
+  // (as on Showdown: Bind and its kin, Mean Look and Octolock end once the Pokémon that did it is gone from the field)
+  function trapsEnd(u) {
+    for (const x of B.units) if (x !== u && x.alive && x.eff.some(e => ["TRAP", "NOSWITCH", "OCTOLOCK"].includes(e.id) && e.src === u.uid)) { x.eff = x.eff.filter(e => !(["TRAP", "NOSWITCH", "OCTOLOCK"].includes(e.id) && e.src === u.uid)); fxEv(x); }
+  }
   function switchOut(u, x, forced) {
     const slot = u.slot;
+    trapsEnd(u);
     if (u.orig) untransform(u, false);
     const pass = forced === "baton" ? { stages: { ...u.stages }, shield: u.shield, eff: u.eff.filter(e => ["SUB", "FOCUS", "AQUARING", "INGRAIN", "MAGNETRISE", "CNF", "SEED", "CURSE"].includes(e.id)) } : null;
     if (pv(u, "REGEN") && u.alive) u.hp = Math.min(u.max.hp, u.hp + Math.floor(u.max.hp / 3));
@@ -25698,10 +25715,14 @@ function makeBattle(cfg) {
     u.stages = newStages(); u.eff = []; u.shield = 0; u.atb = 0; if (u.status === "TOX") u.sTurn = 1; u.flags.noAbility = false; loveEnds(u);
     if (forced !== true && !TEXT_TOKENS) msg(u.team === VIEW_ME ? `${u.n}, come back!` : `${sideName(u.team)} withdrew ${u.n}!`);
     gasLeaves(u);
+    // (as on Showdown: a type or Ability changed in battle goes back as it leaves: Soak, Burn Up, Reflect Type, Protean, Forest's
+    // Curse, Trace, Mummy, Worry Seed, Skill Swap...; its form stays, and Trace and the like go off again next time it comes in)
+    if (u.abBase) u.passives = u.abBase.slice();
+    u.types = (u.plateType ? [u.plateType] : (OPS[u.disguise ? u.disguise.spr : u.spr] || OPS[u.key]).types).slice(); u.flags.addType = null;
     ev({ k: "recall", u: u.uid, forced: forced === true });
     B.units.splice(B.units.indexOf(u), 1); u.slot = -1; B.bench[u.team].push(u);
-    enter(x.team, slot, x, forced === true ? `${x.n} was dragged out!` : null, 0);
-    if (pass && x.alive) { x.stages = pass.stages; x.shield = pass.shield; x.eff.push(...pass.eff.map(e => ({ ...e }))); fxEv(x); }
+    enter(x.team, slot, x, forced === true ? `${x.n} was dragged out!` : null, 0, pass ? y => { y.stages = pass.stages; y.shield = pass.shield; y.eff.push(...pass.eff.map(e => ({ ...e }))); } : null);
+    if (pass && x.alive) fxEv(x);
     if (forced && forced.sub && x.alive) { x.shield = forced.sub; x.eff.push({ id: "SUB", turns: 99 }); msg(`${Nm(x)} is behind the decoy!`); fxEv(x); }   // (Shed Tail)
     terrainSeeds();
   }
@@ -25719,7 +25740,7 @@ function makeBattle(cfg) {
   const weatherProof = (u, w) => ["WSPEED", "WEVA", "WHEAL"].some(id => { const p = pv(u, id); return p && p.w === w; });
   // on the ground (terrains and Spikes reach it): not Flying, no Levitate, no Magnet Rise
   const grounded = u => fieldOn("gravity") || !has(u, "TELEKINESIS") && grounded0(u);
-  const grounded0 = u => item(u, "ironball") || has(u, "SMACKDOWN") || (!u.types.includes("Flying") && !pv(u, "IMMUNE_TYPE") && !has(u, "MAGNETRISE") && !item(u, "airballoon"));
+  const grounded0 = u => item(u, "ironball") || has(u, "SMACKDOWN") || has(u, "INGRAIN") || (!u.types.includes("Flying") && !pv(u, "IMMUNE_TYPE") && !has(u, "MAGNETRISE") && !item(u, "airballoon"));
   const inTerrain = (t, u) => B.terrain && B.terrain.t === t && (!u || grounded(u));
   // Weather Ball takes the weather's type; everything else its own
   const WB_TYPE = { sun: "Fire", rain: "Water", sand: "Rock", hail: "Ice", snow: "Ice" };
@@ -25818,11 +25839,21 @@ function makeBattle(cfg) {
       if (!cfg.from && u.alive && u.fxKey !== JSON.stringify(shownStages(u))) fxEv(u);   // (not in the AI's look-ahead copies: nobody sees them)
     }
   }   // (and Castform when its rock is lost)
-  function statOf(u, s, ignoreStage) {
+  function statOf(u, s, ignoreStage, extra = 0) {
     const ws = fieldOn("wonderRoom") && (s === "def" || s === "sdf") ? (s === "def" ? "sdf" : "def") : s;   // (Wonder Room swaps Defense and Sp. Def)
-    // the stages moves made (ignoreStage: a critical hit or Unaware leaves them out) and the fixed ones, ±6 together
-    return u.max[ws] * stageMult(clamp((ignoreStage ? 0 : u.stages[s]) + fixedStage(u, s), -6, 6));
+    // the stages moves made (ignoreStage: a critical hit or Unaware leaves them out) and the fixed ones, ±6 together (extra: a
+    // stage more or less for one hit, burn's in damageOf)
+    return u.max[ws] * stageMult(clamp((ignoreStage ? 0 : u.stages[s]) + fixedStage(u, s) + extra, -6, 6));
   }
+  // a burn's Attack −2 (fixedStage), Guts aside
+  const burnStage = u => u && u.alive && u.status === "BRN" && !pv(u, "GUTS") ? -2 : 0;
+  // Sheer Force on a move with added effects: they're gone, and so are what they'd set off (Life Orb's recoil, Shell Bell, Throat
+  // Spray, Magician; the target's Red Card, Eject Button, Emergency Exit, Kee and Maranga Berries, Pickpocket), as in the games
+  const sheerOf = (u, sk) => !!pv(u, "SHEER_FORCE") && !!(sk.M.ail || sk.M.fl || (sk.M.st && sk.M.sw !== "self") || SECONDARY_SP.has(sk.M.sp));
+  // held in place: Suction Cups, Guard Dog, Ingrain (Roar, Whirlwind, Dragon Tail, a Red Card can't drag it out)
+  const anchored = x => !!(pv(x, "SUCTION") || pv(x, "GUARD_DOG") || has(x, "INGRAIN"));
+  // Showdown's rounding: a modifier rounds half down
+  const pokeRound = v => { const f = Math.floor(v); return v - f > .5 ? f + 1 : f; };
   // turn-meter tempo: Speed relative to the battle's average level, so it matters at Lv 5 as much as at Lv 70
   // Arena Trap holds grounded Pokémon (not Flying-type, no Levitate) while its user is in battle: their turn meter fills 10% slower
   // Magnet Pull does the same to opposing Steel types (Flying or not), and stacks with Arena Trap
@@ -25832,8 +25863,11 @@ function makeBattle(cfg) {
   const pulled = u => !pv(u, "RUN_AWAY") && u.types.includes("Steel") && enemies(u).some(f => pv(f, "MAGNET_PULL"));
   const trSpe = u => { const s = statOf(u, "spe"); if (!(B.trickRoom > B.turn)) return s; const al = B.units.filter(x => x.alive), m = al.reduce((a, x) => a + statOf(x, "spe"), 0) / (al.length || 1); return m * m / Math.max(5, s); };
   const effSpd = u => (70 + .45 * trSpe(u) * 50 / Math.max(5, B.avgL)) * (trapped(u) ? .9 : 1) * (pulled(u) ? .9 : 1) * (item(u, "laggingtail") || item(u, "fullincense") || pv(u, "STALL") ? .6 : 1) * (pledgeOn(u.team, "swamp") ? .25 : 1);
-  const critStage = (u, sk) => (has(u, "FOCUS") ? 2 : 0) + (pv(u, "SUPER_LUCK") ? 2 : 0) + (sk && sk.M.cr ? 1 : 0) + (item(u, "scopelens") || item(u, "razorclaw") ? 1 : 0) + ((item(u, "luckypunch") && u.key === "chansey") || (item(u, "leek") && u.key === "farfetchd") ? 3 : 0);
+  const critStage = (u, sk) => (has(u, "FOCUS") ? effOf(u, "FOCUS").n || 2 : 0) + (pv(u, "SUPER_LUCK") ? 2 : 0) + (sk && sk.M.cr ? 1 : 0) + (item(u, "scopelens") || item(u, "razorclaw") ? 1 : 0) + ((item(u, "luckypunch") && u.key === "chansey") || (item(u, "leek") && u.key === "farfetchd") ? 3 : 0);
   const critChance = n => [1 / 24, 1 / 8, 1 / 2, 1][clamp(n, 0, 3)];
+  // how many a spread move hits: the targets it set out with while it's being used, otherwise (the AI's sums) the opposing
+  // Pokémon on the field. As in the games, its damage is cut to 75% only when that's two or more
+  const spreadCount = att => B.acting && B.spreadN != null ? B.spreadN : enemies(att).filter(x => x.alive && B.units.includes(x)).length;
   const sureCrit = (att, sk) => sk && (sk.M.sp === "alwayscrit" || has(att, "LASER"));
   const sniperCrit = att => pv(att, "SNIPER") && !wasHit(att);   // Sniper (the owner's rule): not hurt since its last turn, its damaging moves crit
   const mastery = (u, sk) => 1 + .06 * ((u.sk[sk.slot - 1] || 1) - 1);
@@ -25878,19 +25912,20 @@ function makeBattle(cfg) {
     if (major && inWeather("sun") && tab(src, tar, "LEAF_GUARD")) return fail(`${Nm(tar)}'s Leaf Guard prevents it!`);
     if ((major || what === "CNF") && inTerrain("misty", tar)) return fail(`${Nm(tar)} surrounds itself with a protective mist!`);
     if (what === "SLP" && inTerrain("electric", tar)) return fail(`${Nm(tar)} is protected by the Electric Terrain!`);
-    if (tar.shield > 0 && src !== tar && src.team !== tar.team && !opts.sound && !pv(src, "INFILTRATOR") && opts.direct) return fail();
+    if (tar.shield > 0 && src && src !== tar && src.team !== tar.team && !opts.sound && !pv(src, "INFILTRATOR") && opts.direct) return fail();   // (no source: Yawn's sleep, a hazard)
     if (what === "SLP" || what === "FRZ") { /* no extra checks */ }
     if (major) {
       tar.status = what;
       tar.sTurn = what === "SLP" ? (opts.turns || ri(1, 3)) : what === "TOX" ? 1 : what === "FRZ" ? 3 : 0;
-      if (what === "SLP" && pv(tar, "EARLY_BIRD")) tar.sTurn = Math.ceil(tar.sTurn / 2);
       ev({ k: "status", u: tar.uid, s: what }); msg(statusLine(what, tar, src));
       fxEv(tar);
-      if (pv(tar, "SYNC") && src && src !== tar && src.alive && ["BRN", "PSN", "TOX", "PAR"].includes(what)) { msg(`${Nm(tar)}'s Synchronize!`); tryStatus(tar, src, what, false); }
+      if (pv(tar, "SYNC") && src && src !== tar && src.alive && !opts.hazard && ["BRN", "PSN", "TOX", "PAR"].includes(what)) { msg(`${Nm(tar)}'s Synchronize!`); tryStatus(tar, src, what, false); }
       if ((what === "PSN" || what === "TOX") && src && src !== tar && pv(src, "PUPPETEER")) tryStatus(src, tar, "CNF", false);   // Poison Puppeteer
     } else {
-      const turns = { CNF: ri(2, 4), INFAT: ri(2, 4), SEED: 99, TRAP: src && item(src, "gripclaw") ? 7 : ri(2, 4), DISABLE: 2 }[what] || 2;
-      tar.eff.push({ id: what, turns, skip: tar === B.actor, src: src && src.uid });
+      // (confusion 3 to 4 turns: the owner's rule, 2026-10-21; binding 4 to 5, as on Showdown)
+      const turns = { CNF: ri(3, 4), INFAT: ri(2, 4), SEED: 99, TRAP: src && item(src, "gripclaw") ? 7 : ri(4, 5), DISABLE: 2 }[what] || 2;
+      // (Leech Seed heals whoever stands where its seeder stood: its place, as on Showdown)
+      tar.eff.push({ id: what, turns, skip: tar === B.actor, src: src && src.uid, ...(what === "SEED" && src ? { team: src.team, slot: src.slot } : {}) });
       msg(statusLine(what, tar, src)); fxEv(tar);
     }
     statusItems(tar);
@@ -25983,8 +26018,8 @@ function makeBattle(cfg) {
     if (grudge && killer && killer.alive && killer !== u && killer.lastSkill && killer.lastSkill.key !== "struggle") {
       (killer.flags.lost || (killer.flags.lost = {}))[killer.lastSkill.key] = 1; msg(`${Nm(killer)}'s ${killer.lastSkill.name} lost all its power due to the grudge!`);
     }
-    u.alive = false; u.hp = 0; u.eff = []; u.shield = 0; u.atb = 0; u.status = null; u.flags.semi = null; loveEnds(u);
-    (B.faintT || (B.faintT = {}))[u.team] = B.turn;
+    u.alive = false; u.hp = 0; u.eff = []; u.shield = 0; u.atb = 0; u.status = null; u.flags.semi = null; loveEnds(u); trapsEnd(u);
+    (B.faintT || (B.faintT = {}))[u.team] = B.turn; B.lastFaint = u.team;
     if (u.team === "E") B.tally.kills++;
     ev({ k: "death", u: u.uid }); msg(`${Nm(u)} fainted!`);
     gasLeaves(u);
@@ -26030,7 +26065,7 @@ function makeBattle(cfg) {
     // Endure, Sturdy and Focus Band hold on with 1 HP
     if (!meta.trueDmg && dealt >= tar.hp) {
       if (has(tar, "ENDURE")) { dealt = tar.hp - 1; meta.endure = `${Nm(tar)} endured the hit!`; }
-      else if (tab(att, tar, "STURDY") && tar.hp === tar.max.hp && !tar.flags.sturdyUsed) { dealt = tar.hp - 1; tar.flags.sturdyUsed = true; meta.endure = `${Nm(tar)} endured the hit thanks to Sturdy!`; }
+      else if (tab(att, tar, "STURDY") && tar.hp === tar.max.hp) { dealt = tar.hp - 1; tar.flags.sturdyUsed = true; meta.endure = `${Nm(tar)} endured the hit thanks to Sturdy!`; }   // (every time it's at full HP, as on Showdown)
       else if (item(tar, "focusband") && R() < .1) { dealt = tar.hp - 1; meta.endure = `${Nm(tar)} hung on using its Focus Band!`; }
       else if (item(tar, "focussash") && tar.hp === tar.max.hp) { dealt = tar.hp - 1; useUp(tar); meta.endure = `${Nm(tar)} hung on using its Focus Sash!`; }
     }
@@ -26140,6 +26175,8 @@ function makeBattle(cfg) {
   // Minimize: these moves hit a minimized Pokémon twice as hard and never miss it; these thaw a frozen target like Fire moves
   const MINI_HIT = new Set(["stomp", "steamroller", "bodyslam", "dragonrush", "heatcrash", "heavyslam", "maliciousmoonsault", "supercellslam", "doubleironbash"]);
   const THAW = new Set(["scald", "scorchingsands", "steameruption", "matchagotcha"]);
+  // the moves that thaw their own user (Showdown's defrost moves): a frozen Pokémon that uses one thaws and moves
+  const DEFROST = new Set(["burnup", "flamewheel", "flareblitz", "fusionflare", "matchagotcha", "pyroball", "sacredfire", "scald", "scorchingsands", "steameruption"]);
   // moves whose added effect is their own (secondary): Sheer Force powers them up and cancels it, like status chances
   const SLICE = new Set(["aerialace", "aircutter", "airslash", "aquacutter", "behemothblade", "bitterblade", "ceaselessedge", "crosspoison", "cut", "furycutter",
     "kowtowcleave", "leafblade", "mightycleave", "nightslash", "populationbomb", "psyblade", "psychocut", "razorleaf", "razorshell", "sacredsword", "secretsword", "slash",
@@ -26156,23 +26193,24 @@ function makeBattle(cfg) {
   // (the owner's rule: these roll their power like Magnitude, 10 to 150, about 71 on average; Loaded Dice: always 150)
   const FIXED = { dragonrage: () => 40, sonicboom: () => 20, nightshade: u => u.lvl, seismictoss: u => u.lvl, psywave: u => Math.max(1, Math.floor(u.lvl * (item(u, "loadeddice") ? 1.5 : .5 + R()))) };   // (Loaded Dice: Psywave at its most, a house rule)
   function damageOf(att, tar, sk, opts = {}) {
-    const M = sk.M, e = effOn(att, tar, sk);
+    const M = sk.M; let e = effOn(att, tar, sk);
     if (e === 0) return { dmg: 0, e: 0 };
     // fixed damage ignores stats, type effectiveness (immunities aside) and boosts, but Mastery still adds its 6% per rank
     if (M.sp === "superfang") return { dmg: Math.max(1, Math.floor(Math.min(tar.hp, hpBase(tar)) / 2 * (tar.boss ? .5 : 1) * mastery(att, sk))), e: 1 };
-    if (FIXED[M.sp]) return { dmg: Math.max(1, Math.round(FIXED[M.sp](att) * DMG_SCALE * 1.5 * mastery(att, sk))), e: 1 };
+    if (FIXED[M.sp]) return { dmg: Math.max(1, Math.round(FIXED[M.sp](att) * mastery(att, sk))), e: 1 };   // (exactly the level, 40, 20, as on Showdown; Mastery's 6% a rank)
     if (M.sp === "endeavor") return { dmg: Math.max(0, Math.min(tar.hp, hpBase(tar)) - att.hp), e: 1 };
     if (M.sp === "finalgambit") return { dmg: att.hp, e: 1 };
     if (M.sp === "counter" || M.sp === "mirrorcoat") { const h = att.lastHit && att.lastHit[M.sp === "counter" ? "P" : "S"]; return { dmg: h ? Math.max(1, Math.round(h.dmg * 2)) : 0, e: 1 }; }
     if (M.sp === "metalburst") { const h = att.lastHit && (B.counterCat ? att.lastHit[B.counterCat] : [att.lastHit.P, att.lastHit.S].filter(Boolean).sort((a, b) => b.dmg - a.dmg)[0]); return { dmg: h ? Math.max(1, Math.round(h.dmg * 1.5)) : 0, e: 1 }; }
     const crit = opts.crit, phys = M.sp === "terablast" || M.sp === "hiddenpower" || M.sp === "present" || sk.key === "photongeyser" ? statOf(att, "atk") > statOf(att, "spa") : M.c === "P", t = mtype(att, sk);
-    let pow = movePower(att, tar, sk) * mastery(att, sk);
+    const bp = movePower(att, tar, sk);   // (the move's power now: Acrobatics without an item, a doubled Payback, Flail...)
+    let pow = bp * mastery(att, sk);
     if (has(att, "CHARGE") && t === "Electric") pow *= 2;                                                // Charge
     if (has(tar, "MINIMIZE") && MINI_HIT.has(sk.key)) pow *= 2;                                         // Minimize
     if (tar.flags.semi && (SEMI_DOUBLE[tar.flags.semi.key] || []).includes(sk.key)) pow *= 2;            // Earthquake on a digger...
     if (axelLike(sk)) pow *= (B.hitIdx || 0) + 1;   // Triple Axel and Ash-Greninja's Water Shuriken: 20, 40, 60; Triple Kick: 10, 20, 30
     if (M.sp === "fusion") { const other = sk.key === "fusionflare" ? "fusionbolt" : "fusionflare"; if (B.fusion && B.fusion[other] != null && B.fusion[other] > (att.actT == null ? -1 : att.actT)) pow *= 2; }
-    if (pv(att, "TECHNICIAN") && sk.pow <= 60) pow *= 1.5;
+    if (pv(att, "TECHNICIAN") && bp <= 60) pow *= 1.5;   // (its power now, as on Showdown)
     if (pv(att, "IRON_FIST") && M.pu) pow *= 1.5;   // (the owner's rule: 50%)
     if (pv(att, "SHARPNESS") && SLICE.has(sk.key)) pow *= 1.5;
     const fp = pv(att, "FLAGPOW"); if (fp && (fp.flag === "pulse" ? PULSE.has(sk.key) : M[fp.flag] && !(fp.flag === "ct" && pv(att, "LONG_REACH")))) pow *= fp.mul;   // Strong Jaw, Mega Launcher, Tough Claws, Punk Rock
@@ -26185,7 +26223,7 @@ function makeBattle(cfg) {
     if (pv(att, "STAKEOUT") && tar.fresh) pow *= 2;
     if (pv(att, "RECKLESS") && M.dr < 0) pow *= 1.5;   // (50%)
     if (pv(att, "SHEER_FORCE") && (M.ail || M.fl || (M.st && M.sw !== "self") || SECONDARY_SP.has(M.sp))) pow *= 1.5;   // (50%)
-    const pin = pv(att, "PINCH"); if (pin && pin.type === t && att.hp < att.max.hp / 3) pow *= 1.5;
+    const pin = pv(att, "PINCH"); if (pin && pin.type === t && att.hp <= att.max.hp / 3) pow *= 1.5;
     if (has(att, "FLASHFIRE") && t === "Fire") pow *= 1.5;
     if (pv(att, "SAND_FORCE") && inWeather("sand") && ["Rock", "Ground", "Steel"].includes(t)) pow *= 1.5;   // (50%)
     // Analytic (the owner's rules; 2026-10-16): with its Speed down a stage or more (as the badge shows it, paralysis and an Iron Ball
@@ -26211,32 +26249,42 @@ function makeBattle(cfg) {
     // Unaware (either side) and Chip Away ignore stat changes
     const aStat = M.sp === "bodypress" ? "def" : phys ? "atk" : "spa", dStat = phys || M.sp === "psyshock" ? "def" : "sdf", aSrc = M.sp === "foulplay" ? tar : att;
     const ignA = !!tab(att, tar, "UNAWARE"), ignD = !!pv(att, "UNAWARE") || M.sp === "chipaway";
-    let A = statOf(aSrc, aStat, ignA), D = statOf(tar, dStat, ignD);
-    if (crit) { A = Math.max(A, statOf(aSrc, aStat, true)); D = Math.min(D, statOf(tar, dStat, true)); }
-    let d = ((2 * att.lvl / 5 + 2) * pow * A / Math.max(1, D)) / 50 + 2;
-    if (sk.target === "aoe_enemies") d *= SPREAD;
-    const umb = item(att, "utilityumbrella") || item(tar, "utilityumbrella");
-    if (inWeather("rain") && !umb) d *= t === "Water" ? 1.5 : t === "Fire" ? .5 : 1;
-    if (inWeather("sun") && !umb) d *= t === "Fire" ? 1.5 : t === "Water" ? (M.sp === "hydrosteam" ? 1.5 : .5) : 1;
-    if (crit) d *= pv(att, "SNIPER") ? 2.25 : 1.5;
-    d *= opts.roll == null ? .85 + R() * .15 : opts.roll;
-    if (att.types.includes(t)) d *= pv(att, "ADAPT") ? 2 : 1.5;
-    d *= e;
-    if (!crit && !pv(att, "INFILTRATOR") && (has(tar, phys ? "REFLECT" : "LSCREEN") || has(tar, "VEIL"))) d *= 2 / 3;
-    const rs = tab(att, tar, "RESIST"); if (rs && rs.types.includes(t)) d *= .5;
-    const dsk = tab(att, tar, "ABSORB"); if (dsk && dsk.dry && t === "Fire") d *= 1.25;   // Dry Skin: Fire hurts it 25% more
-    if (tab(att, tar, "MULTISCALE") && tar.hp === tar.max.hp) d *= .5;
-    { const fl = tab(att, tar, "FILTER"); if (fl && e > 1) d *= 1 - (fl.cut || .25); }   // Filter, Solid Rock, Prism Armor (the owner's rule: 50%)
-    const RB = heldX(tar); if (RB && RB.resist === t && (e > 1 || t === "Normal") && berryOk(tar)) d *= .5;
-    if (pv(att, "TINTED") && e < 1) d *= 2;
-    if (item(att, "expertbelt") && e > 1) d *= 1.2;
-    if (allies(tar).some(a => a !== tar && pv(a, "FRIEND_GUARD"))) d *= .5;   // Friend Guard (the owner's rule: 50%)
-    if (!phys && tab(att, tar, "ICE_SCALES")) d *= .5;
-    if (tab(att, tar, "FLUFFY")) { if (M.ct && !pv(att, "LONG_REACH")) d *= .5; if (t === "Fire") d *= 2; }
-    if (M.so && (tab(att, tar, "FLAGPOW") || {}).guard) d *= .5;   // Punk Rock
-    if (t === "Fire" && tab(att, tar, "WATER_BUBBLE")) d *= .5;
-    if (tab(att, tar, "TERA_SHELL") && tar.hp >= tar.max.hp && e > .5) d *= .5 / e;   // Tera Shell: not very effective at full HP
-    return { dmg: Math.max(1, Math.round(d * DMG_SCALE)), e };
+    // a burn as on Showdown (here its Attack −2): Facade ignores it, Foul Play counts the user's burn and not the target's, Body
+    // Press is weakened by it too
+    const xA = M.sp === "facade" && aStat === "atk" ? -burnStage(att) : M.sp === "foulplay" ? burnStage(att) - burnStage(tar) : M.sp === "bodypress" ? burnStage(att) : 0;
+    let A = statOf(aSrc, aStat, ignA, xA), D = statOf(tar, dStat, ignD);
+    if (crit) { A = Math.max(A, statOf(aSrc, aStat, true, xA)); D = Math.min(D, statOf(tar, dStat, true)); }
+    // Tera Shell (at full HP: not very effective) before the items and Abilities that look at how effective a hit is
+    if (tab(att, tar, "TERA_SHELL") && tar.hp >= tar.max.hp && e > .5) e = .5;
+    // Showdown's steps and rounding: whole numbers for the power and the stats, the level term and the base damage rounded down,
+    // each modifier rounding half down, 16 even damage rolls (85% to 100%), and the effectiveness rounding down
+    pow = Math.max(1, Math.round(pow)); A = Math.floor(A); D = Math.max(1, Math.floor(D));
+    let d = Math.floor(Math.floor(Math.floor(2 * att.lvl / 5 + 2) * pow * A / D) / 50) + 2;
+    if (sk.target === "aoe_enemies" && spreadCount(att) > 1) d = pokeRound(d * SPREAD);
+    // the weather: the target's Utility Umbrella keeps it off the target; Hydro Steam's sun boost goes by the user's own umbrella
+    const umbT = item(tar, "utilityumbrella"), umbA = item(att, "utilityumbrella");
+    if (inWeather("rain") && !umbT) { if (t === "Water") d = pokeRound(d * 1.5); else if (t === "Fire") d = pokeRound(d * .5); }
+    if (inWeather("sun")) { if (t === "Fire" && !umbT) d = pokeRound(d * 1.5); else if (t === "Water") { if (M.sp === "hydrosteam") { if (!umbA) d = pokeRound(d * 1.5); } else if (!umbT) d = pokeRound(d * .5); } }
+    if (crit) d = Math.floor(d * (pv(att, "SNIPER") ? 2.25 : 1.5));
+    d = Math.floor(d * (opts.roll == null ? (85 + Math.floor(R() * 16)) / 100 : opts.roll));
+    if (att.types.includes(t)) d = pokeRound(d * (pv(att, "ADAPT") ? 2 : 1.5));
+    d = Math.floor(d * e);
+    let fm = 1;   // (the final modifiers, chained, then applied once)
+    if (!crit && !pv(att, "INFILTRATOR") && (has(tar, phys ? "REFLECT" : "LSCREEN") || has(tar, "VEIL"))) fm *= 2 / 3;
+    const rs = tab(att, tar, "RESIST"); if (rs && rs.types.includes(t)) fm *= .5;
+    const dsk = tab(att, tar, "ABSORB"); if (dsk && dsk.dry && t === "Fire") fm *= 1.25;   // Dry Skin: Fire hurts it 25% more
+    if (tab(att, tar, "MULTISCALE") && tar.hp === tar.max.hp) fm *= .5;
+    { const fl = tab(att, tar, "FILTER"); if (fl && e > 1) fm *= 1 - (fl.cut || .25); }   // Filter, Solid Rock, Prism Armor (the owner's rule: 50%)
+    const RB = heldX(tar); if (RB && RB.resist === t && (e > 1 || t === "Normal") && berryOk(tar)) fm *= .5;
+    if (pv(att, "TINTED") && e < 1) fm *= 2;
+    if (item(att, "expertbelt") && e > 1) fm *= 1.2;
+    if (allies(tar).some(a => a !== tar && pv(a, "FRIEND_GUARD"))) fm *= .5;   // Friend Guard (the owner's rule: 50%)
+    if (!phys && tab(att, tar, "ICE_SCALES")) fm *= .5;
+    if (tab(att, tar, "FLUFFY")) { if (M.ct && !pv(att, "LONG_REACH")) fm *= .5; if (t === "Fire") fm *= 2; }
+    if (M.so && (tab(att, tar, "FLAGPOW") || {}).guard) fm *= .5;   // Punk Rock
+    if (t === "Fire" && tab(att, tar, "WATER_BUBBLE")) fm *= .5;
+    if (fm !== 1) d = pokeRound(d * fm);
+    return { dmg: Math.max(1, Math.floor(d * DMG_SCALE)), e };
   }
   function accOf(att, tar, sk) {
     const M = sk.M;
@@ -26293,7 +26341,7 @@ function makeBattle(cfg) {
     const nc = damageOf(att, tar, sk, { roll: .925 }).dmg, cr = damageOf(att, tar, sk, { roll: .925, crit: true }).dmg;
     const odds = 1;   // (Focus Punch never loses its focus here, the owner's rule)
     let d = Math.round(((1 - pc) * nc + pc * cr) * hits * accOf(att, tar, sk) * odds * (axelLike(sk) ? 2 : 1));
-    if (!legacy(att) && tar.hp === tar.max.hp && d >= tar.hp && !(sk.hits && sk.hits[1] > 1) && ((tab(att, tar, "STURDY") && !tar.flags.sturdyUsed) || item(tar, "focussash"))) d = Math.floor(tar.hp * .79);   // it holds on with 1 HP: a big hit, not a knockout
+    if (!legacy(att) && tar.hp === tar.max.hp && d >= tar.hp && !(sk.hits && sk.hits[1] > 1) && (tab(att, tar, "STURDY") || item(tar, "focussash"))) d = Math.floor(tar.hp * .79);   // it holds on with 1 HP: a big hit, not a knockout
     if (soaks && pv(tar, "ABSORB")) d -= Math.min(tar.max.hp - tar.hp, hpBase(tar) / 4);   // (Volt Absorb and the like heal it first)
     return d;
   }
@@ -26304,7 +26352,7 @@ function makeBattle(cfg) {
     const t = att ? mtype(att, sk) : sk.M.t, a = tab(att, tar, "ABSORB"), rod = tab(att, tar, "ROD"), sip = tab(att, tar, "SIPPER");
     return (a && a.type === t) || (t === "Fire" && tab(att, tar, "FLASH_FIRE")) || (rod && (rod.type || "Electric") === t) || (sip && (sip.wind ? WIND.has(sk.key) : sip.type === t));
   };
-  function attackOnce(att, tar, sk, first) {
+  function attackOnce(att, tar, sk, first, single) {
     if (!att.alive || !tar.alive) return { dealt: 0 };
     const M = sk.M;
     if (M.sp === "fusion") (B.fusion = B.fusion || {})[sk.key] = B.turn;
@@ -26343,32 +26391,41 @@ function makeBattle(cfg) {
     if (r.dmg > 0 && OPS.eiscuenoice && tar.spr !== "eiscuenoice" && tab(att, tar, "ICE_FACE")) { becomeForm(tar, "eiscuenoice", `${Nm(tar)}'s ice face shattered!`); return { dealt: 0 }; }
     const hp0 = tar.hp;
     if (M.sp === "falseswipe") r.dmg = Math.max(0, Math.min(r.dmg, tar.hp - 1));
-    const bypassSub = !!M.so || pv(att, "INFILTRATOR");
+    const bypassSub = !!M.so || pv(att, "INFILTRATOR"), subbed = tar.shield > 0 && !bypassSub;   // (subbed: the substitute takes this hit)
     const RB = heldX(tar), rt = mtype(att, sk);
     if (RB && RB.resist === rt && (r.e > 1 || rt === "Normal") && berryOk(tar) && r.dmg > 0) useUp(tar, `${Nm(tar)}'s ${RB.n} weakened the damage!`);
     const GM = heldX(att); if (GM && GM.gem === rt && r.dmg > 0) useUp(att, `The ${GM.n} strengthened ${nm(att)}'s power!`);
+    // (as on Showdown: "A critical hit!" and a single hit's "It's super effective!" come before the damage)
+    if (crit) { msg("A critical hit!"); B.tally.crits++; }
+    if (single) { const aoe = sk.target === "aoe_enemies"; if (r.e > 1) { msg(`It's super effective${aoe ? ` on ${nm(tar)}` : ""}!`); if (att.team === "A") B.tally.superEff++; } else if (r.e < 1) msg(psT("default", aoe ? "resistedSpread" : "resisted", { POKEMON: nm(tar) })); }
     const dealt = applyDamage(att, tar, r.dmg, { crit, eff: r.e, bypassSub, cat: M.c });
+    // drain, inside the hit as on Showdown (before Rocky Helmet and the like); Liquid Ooze turns only its own holder's share around
+    if (M.dr > 0 && dealt > 0 && att.alive) {
+      const n = Math.max(1, Math.round(dealt * M.dr / 100 * (item(att, "bigroot") ? 1.3 : 1)));
+      if (pv(tar, "OOZE")) chip(att, n, `${Nm(att)} sucked up the liquid ooze!`); else heal(att, n, M.sp === "dreameater" && tar.status === "SLP" ? `${Nm(tar)}'s dream was eaten!` : `${Nm(tar)} had its energy drained!`);
+    }
     if (dealt > 0) hitItems(att, tar, sk, r.e);
-    if (crit) { msg("A critical hit!"); B.tally.crits++; if (tar.alive && pv(tar, "ANGER") && tar.stages.atk < 6) { tar.stages.atk = 6; msg(psT("angerpoint", "boost", { POKEMON: nm(tar) })); fxEv(tar); } }
+    if (crit && tar.alive && dealt > 0 && pv(tar, "ANGER") && tar.stages.atk < 6) { tar.stages.atk = 6; msg(psT("angerpoint", "boost", { POKEMON: nm(tar) })); fxEv(tar); }
     else if (tar.alive && dealt > 0 && pv(tar, "ANGER") && tar.stages.atk < 6) stage(tar, tar, "atk", 1, "Anger Point");
     if ((M.t === "Fire" || THAW.has(sk.key)) && tar.status === "FRZ" && tar.alive) { tar.status = null; msg(`${Nm(tar)} thawed out!`); fxEv(tar); }
     // contact abilities and on-hit reactions (Protective Pads and the Punching Glove avoid them)
-    if (tar.alive && att.alive && dealt > 0 && M.ct && !pv(att, "LONG_REACH") && !item(att, "protectivepads") && !(item(att, "punchingglove") && M.pu)) {
+    // (a knockout too, as on Showdown: the holder's Ability goes off as it faints)
+    if (att.alive && dealt > 0 && M.ct && !pv(att, "LONG_REACH") && !item(att, "protectivepads") && !(item(att, "punchingglove") && M.pu)) {
       const ca = pv(tar, "CONTACT"), spored = ca && ca.what === "SPORE" && (att.types.includes("Grass") || pv(att, "OVERCOAT") || item(att, "safetygoggles"));
       if (ca && !spored && R() < ca.chance) { msg(`${Nm(tar)}'s ${tar.passives[0].name}!`); tryStatus(tar, att, ca.what, false); }
-      if (pv(att, "TOUCH") && R() < .3) tryStatus(att, tar, "PSN", false);
+      if (tar.alive && pv(att, "TOUCH") && R() < .3) tryStatus(att, tar, "PSN", false);
       if (pv(tar, "BARBS") && !pv(att, "MAGIC_GUARD")) chip(att, att.max.hp / 8, `${Nm(att)} was hurt by ${nm(tar)}'s ${tar.passives[0].name}!`);
       const mm = pv(tar, "MUMMY");
       if (mm && att.alive && !["MUMMY", "MULTITYPE"].includes((att.passives[0] || {}).id)) {
-        if (mm.swap) { const a = att.passives; att.passives = tar.passives; tar.passives = a; msg(`${Nm(att)} swapped Abilities with ${nm(tar)}!`); }   // Wandering Spirit
+        if (mm.swap) { if (tar.alive) { const a = att.passives; att.passives = tar.passives; tar.passives = a; msg(`${Nm(att)} swapped Abilities with ${nm(tar)}!`); } }   // Wandering Spirit
         else { att.passives = [abilityOf(tar.passives[0].key)]; msg(`${Nm(att)}'s Ability became ${tar.passives[0].name}!`); }   // Mummy, Lingering Aroma
       }
       const cd = pv(tar, "CONTACT_DROP"); if (cd && att.alive) stage(tar, att, cd.stat, -1, null);   // Gooey, Tangling Hair
       if (pv(tar, "HONEY") && att.alive) stage(tar, att, "spe", -1, null);   // (Honey Gather: Gooey's effect too)
       if (pv(tar, "PERISH_BODY") && att.alive && !has(att, "PERISH")) {   // Perish Body (the owner's rule): Perish Song for it and the attacker
-        addEff(att, "PERISH", 3, tar, true); if (!has(tar, "PERISH")) addEff(tar, "PERISH", 3, tar, true); msg(`${Nm(tar)}'s Perish Body! Both Pokémon will faint in three turns!`);
+        addEff(att, "PERISH", 3, tar, true); if (tar.alive && !has(tar, "PERISH")) addEff(tar, "PERISH", 3, tar, true); msg(`${Nm(tar)}'s Perish Body! Both Pokémon will faint in three turns!`);
       }
-      if (pv(tar, "PICKPOCKET") && !tar.held && att.held && !att.flags.itemUsed && !item(att, "stickybarb")) { tar.held = att.held; tar.flags.itemUsed = false; att.held = null; msg(`${Nm(tar)} stole ${nm(att)}'s ${HELD[tar.held].n}!`); }
+      if (tar.alive && pv(tar, "PICKPOCKET") && !sheerOf(att, sk)) tar.flags.pickPend = 1;   // (it steals once the move is done: afterMoveItems)
     }
     if (tar.alive && dealt > 0 && tar.disguise) { tar.spr = tar.disguise.spr; tar.n = tar.disguise.n; tar.disguise = null; tar.flags.illusionGone = true; ev({ k: "transform", u: tar.uid, to: tar.spr }); msg(`${Nm(tar)}'s illusion wore off!`); }
     if (tar.alive && dealt > 0) formCheck(tar);
@@ -26378,7 +26435,7 @@ function makeBattle(cfg) {
     if (!tar.alive && att.alive && M.ct && pv(tar, "AFTERMATH") && !pv(att, "MAGIC_GUARD") && !damp()) chip(att, att.max.hp / 4, `${Nm(att)} was caught in the aftermath!`);
     if (tar.alive && dealt > 0 && ["Bug", "Ghost", "Dark"].includes(mtype(att, sk)) && pv(tar, "RATTLED")) stage(tar, tar, "spe", 1, "Rattled");
     if (tar.alive && att.alive && dealt > 0 && pv(tar, "CURSED") && R() < .3 && !has(att, "DISABLE")) { msg(`${Nm(tar)}'s Cursed Body!`); tryStatus(tar, att, "DISABLE", false); }
-    return { dealt, crit, e: r.e };
+    return { dealt, crit, e: r.e, sub: subbed };
   }
   // what a hit sets off in the generations 6 to 9 Abilities: the target's (Stamina, Berserk, Emergency Exit, Cotton Down, Sand
   // Spit, Seed Sower, Toxic Debris, Electromorphosis, Innards Out) and the attacker's (Magician, Toxic Chain)
@@ -26390,14 +26447,14 @@ function makeBattle(cfg) {
       const hb = pv(tar, "HIT_BOOST"); if (hb && (!hb.types || hb.types.includes(t))) stage(tar, tar, hb.stat, hb.n, tar.passives[0].name);
       const bz = pv(tar, "BERSERK");
       if (bz && crossed) { if (bz.shell) { for (const st of ["atk", "spa", "spe"]) stage(tar, tar, st, 1); for (const st of ["def", "sdf"]) stage(tar, tar, st, -1); } else stage(tar, tar, "spa", 1, "Berserk"); }
-      if (pv(tar, "EJECT_HALF") && crossed && benchOf(tar.team).length && B.units.includes(tar)) { msg(`${Nm(tar)}'s ${tar.passives[0].name}!`); B.pivotQ.push({ uid: tar.uid }); }
+      if (pv(tar, "EJECT_HALF") && crossed && !sheerOf(att, sk) && benchOf(tar.team).length && B.units.includes(tar)) { msg(`${Nm(tar)}'s ${tar.passives[0].name}!`); B.pivotQ.length = 0; B.pivotQ.push({ uid: tar.uid }); }   // (it cancels every other switch, U-turn's too, as on Showdown)
       if (pv(tar, "COTTON_DOWN")) { msg(`${Nm(tar)}'s Cotton Down!`); for (const x of B.units) if (x.alive && x.team !== tar.team) stage(tar, x, "spe", -1); }   // (the opposing side only: the owner's rule, 2026-10-16)
       if (pv(tar, "SAND_SPIT") && B.weather !== "sand") { B.weather = "sand"; B.wxEnd = fieldRounds(item(tar, "smoothrock") ? 8 : 5); msg(`${Nm(tar)}'s Sand Spit!`); if (WEATHER.sand) msg(WEATHER.sand.turn); ev({ k: "weather", w: "sand" }); }
       if (pv(tar, "SEED_SOWER") && !(B.terrain && B.terrain.t === "grassy")) setTerrain(tar, "grassy");
       if (pv(tar, "TOXIC_DEBRIS") && M.c === "P") { const hz = sideHz(att.team); if (hz.tspikes < 2) { hz.tspikes++; msg(psT("toxicspikes", "start", { TEAM: psTeam(att.team) })); hzEv(att.team); } }
       const ch = pv(tar, "CHARGED"); if (ch && (!ch.wind || WIND.has(sk.key)) && !has(tar, "CHARGE")) { addEff(tar, "CHARGE", 99, tar, true); msg(`Being hit by ${M.n} charged ${nm(tar)} with power!`); }
     }
-    if (att.alive && pv(att, "MAGICIAN") && !att.held && tar.held && !tar.flags.itemUsed && !item(tar, "stickybarb")) { att.held = tar.held; att.flags.itemUsed = false; tar.held = null; msg(`${Nm(att)} stole ${nm(tar)}'s ${HELD[att.held].n}!`); }
+    if (att.alive && pv(att, "MAGICIAN") && !sheerOf(att, sk) && !att.held && tar.held && !tar.flags.itemUsed && !item(tar, "stickybarb")) { att.held = tar.held; att.flags.itemUsed = false; tar.held = null; msg(`${Nm(att)} stole ${nm(tar)}'s ${HELD[att.held].n}!`); }
     if (tar.alive && pv(att, "TOXIC_CHAIN") && R() < .3) tryStatus(att, tar, "TOX", false);
   }
   // the chance an attack flinches its target (its own, or King's Rock, Razor Fang and Stench; Serene Grace doubles it)
@@ -27175,6 +27232,8 @@ function makeBattle(cfg) {
     return best;
   }
   function aiChoose(u, style = "balanced") {
+    // (frozen, with a move ready that thaws it: that move)
+    if (u.flags.defrost) { const s = u.skills.find(k => DEFROST.has(k.key) && skillReady(u, k)); if (s) return { slot: s.slot, t: defaultTarget(u, s) }; }
     const rd = redirectNow(u); if (rd) return rd;
     let ch;
     if (style === "expert") ch = expertChoose(u);
@@ -27242,6 +27301,13 @@ function makeBattle(cfg) {
   }
   function endTurn(u) {
     releaseKO(); B.koOn = false;   // (the move is done: its knockouts first)
+    // its residuals (the owner's rule, 2026-10-21): after its own turn, whether it moved or not, as Showdown has them at the end of
+    // the turn (the weather, its status, Leech Seed, binding, Leftovers...); then the Flame and Toxic Orbs, whose first damage
+    // comes at the end of its next turn. A Pokémon that left the field on its turn (a switch, U-turn) has none
+    if (u.alive && B.units.includes(u) && upkeep(u)) {
+      if (!u.status && item(u, "toxicorb")) { msg(`${Nm(u)}'s Toxic Orb activated!`); tryStatus(u, u, "TOX", false); }
+      else if (!u.status && item(u, "flameorb")) { msg(`${Nm(u)}'s Flame Orb activated!`); tryStatus(u, u, "BRN", false); }
+    }
     syncFx();   // (fixed stages its move changed: the weather, a status, an item lost...)
     if (u.flags.cud) { if (u.flags.cud.skip) u.flags.cud.skip = false; else { const k = u.flags.cud.key; u.flags.cud = null; if (u.alive && pv(u, "CUD_CHEW") && B.units.includes(u)) eatAgain(u, k); } }   // (Cud Chew: the end of its next turn)
     if (u.alive && pv(u, "HUNGER") && B.units.includes(u)) { u.flags.hangry = !u.flags.hangry; msg(u.flags.hangry ? `${Nm(u)} got hangry!` : `${Nm(u)} is full again!`); }   // Hunger Switch
@@ -27286,7 +27352,9 @@ function makeBattle(cfg) {
   function checkOver() {
     B.actor = null; B.waiting = null;
     const a = aliveCount("A"), f = aliveCount("E");
-    if (!a) { B.over = true; B.result = { win: false, alive: 0, turns: B.allyTurns }; }
+    // (both sides out at once, say a knockout and then the attacker's recoil: the side whose Pokémon fainted last wins, as on Showdown)
+    if (!a && !f) { B.over = true; B.result = { win: B.lastFaint === "A", alive: 0, turns: B.allyTurns }; }
+    else if (!a) { B.over = true; B.result = { win: false, alive: 0, turns: B.allyTurns }; }
     else if (!f && B.waveByWave && B.wave < B.waves.length - 1) nextWave();
     else if (!f) { B.over = true; B.result = { win: true, alive: a, lost: B.allyCount - a, turns: B.allyTurns }; }
     // timed fights (Raid Battles): your team withdraws when its turns run out
@@ -27339,9 +27407,8 @@ function makeBattle(cfg) {
     }
     const seed = effOf(u, "SEED");
     if (u.alive && seed && !pv(u, "MAGIC_GUARD")) {
-      const src = B.units.find(x => x.uid === seed.src), n = Math.max(1, Math.floor(H / 8));
-      chip(u, n, `${Nm(u)}'s health is sapped by Leech Seed!`);
-      if (src && src.alive) { if (pv(u, "OOZE")) chip(src, n); else heal(src, n * (item(src, "bigroot") ? 1.3 : 1)); }
+      const src = seed.team ? B.units.find(x => x.alive && x.team === seed.team && x.slot === seed.slot) : B.units.find(x => x.alive && x.uid === seed.src), n = Math.max(1, Math.floor(H / 8));
+      if (src) { chip(u, n, `${Nm(u)}'s health is sapped by Leech Seed!`); if (pv(u, "OOZE")) chip(src, n); else heal(src, n * (item(src, "bigroot") ? 1.3 : 1)); }
     }
     if (u.alive && has(u, "TRAP")) { const by = B.byId(effOf(u, "TRAP").src); chip(u, H / (by && item(by, "bindingband") ? 6 : 8), `${Nm(u)} is hurt by Bind!`); }
     if (u.alive && item(u, "blacksludge")) { if (u.types.includes("Poison")) { if (u.hp < H) heal(u, H / 16, `${Nm(u)} restored a little HP using its Black Sludge!`); } else chip(u, H / 8, `${Nm(u)} is hurt by its Black Sludge!`); }
@@ -27370,7 +27437,7 @@ function makeBattle(cfg) {
     if (has(u, "RECHARGE")) { removeEff(u, "RECHARGE"); msg(`${Nm(u)} must recharge!`); return false; }
     if (pv(u, "TRUANT")) { if (u.flags.loaf) { u.flags.loaf = false; msg(`${Nm(u)} is loafing around!`); ev({ k: "txt", u: u.uid, s: "Loafing", c: "txt" }); return false; } u.flags.loaf = true; }
     if (u.status === "SLP") {
-      u.sTurn--;
+      u.sTurn -= pv(u, "EARLY_BIRD") ? 2 : 1;   // (Early Bird: twice as fast, as on Showdown)
       if (u.sTurn > 0) {
         msg(`${Nm(u)} is fast asleep.`); ev({ k: "txt", u: u.uid, s: "Zzz", c: "txt" });
         const st = u.skills.find(s => s.M.sp === "sleeptalk" && skillReady(u, s));
@@ -27382,11 +27449,26 @@ function makeBattle(cfg) {
     }
     if (u.status === "FRZ") {
       u.sTurn--;
-      if (u.sTurn > 0 && R() >= .2) { msg(`${Nm(u)} is frozen solid!`); return false; }
+      // (still frozen, but it knows a move that thaws its user, ready: it may pick it, and that thaws it, DEFROST in act)
+      if (u.sTurn > 0 && R() >= .2) { if (u.skills.some(s => DEFROST.has(s.key) && skillReady(u, s))) { u.flags.defrost = true; return true; } msg(`${Nm(u)} is frozen solid!`); return false; }
       u.status = null; msg(`${Nm(u)} thawed out!`); fxEv(u);
     }
     if (stun) { msg(`${Nm(u)} flinched and couldn't move!`); ev({ k: "txt", u: u.uid, s: "Flinch", c: "debuff" }); return false; }
+    if (!confusedOrCharmed(u)) return false;
     if (u.status === "PAR" && R() < .25) { msg(`${Nm(u)} is paralyzed! It can't move!`); ev({ k: "txt", u: u.uid, s: "PAR", c: "debuff" }); return false; }
+    return u.alive;
+  }
+  // confusion and infatuation, before paralysis as on Showdown: false when it hits itself or a partner and loses its turn.
+  // The hit: confusion's, 40-power typeless physical, the level term rounded down and a damage roll, as on Showdown
+  function selfHit(u, tg) {
+    const d = Math.floor(Math.floor(Math.floor(2 * u.lvl / 5 + 2) * 40 * Math.floor(statOf(u, "atk")) / Math.max(1, Math.floor(statOf(tg, "def")))) / 50) + 2;
+    return Math.max(1, Math.floor(Math.floor(d * (85 + Math.floor(R() * 16)) / 100) * DMG_SCALE));
+  }
+  function confusedOrCharmed(u) {
+    if (has(u, "CNF")) {
+      msg(`${Nm(u)} is confused!`);
+      if (R() < 1 / 3) { msg("It hurt itself in its confusion!"); applyDamage(null, u, selfHit(u, u), { trueDmg: true }); return false; }
+    }
     // Infatuation (the owner's house rule, 2026-10-20): it works like confusion, but the hit goes to a partner: a 1 in 3 chance each
     // turn that it attacks one of its partners on the field instead of moving (confusion's 40-power typeless hit, its Attack against
     // the partner's Defense) and loses its turn; with no partner there it hits itself. It lasts 2 to 4 turns (tryStatus), over
@@ -27397,17 +27479,7 @@ function makeBattle(cfg) {
       if (R() < 1 / 3) {
         const mates = allies(u).filter(x => x !== u && x.alive && B.units.includes(x)), tg = mates.length ? pick(mates) : u;
         msg(tg === u ? `${Nm(u)} hurt itself in its infatuation!` : `${Nm(u)} attacked ${nm(tg)} in its infatuation!`);
-        const d = Math.max(1, Math.round((((2 * u.lvl / 5 + 2) * 40 * statOf(u, "atk") / Math.max(1, statOf(tg, "def"))) / 50 + 2) * DMG_SCALE));
-        applyDamage(null, tg, d, { trueDmg: true });
-        return false;
-      }
-    }
-    if (has(u, "CNF")) {
-      msg(`${Nm(u)} is confused!`);
-      if (R() < 1 / 3) {
-        msg("It hurt itself in its confusion!");
-        const d = Math.max(1, Math.round((((2 * u.lvl / 5 + 2) * 40 * statOf(u, "atk") / Math.max(1, statOf(u, "def"))) / 50 + 2) * DMG_SCALE));
-        applyDamage(null, u, d, { trueDmg: true });
+        applyDamage(null, tg, selfHit(u, tg), { trueDmg: true });
         return false;
       }
     }
@@ -27428,6 +27500,7 @@ function makeBattle(cfg) {
     if (encSk && encSk !== sk && sk.M.sp !== "lastresort") { if (skillReady(u, encSk)) { sk = encSk; t = null; } else { msg(`${Nm(u)} must do an encore, but ${encSk.name} isn't ready!`); sk = { ...makeSkill("struggle", 1), cd: 0 }; } }
     if (sk.M.sp === "expandingforce" && inTerrain("psychic", u)) sk = { ...sk, target: "aoe_enemies" };   // (Expanding Force in Psychic Terrain: every foe)
     const M = sk.M;
+    if (u.flags.defrost && !free) { u.flags.defrost = false; if (u.status === "FRZ") { if (DEFROST.has(sk.key)) { u.status = null; u.sTurn = 0; msg(`${Nm(u)} thawed out!`); fxEv(u); } else { msg(`${Nm(u)} is frozen solid!`); ev({ k: "end", u: u.uid }); endTurn(u); return; } } }
     // U-turn, Volt Switch, Flip Turn, Teleport, Baton Pass: an opposing Pursuit strikes first, before the move resolves
     if (!free && PIVOT.has(M.sp) && !landing) { pursue(u); if (!u.alive || B.over) { ev({ k: "end", u: u.uid }); endTurn(u); return; } }
     if (pv(u, "STANCE") && OPS.aegislashblade && M.sp !== "struggle") {
@@ -27512,8 +27585,8 @@ function makeBattle(cfg) {
     // Dancer: a dance move is danced again right away by every other Dancer on the field
     if (DANCES.has(sk.key) && !B.dancing) { B.dancing = true; for (const x of B.units.slice()) if (x !== u && x.alive && pv(x, "DANCER")) { msg(`${Nm(x)}'s Dancer!`); callMove(x, sk.key, sk.slot); } B.dancing = false; }
     if (M.sp === "ramp") u.flags["ramp:" + sk.key] = rampN(u, sk.key) + 1;
-    B.acting = false; u.flags.failed = B.failed; B.lastMove = sk.key;
-    if (u.alive && M.so && item(u, "throatspray")) { useUp(u, `${Nm(u)}'s Throat Spray kicked in!`); stage(u, u, "spa", 1); }
+    B.acting = false; B.spreadN = null; u.flags.failed = B.failed; B.lastMove = sk.key;
+    if (u.alive && M.so && item(u, "throatspray") && !sheerOf(u, sk)) { useUp(u, `${Nm(u)}'s Throat Spray kicked in!`); stage(u, u, "spa", 1); }
     // one-shot boosts are used up by the move
     if (M.c !== "X") { removeEff(u, "LOCKON"); removeEff(u, "LASER"); removeEff(u, "HELPED"); }
     if (u.alive && sk.mk === "tm" && mastery(u, sk) > 1 && !free) addATB(u, mastery(u, sk) - 1, true); // status moves that never miss
@@ -27612,7 +27685,7 @@ function makeBattle(cfg) {
   }
   // (what Copycat and Mirror Move can use: anything but Sketch, Copycat and Mirror Move themselves)
   const copyable = k => !!MOVES[k] && !isSketch(k) && !["copycat", "mirrormove"].includes(MOVES[k].sp) && !SELF_GOING.has(MOVES[k].sp);   // (nor what only goes off by itself)
-  const PIVOT = new Set(["uturn", "teleport", "batonpass"]);
+  const PIVOT = new Set(["uturn", "teleport", "batonpass", "partingshot", "shedtail"]);   // (Pursuit strikes first: Parting Shot and Shed Tail too, as on Showdown)
   function callMove(u, key, slot) {
     if (!MOVES[key]) { msg("But it failed!"); return; }
     const virt = { ...makeSkill(key, slot), slot, cd: 0 };
@@ -27626,18 +27699,20 @@ function makeBattle(cfg) {
     const M = sk.M, t = mtype(att, sk), H = heldX(tar), contact = M.ct && !item(att, "protectivepads") && !(item(att, "punchingglove") && M.pu);
     if (contact && att.alive && item(tar, "rockyhelmet") && !pv(att, "MAGIC_GUARD")) chip(att, att.max.hp / 6, psT("rockyhelmet", "damage", { POKEMON: nm(att) }));
     if (contact && att.alive && !att.held && item(tar, "stickybarb")) { att.held = "stickybarb"; att.flags.itemUsed = false; tar.held = null; msg(`The Sticky Barb attached itself to ${nm(att)}!`); }
+    // (the Jaboca and Rowap Berries go off as their holder faints, as on Showdown)
+    if (H && !tar.alive && H.retaliate === M.c && att.alive && (!H.berry || berryOk(tar))) { useUp(tar, `${Nm(tar)} ate its ${H.n}!`); chip(att, att.max.hp / 8, `${Nm(att)} was hurt by ${nm(tar)}'s ${H.n}!`); return; }
     if (!H || !tar.alive) { if (H && !tar.alive && tar.held === "airballoon") tar.flags.itemUsed = true; return; }
-    const k = tar.held, bOk = !H.berry || berryOk(tar);
+    const k = tar.held, bOk = !H.berry || berryOk(tar), sheer = sheerOf(att, sk);
     if (k === "airballoon") useUp(tar, `${Nm(tar)}'s Air Balloon popped!`);
     else if (k === "weaknesspolicy" && e > 1) { useUp(tar, `${Nm(tar)}'s Weakness Policy kicked in!`); stage(tar, tar, "atk", 2); stage(tar, tar, "spa", 2); }
     else if ({ absorbbulb: "Water", luminousmoss: "Water", cellbattery: "Electric", snowball: "Ice" }[k] === t) {
       useUp(tar, `${Nm(tar)}'s ${H.n} kicked in!`); stage(tar, tar, { absorbbulb: "spa", luminousmoss: "sdf", cellbattery: "atk", snowball: "atk" }[k], 1);
     }
-    else if (H.hitBoost === M.c && bOk) { useUp(tar, `${Nm(tar)} ate its ${H.n}!`); stage(tar, tar, H.stat, 1); }
+    else if (H.hitBoost === M.c && bOk) { if (!sheer) tar.flags.keePend = 1; }   // (Kee and Maranga: once the move is done, afterMoveItems)
     else if (H.retaliate === M.c && bOk && att.alive) { useUp(tar, `${Nm(tar)} ate its ${H.n}!`); chip(att, att.max.hp / 8, `${Nm(att)} was hurt by ${nm(tar)}'s ${H.n}!`); }
     else if (H.seHeal && e > 1 && bOk) { useUp(tar); heal(tar, tar.max.hp * H.seHeal, `${Nm(tar)} restored its HP using its ${H.n}!`); }
-    else if (k === "ejectbutton" && benchOf(tar.team).length && B.units.includes(tar)) { useUp(tar, `${Nm(tar)} is switched out with the Eject Button!`); B.pivotQ.push({ uid: tar.uid }); }
-    else if (k === "redcard") tar.redCard = true;
+    else if (k === "ejectbutton" && !sheer && benchOf(tar.team).length && B.units.includes(tar) && !B.pivotQ.length) { useUp(tar, `${Nm(tar)} is switched out with the Eject Button!`); B.pivotQ.push({ uid: tar.uid }); }   // (one a move)
+    else if (k === "redcard" && !sheer) tar.redCard = true;
   }
   // terrain seeds: +1 to a defense when their terrain is on the field
   function terrainSeeds() {
@@ -27703,6 +27778,11 @@ function makeBattle(cfg) {
     return out;
   }
   // after a damaging move hits one target
+  // what goes off once the move is done, for each Pokémon it hit (as on Showdown): the Kee and Maranga Berries, Pickpocket
+  function afterMoveItems(u, x) {
+    if (x.flags.keePend) { x.flags.keePend = 0; const H = heldX(x); if (x.alive && H && H.hitBoost && (!H.berry || berryOk(x))) { useUp(x, `${Nm(x)} ate its ${H.n}!`); stage(x, x, H.stat, 1); } }
+    if (x.flags.pickPend) { x.flags.pickPend = 0; if (x.alive && u.alive && !x.held && u.held && !u.flags.itemUsed && !item(u, "stickybarb")) { x.held = u.held; x.flags.itemUsed = false; u.held = null; msg(`${Nm(x)} stole ${nm(u)}'s ${HELD[x.held].n}!`); } }
+  }
   function afterHit(u, x, sk) {
     const sp = sk.M.sp, holds = y => y.held && !y.flags.itemUsed, sticky = y => !!tab(u, y, "STICKY");
     if (sp === "knockoff" && x.alive && holds(x) && !sticky(x)) { msg(`${Nm(u)} knocked off ${nm(x)}'s ${HELD[x.held].n}!`); x.held = null; x.flags.unburden = true; }
@@ -27716,20 +27796,25 @@ function makeBattle(cfg) {
     if (sp === "wakeupslap" && x.alive && x.status === "SLP") { x.status = null; msg(`${Nm(x)} woke up!`); fxEv(x); }
     if (sp === "smellingsalts" && x.alive && x.status === "PAR") { x.status = null; msg(`${Nm(x)} was cured of paralysis!`); fxEv(x); }
     if (sp === "burningjealousy" && x.alive && x.raiseT != null && x.raiseT > (u.actT == null ? -1 : u.actT)) tryStatus(u, x, "BRN", false);
-    if (sp === "dragontail" && x.alive && !x.boss && !(B.wild && x.team === "E") && benchOf(x.team).length) { if (pv(x, "SUCTION") || pv(x, "GUARD_DOG")) msg(`${Nm(x)} anchors itself with Suction Cups!`); else switchOut(x, pick(benchOf(x.team)), true); }
+    if (sp === "dragontail" && x.alive && !x.boss && !(B.wild && x.team === "E") && benchOf(x.team).length) { if (anchored(x)) msg(has(x, "INGRAIN") ? `${Nm(x)} anchored itself with its roots!` : `${Nm(x)} anchors itself with Suction Cups!`); else switchOut(x, pick(benchOf(x.team)), true); }
     // Whirlwind (house rule: a 60-power attack): blows the target away, so a random Pokémon from its bench comes in; a boss, a
     // wild Pokémon or one with nobody to come in loses its turn meter and stat changes instead
-    if (sp === "whirlwind" && x.alive) {
+    if (sp === "whirlwind" && x.alive && anchored(x)) msg(has(x, "INGRAIN") ? `${Nm(x)} anchored itself with its roots!` : `${Nm(x)} anchors itself with Suction Cups!`);
+    else if (sp === "whirlwind" && x.alive) {
       msg(`${Nm(x)} was blown away!`);
       if (!x.boss && !(B.wild && x.team === "E") && benchOf(x.team).length) switchOut(x, pick(benchOf(x.team)), true);
       else { x.atb = 0; x.stages = newStages(); ev({ k: "tm", u: x.uid, tm: 0, v: -100, quiet: 1 }); fxEv(x); }
     }
   }
+  // the status moves a Substitute keeps off its holder (Showdown's: those without its "bypasses Substitute" flag, aimed at a foe)
+  const SUB_BLOCKS = new Set(["babydolleyes", "block", "captivate", "charm", "confuseray", "cottonspore", "darkvoid", "decorate", "doodle", "eerieimpulse", "electrify", "embargo", "entrainment", "faketears", "featherdance", "flash", "flatter", "floralhealing", "forestscurse", "gastroacid", "glare", "guardsplit", "healblock", "healpulse", "hypnosis", "kinesis", "leechseed", "leer", "lockon", "lovelykiss", "magicpowder", "meanlook", "memento", "mindreader", "mirrormove", "naturepower", "nightmare", "octolock", "painsplit", "poisongas", "poisonpowder", "powersplit", "psychoshift", "purify", "quash", "sandattack", "scaryface", "simplebeam", "sleeppowder", "smokescreen", "soak", "spicyextract", "spiderweb", "spore", "spotlight", "strengthsap", "stringshot", "stunspore", "swagger", "sweetkiss", "sweetscent", "switcheroo", "tailwhip", "tarshot", "tearfullook", "teeterdance", "telekinesis", "thunderwave", "tickle", "topsyturvy", "toxic", "toxicthread", "transform", "trick", "trickortreat", "venomdrench", "willowisp", "worryseed", "yawn"]);
   // the status moves from later generations; true when handled
   function statusMove(u, sk, targets) {
     const M = sk.M, sp = M.sp, t = targets[0], foes = foeTeam(u);
     const fail = () => { msg("But it failed!"); return true; };
     const hz = () => sideHz(foes);
+    // (a hazard: Magic Bounce, or a Magic Coat that's up, on the other side sends it back onto the user's side, as on Showdown)
+    const hzSide = () => { const mb = !B.bouncing && B.units.find(x => x.alive && x.team === foes && (tab(u, x, "MAGIC_BOUNCE") || has(x, "MAGICCOAT"))); if (mb) { msg(`${Nm(mb)} bounced the ${M.n} back!`); return u.team; } return foes; };
     switch (sp) {
       case "teleport": case "batonpass":
         if (!benchOf(u.team).length) return fail();
@@ -27743,6 +27828,7 @@ function makeBattle(cfg) {
         const sd = B.side || (B.side = { A: {}, E: {} }); B.side = { A: sd.E || {}, E: sd.A || {} };
         for (const x of B.units) if (x.alive) { x.eff = x.eff.filter(e => !TEAM_FX[e.id]); for (const id in B.side[x.team]) if (B.side[x.team][id] > B.turn) x.eff.push({ id, turns: 99 }); fxEv(x); }
         if (B.tailwind) B.tailwind = { A: B.tailwind.E || 0, E: B.tailwind.A || 0 };
+        if (B.pledgeFx) B.pledgeFx = { A: B.pledgeFx.E || {}, E: B.pledgeFx.A || {} };   // (the Pledges' sea of fire, rainbow and swamp too, as on Showdown)
         msg(`${Nm(u)} swapped the battle effects affecting each side of the field!`); return true;
       }
       case "craftyshield": case "matblock": case "quickguard": case "wideguard": {
@@ -27821,7 +27907,7 @@ function makeBattle(cfg) {
         if (benchOf(u.team).length) B.pivotQ.push({ uid: u.uid }); return true;
       }
       case "healblock":
-        for (const x of targets) if (x.alive && x.team !== u.team && !has(x, "HEALBLOCK")) { addEff(x, "HEALBLOCK", 4, u, true); msg(psT("healblock", "start", { POKEMON: nm(x) })); }
+        for (const x of targets) if (x.alive && x.team !== u.team && !has(x, "HEALBLOCK")) { addEff(x, "HEALBLOCK", 5, u, true); msg(psT("healblock", "start", { POKEMON: nm(x) })); }
         return true;
       case "strengthsap": {   // heals what the target's Attack is (after its changes), then lowers it
         if (!t || !t.alive || t.team === u.team) return fail();
@@ -27838,10 +27924,10 @@ function makeBattle(cfg) {
         B.sketched = { u, sk: ns, t };
         return true;
       }
-      case "stealthrock": if (hz().sr) return fail(); hz().sr = 1; msg(`Pointed stones float in the air around ${foes === "A" ? "your team" : "the opposing team"}!`); hzEv(foes); return true;
-      case "spikes": if (hz().spikes >= 3) return fail(); hz().spikes++; msg(psT("spikes", "start", { TEAM: psTeam(foes) })); hzEv(foes); return true;
-      case "toxicspikes": if (hz().tspikes >= 2) return fail(); hz().tspikes++; msg(psT("toxicspikes", "start", { TEAM: psTeam(foes) })); hzEv(foes); return true;
-      case "stickyweb": if (hz().web) return fail(); hz().web = 1; msg(psT("stickyweb", "start", { TEAM: psTeam(foes) })); hzEv(foes); return true;
+      case "stealthrock": { const sd = hzSide(), h = sideHz(sd); if (h.sr) return fail(); h.sr = 1; msg(`Pointed stones float in the air around ${sd === "A" ? "your team" : "the opposing team"}!`); hzEv(sd); return true; }
+      case "spikes": { const sd = hzSide(), h = sideHz(sd); if (h.spikes >= 3) return fail(); h.spikes++; msg(psT("spikes", "start", { TEAM: psTeam(sd) })); hzEv(sd); return true; }
+      case "toxicspikes": { const sd = hzSide(), h = sideHz(sd); if (h.tspikes >= 2) return fail(); h.tspikes++; msg(psT("toxicspikes", "start", { TEAM: psTeam(sd) })); hzEv(sd); return true; }
+      case "stickyweb": { const sd = hzSide(), h = sideHz(sd); if (h.web) return fail(); h.web = 1; msg(psT("stickyweb", "start", { TEAM: psTeam(sd) })); hzEv(sd); return true; }
       case "defog":
         clearHazards("A"); clearHazards("E");
         if (B.terrain) endTerrain();   // (and the terrain, as from Generation 8)
@@ -27875,7 +27961,9 @@ function makeBattle(cfg) {
         const tt = TERRAIN_MOVE[sk.key]; if (B.terrain && B.terrain.t === tt) return fail();
         setTerrain(u, tt); return true;
       }
-      case "yawn": if (!t || t.status || has(t, "YAWN") || inTerrain("electric", t) || inTerrain("misty", t)) return fail(); addEff(t, "YAWN", 1, u, true); effOf(t, "YAWN").skip = true; msg(psT("yawn", "start", { POKEMON: nm(t) })); return true;
+      case "yawn": if (!t || t.status || has(t, "YAWN") || inTerrain("electric", t) || inTerrain("misty", t)) return fail();
+        if (t.team !== u.team && has(t, "SAFEGUARD") && !pv(u, "INFILTRATOR")) { msg(`${Nm(t)} is protected by Safeguard!`); return true; }
+        addEff(t, "YAWN", 1, u, true); msg(psT("yawn", "start", { POKEMON: nm(t) })); return true;   // (it falls asleep at the end of its next turn)
       case "curse":
         if (u.types.includes("Ghost")) {
           if (!t || has(t, "CURSE")) return fail();
@@ -27893,8 +27981,8 @@ function makeBattle(cfg) {
       case "magnetrise": if (has(u, "MAGNETRISE")) return fail(); addEff(u, "MAGNETRISE", 5, u, true); msg(`${Nm(u)} levitated with electromagnetism!`); return true;
       case "meanlook": if (!t || has(t, "NOSWITCH")) return fail(); if (tab(u, t, "RUN_AWAY")) { msg(`${Nm(t)}'s Run Away keeps it from being trapped!`); return true; } addEff(t, "NOSWITCH", 99, u, true); msg(`${Nm(t)} can no longer escape!`); return true;
       case "destinybond": addEff(u, "DBOND", 99, u, true); msg(`${Nm(u)} is hoping to take its attacker down with it!`); return true;
-      case "lockon": addEff(u, "LOCKON", 2, u, true); msg(`${Nm(u)} took aim at ${t ? nm(t) : "the target"}!`); return true;
-      case "laserfocus": addEff(u, "LASER", 2, u, true); msg(`${Nm(u)} concentrated intensely!`); return true;
+      case "lockon": addEff(u, "LOCKON", 1, u, true); msg(`${Nm(u)} took aim at ${t ? nm(t) : "the target"}!`); return true;   // (until the end of its next turn)
+      case "laserfocus": addEff(u, "LASER", 1, u, true); msg(`${Nm(u)} concentrated intensely!`); return true;   // (until the end of its next turn)
       case "acupressure": { const st = ["atk", "def", "spa", "sdf", "spe", "acc", "eva"].filter(s => u.stages[s] < 6); if (!st.length) return fail(); stage(u, u, pick(st), 2); return true; }
       case "powerswap": case "guardswap": {
         if (!t) return fail(); for (const s of sp === "powerswap" ? ["atk", "spa"] : ["def", "sdf"]) [u.stages[s], t.stages[s]] = [t.stages[s], u.stages[s]];
@@ -27908,7 +27996,8 @@ function makeBattle(cfg) {
         [u.held, t.held] = [t.held, u.held]; [u.flags.itemUsed, t.flags.itemUsed] = [t.flags.itemUsed, u.flags.itemUsed];
         msg(`${Nm(u)} switched items with its target!`); if (!u.held) u.flags.unburden = true; if (!t.held) t.flags.unburden = true; return true;
       }
-      case "helpinghand": { const a = t && t !== u && t.alive && t.team === u.team && B.units.includes(t) ? t : allies(u).find(x => x !== u); if (!a) return fail(); addEff(a, "HELPED", 2, u, true); msg(`${Nm(u)} is ready to help ${nm(a)}!`); return true; }   // (the partner it's aimed at, any partner: the owner's rule)
+      case "helpinghand": { const a = t && t !== u && t.alive && t.team === u.team && B.units.includes(t) ? t : allies(u).find(x => x !== u); if (!a) return fail(); addEff(a, "HELPED", 2, u, true); msg(`${Nm(u)} is ready to help ${nm(a)}!`); return true; }
+   // (the partner it's aimed at, any partner: the owner's rule)
       case "followme": addEff(u, "FOLLOWME", 99, u, true); { const fe = effOf(u, "FOLLOWME"); if (fe) { fe.powder = !!sk.M.pw; fe.at = B.fmSeq = (B.fmSeq || 0) + 1; } } msg(`${Nm(u)} became the center of attention!`); return true;   // (until the user leaves the field: the owner's rule)
       case "venomdrench": {
         const ps = targets.filter(x => x.status === "PSN" || x.status === "TOX"); if (!ps.length) return fail();
@@ -27919,7 +28008,7 @@ function makeBattle(cfg) {
         for (const x of g) { if (sp === "rototiller") { stage(u, x, "atk", 1); stage(u, x, "spa", 1); } else stage(u, x, "def", 1); } return true;
       }
       case "magneticflux": { const e = allies(u).filter(x => x.types.includes("Electric")); if (!e.length) return fail(); for (const x of e) { stage(u, x, "def", 1); stage(u, x, "sdf", 1); } return true; }
-      case "dragoncheer": { const a = allies(u).filter(x => x !== u); if (!a.length) return fail(); for (const x of a) addEff(x, "FOCUS", 99, u, true); msg("Your team is getting pumped!".replace("Your team", u.team === "A" ? "Your team" : "The opposing team")); return true; }
+      case "dragoncheer": { const a = allies(u).filter(x => x !== u); if (!a.length) return fail(); for (const x of a) if (!has(x, "FOCUS")) { addEff(x, "FOCUS", 99, u, true); effOf(x, "FOCUS").n = x.types.includes("Dragon") ? 2 : 1; } msg("Your team is getting pumped!".replace("Your team", u.team === "A" ? "Your team" : "The opposing team")); return true; }
     }
     return false;
   }
@@ -28000,6 +28089,7 @@ function makeBattle(cfg) {
     if (dmgMove) {
       let total = 0, anyHit = false;
       const aoe = sk.target === "aoe_enemies";
+      B.spreadN = targets.filter(x => x && x.alive).length;   // (the 75% only with two or more targets: spreadCount)
       // Magnitude: 4 to 10 (10 to 150 power), as in the games; Loaded Dice makes it a 10 (a house rule)
       if (MAG_ROLL.has(sk.key)) {
         let r = R() * 100; const row = item(u, "loadeddice") ? [10, 150] : MAGNITUDE.find(m => (r -= m[2]) < 0) || MAGNITUDE[3];
@@ -28019,7 +28109,8 @@ function makeBattle(cfg) {
       const nHits = !sk.hits ? 1 : pv(u, "SKILL_LINK") ? sk.hits[1] : sk.hits[0] === sk.hits[1] ? sk.hits[0] : item(u, "loadeddice") ? sk.hits[1] : pick([2, 2, 2, 3, 3, 3, 4, 5].filter(n => n >= sk.hits[0] && n <= sk.hits[1]));
       for (const x of targets) {
         if (!x.alive || !u.alive) continue;
-        if (R() >= accOf(u, x, sk)) {
+        // (as on Showdown: an absorbing Ability or an immunity comes before the accuracy roll, so Thunder into Volt Absorb can't miss)
+        if (!(absorbs(x, sk, u) || effOn(u, x, sk) === 0) && R() >= accOf(u, x, sk)) {
           ev({ k: "atk", a: u.uid, t: [x.uid], anim: sk.anim, type: sk.type, aoe: aoe ? 1 : 0, miss: 1, sp: sk.slot > 1 }); msg(`${Nm(x)} avoided the attack!`); ev({ k: "txt", u: x.uid, s: "MISS", c: "txt" });
           if (item(u, "blunderpolicy")) { useUp(u, `${Nm(u)}'s Blunder Policy kicked in!`); stage(u, u, "spe", 2); }
           if (M.crash) chip(u, u.max.hp / 4, `${Nm(u)} kept going and crashed!`);   // (a quarter of its max HP: the owner's rule)
@@ -28029,33 +28120,36 @@ function makeBattle(cfg) {
         if (OHKO.has(sp)) { ev({ k: "atk", a: u.uid, t: [x.uid], anim: sk.anim, type: sk.type, sp: 1 }); applyDamage(u, x, x.hp, { bypassSub: true }); msg("It's a one-hit KO!"); anyHit = true; continue; }
         if (sp === "spectralthief" && x.team !== u.team) stealBoosts(u, x);
         // (fx: this attack on this target; it flinches at most once, however many strikes roll it)
-        let effSeen = null, hitsDone = 0, dealtHere = 0; const fx = {};
+        // (subHit: a substitute took the hit, so the move's added effects and what it does to the Pokémon itself stop there, as on
+        // Showdown: no status, stat drop, flinch, binding, drag-out, stolen or knocked-off item)
+        let effSeen = null, hitsDone = 0, dealtHere = 0, subHit = false; const fx = {};
         for (let h = 0; h < nHits; h++) {
           if (!x.alive || !u.alive) break;
           if (h > 0 && axelLike(sk) && !item(u, "loadeddice") && R() >= accOf(u, x, sk)) break;   // each strike of Triple Axel (and Ash-Greninja's Water Shuriken) can miss; with Loaded Dice every strike lands once the first does
           ev({ k: "atk", a: u.uid, t: [x.uid], anim: sk.anim, type: sk.type, aoe: aoe ? 1 : 0, h, n: nHits, sp: sk.slot > 1 });
           B.hitIdx = h;
-          const r = attackOnce(u, x, sk, h === 0);
+          const r = attackOnce(u, x, sk, h === 0, nHits === 1);
           if (r.immune || r.absorbed) break;
-          hitsDone++; anyHit = true; dealtHere += r.dealt; total += r.dealt; effSeen = r.e;
+          hitsDone++; anyHit = true; dealtHere += r.dealt; total += r.dealt; effSeen = r.e; if (r.sub) subHit = true;
           // each strike of a multi-strike move rolls the added effects, as in the games: King's Rock, Razor Fang and Stench flinch,
           // Twineedle's poison, Double Iron Bash's flinch (the owner's ask, 2026-10-16); a single strike rolls them after its messages
-          if (nHits > 1) secondary(u, x, sk, fx);
+          if (nHits > 1 && !r.sub) secondary(u, x, sk, fx);
         }
         if (nHits > 1 && hitsDone) msg(`The Pokémon was hit ${hitsDone} time${hitsDone > 1 ? "s" : ""}!`);
-        if (effSeen > 1) { msg(`It's super effective${aoe ? ` on ${nm(x)}` : ""}!`); if (u.team === "A") B.tally.superEff++; }
-        else if (effSeen != null && effSeen < 1) msg(psT("default", aoe ? "resistedSpread" : "resisted", { POKEMON: nm(x) }));
+        if (nHits > 1 && effSeen > 1) { msg(`It's super effective${aoe ? ` on ${nm(x)}` : ""}!`); if (u.team === "A") B.tally.superEff++; }
+        else if (nHits > 1 && effSeen != null && effSeen < 1) msg(psT("default", aoe ? "resistedSpread" : "resisted", { POKEMON: nm(x) }));
         B.hitIdx = 0;
-        if (hitsDone && nHits === 1) secondary(u, x, sk, fx);
-        if (hitsDone) afterHit(u, x, sk);
+        if (hitsDone && nHits === 1 && !subHit) secondary(u, x, sk, fx);
+        if (hitsDone && !subHit) afterHit(u, x, sk);
+        if (hitsDone) afterMoveItems(u, x);
         if (hitsDone && sp === "fellstinger" && !x.alive && u.alive) stage(u, u, "atk", 3);   // Fell Stinger: Attack +3 on a knockout
         if (hitsDone && sp === "flameburst") for (const q of allies(x)) if (q !== x) chip(q, hpBase(q) / 16, psT("flameburst", "damage", { POKEMON: nm(q) }));
-        if (hitsDone && sp === "smackdown" && x.alive) smackDown(x);
-        if (hitsDone && sp === "thousandarrows" && x.alive) smackDown(x);
+        if (hitsDone && !subHit && sp === "smackdown" && x.alive) smackDown(x);
+        if (hitsDone && !subHit && sp === "thousandarrows" && x.alive) smackDown(x);
         // Thousand Waves, Anchor Shot, Spirit Shackle (the owner's rule): Arena Trap's effect on each Pokémon hit, its turn meter gone
-        if (hitsDone && sp === "anchor" && x.alive && x.team !== u.team && !pv(x, "RUN_AWAY")) { x.atb = 0; ev({ k: "tm", u: x.uid, tm: 0, v: -100 }); msg(`${Nm(x)} can't get away!`); }
+        if (hitsDone && !subHit && sp === "anchor" && x.alive && x.team !== u.team && !pv(x, "RUN_AWAY")) { x.atb = 0; ev({ k: "tm", u: x.uid, tm: 0, v: -100 }); msg(`${Nm(x)} can't get away!`); }
         // Core Enforcer: suppresses the Ability of a Pokémon that has moved since the user's last turn (this game's "already moved this turn")
-        if (hitsDone && sp === "coreenforcer" && x.alive && x.actT != null && x.actT > (u.actT == null ? -1 : u.actT) && !x.flags.noAbility && !item(x, "abilityshield") && x.passives[0] && x.passives[0].id !== "NONE") { x.flags.noAbility = true; msg(`${Nm(x)}'s Ability was suppressed!`); }
+        if (hitsDone && !subHit && sp === "coreenforcer" && x.alive && x.actT != null && x.actT > (u.actT == null ? -1 : u.actT) && !x.flags.noAbility && !item(x, "abilityshield") && x.passives[0] && x.passives[0].id !== "NONE") { x.flags.noAbility = true; msg(`${Nm(x)}'s Ability was suppressed!`); }
         // Shell Trap: a Pokémon an opposing attack damaged strikes back once the attack is over (shellTraps)
         if (dealtHere > 0 && x.alive && x.team !== u.team && !B.shellTrapping && x.skills.some(k => k.M.sp === "shelltrap") && !(B.shellQ || (B.shellQ = [])).includes(x.uid)) B.shellQ.push(x.uid);
         // Counter, Mirror Coat, Metal Burst and Comeuppance (the owner's rule, 2026-10-16) go off the same way: a Pokemon an opposing
@@ -28063,16 +28157,12 @@ function makeBattle(cfg) {
         if (dealtHere > 0 && x.alive && x.team !== u.team && !B.shellTrapping && (M.c === "P" || M.c === "S") && x.skills.some(k => COUNTERS[k.M.sp]) && !(B.counterQ || (B.counterQ = [])).some(q => q[0] === x.uid)) B.counterQ.push([x.uid, u.uid, M.c]);
         if (sp === "payday" && hitsDone && u.team === "A") { B.tally.payday += 2 * u.lvl; msg("Coins were scattered everywhere!"); }
       }
-      // drain, recoil, self-KO, recharge
-      if (u.alive && M.dr > 0 && total > 0) {
-        const n = Math.max(1, Math.round(total * M.dr / 100 * (item(u, "bigroot") ? 1.3 : 1))), oozer = targets.find(x => pv(x, "OOZE"));
-        if (oozer) chip(u, n, `${Nm(u)} sucked up the liquid ooze!`); else heal(u, n, sp === "dreameater" && targets[0].status === "SLP" ? `${Nm(targets[0])}'s dream was eaten!` : `${Nm(targets[0])} had its energy drained!`);
-      }
+      // recoil, self-KO, recharge (drain comes inside each hit: attackOnce)
       if (u.alive && M.dr < 0 && total > 0 && !pv(u, "ROCK_HEAD")) chip(u, Math.max(1, total * -M.dr / 100), `${Nm(u)} was damaged by the recoil!`);
       if (u.alive && sp === "steelbeam") chip(u, u.max.hp / 4, `${Nm(u)} lost some of its HP!`);   // (a quarter of its max HP, hit or miss: the owner's rule)
-      const sheered = pv(u, "SHEER_FORCE") && (M.ail || M.fl || (M.st && M.sw !== "self") || SECONDARY_SP.has(sp));
+      const sheered = sheerOf(u, sk);
       if (u.alive && item(u, "lifeorb") && anyHit && !sheered) chip(u, u.max.hp / 10, `${Nm(u)} lost some of its HP!`);
-      if (u.alive && item(u, "shellbell") && total > 0) heal(u, total / 8);
+      if (u.alive && item(u, "shellbell") && total > 0 && !sheered) heal(u, total / 8);
       if (u.alive && M.st && M.sw === "self" && !M.pre && anyHit && R() < M.sc / 100) for (const [s, n] of M.st) stage(u, u, s, n);
       if ((sp === "icespinner" || sk.key === "steelroller") && anyHit && B.terrain) endTerrain();
       if (mtype(u, sk) === "Electric") removeEff(u, "CHARGE");   // Charge is spent on the next Electric move
@@ -28096,19 +28186,26 @@ function makeBattle(cfg) {
         if (sk.key === "stoneaxe") { if (!hz.sr) { hz.sr = 1; msg(`Pointed stones float in the air around ${psTeam(side)}!`); hzEv(side); } }
         else if (hz.spikes < 3) { hz.spikes++; msg(psT("spikes", "start", { TEAM: psTeam(side) })); hzEv(side); } }
       // U-turn, Volt Switch, Flip Turn: back to the trainer, who picks who comes in
-      if (sp === "uturn" && u.alive && anyHit && benchOf(u.team).length && !B.over) B.pivotQ.push({ uid: u.uid });
-      // Red Card: the attacker is dragged out
-      for (const x of targets) if (x.redCard && u.alive && B.units.includes(u) && benchOf(u.team).length && !u.boss) { x.redCard = false; useUp(x, `${Nm(x)} held up its Red Card against ${nm(u)}!`); switchOut(u, pick(benchOf(u.team)), true); break; }
+      // (as on Showdown: a target's Eject Button or Emergency Exit going off cancels the user's switch)
+      if (sp === "uturn" && u.alive && anyHit && benchOf(u.team).length && !B.over && !B.pivotQ.some(q => targets.some(x => x.uid === q.uid))) B.pivotQ.push({ uid: u.uid });
+      // Red Card: the attacker is dragged out (its holder still standing and holding it; Suction Cups, Guard Dog and Ingrain hold on)
+      for (const x of targets) if (x.redCard && x.alive && x.held === "redcard" && !x.flags.itemUsed && u.alive && B.units.includes(u) && benchOf(u.team).length && !u.boss && !anchored(u)) { x.redCard = false; useUp(x, `${Nm(x)} held up its Red Card against ${nm(u)}!`); switchOut(u, pick(benchOf(u.team)), true); break; }
+      for (const x of targets) x.redCard = false;
       return;
     }
     // ---- status moves ----
     if (sp === "haze") { for (const x of B.units) if (x.alive) { x.stages = newStages(); fxEv(x); } msg("All stat changes were eliminated!"); return; }
+    // Tidy Up: clears every hazard on both sides and every substitute, then the user's Attack and Speed rise (as on Showdown)
+    if (sk.key === "tidyup") { for (const tm of ["A", "E"]) clearHazards(tm); for (const x of B.units) if (x.alive && x.shield > 0) { x.shield = 0; removeEff(x, "SUB"); fxEv(x); } msg(psT("tidyup", "activate")); }
     if (sp === "rest") {
       if (uproarOn()) { msg(psT("uproar", "blockSelf", { POKEMON: nm(u) })); return; }
       if (inWeather("sun") && pv(u, "LEAF_GUARD")) { msg("But it failed!"); return; }
-      if (u.hp >= u.max.hp && !u.status) { msg("But it failed!"); return; }
+      if (u.status === "SLP" || u.hp >= u.max.hp) { msg("But it failed!"); return; }   // (at full HP it fails, a status or not: Showdown's)
       if (inTerrain("electric", u) || inTerrain("misty", u)) { msg("But it failed!"); return; }   // (it can't fall asleep there)
-      u.status = null; tryStatus(u, u, "SLP", false, { turns: 2 }); heal(u, hpBase(u)); msg(`${Nm(u)} slept and became healthy!`); return;
+      // (Insomnia, Vital Spirit, Sweet Veil...: if it can't fall asleep, Rest fails and heals nothing)
+      const st0 = u.status, sT0 = u.sTurn; u.status = null;
+      if (!tryStatus(u, u, "SLP", false, { turns: 2 }) || u.status !== "SLP") { u.status = st0; u.sTurn = sT0; fxEv(u); msg("But it failed!"); return; }
+      heal(u, hpBase(u)); msg(`${Nm(u)} slept and became healthy!`); return;
     }
     if (sp === "reflect" || sp === "lightscreen" || sp === "mist") {
       const id = { reflect: "REFLECT", lightscreen: "LSCREEN", mist: "MIST" }[sp];
@@ -28145,6 +28242,10 @@ function makeBattle(cfg) {
     if (sp === "defensecurl") addEff(u, "DEFCURL", 99, u, true);
     if (sp === "minimize") addEff(u, "MINIMIZE", 99, u, true);
     if (sk.target === "partners" && !targets.length) { msg("But it failed!"); return; }
+    if (SUB_BLOCKS.has(sk.key) && !M.so && !pv(u, "INFILTRATOR")) {
+      const kept = targets.filter(x => !(x && x.team !== u.team && x.shield > 0));
+      if (kept.length < targets.length) { if (!kept.length) { msg("But it failed!"); return; } targets = kept; }
+    }
     if (statusMove(u, sk, targets)) return;
     if (sp === "aromatherapy") {
       msg("A soothing aroma wafted through the area!");
@@ -28158,7 +28259,7 @@ function makeBattle(cfg) {
     if (sp === "roar") {
       for (const x of targets) {
         if (!x.alive) continue;
-        if (pv(x, "SUCTION") || pv(x, "GUARD_DOG")) { msg(`${Nm(x)} anchors itself with Suction Cups!`); continue; }
+        if (anchored(x)) { msg(has(x, "INGRAIN") ? `${Nm(x)} anchored itself with its roots!` : `${Nm(x)} anchors itself with Suction Cups!`); continue; }
         msg(`${Nm(x)} was scared off!`);
         const b = benchOf(x.team);
         if (b.length && !x.boss && !(B.wild && x.team === "E")) { switchOut(x, pick(b), true); continue; }
@@ -28283,10 +28384,7 @@ function makeBattle(cfg) {
     for (const s in u.cool) if (u.cool[s] > 0) u.cool[s]--;
     if (u.orig && u.orig.cool) for (const s in u.orig.cool) if (u.orig.cool[s] > 0) u.orig.cool[s]--;
     mistyCure(u);   // (Misty Terrain, the owner's house rule: say Smack Down grounded it since)
-    const up = upkeep(u);
-    // Flame Orb and Toxic Orb: the holder starts its turn burned or badly poisoned (the first damage comes next turn)
-    if (up && u.alive && !u.status && item(u, "toxicorb")) { msg(`${Nm(u)}'s Toxic Orb activated!`); tryStatus(u, u, "TOX", false); }
-    else if (up && u.alive && !u.status && item(u, "flameorb")) { msg(`${Nm(u)}'s Flame Orb activated!`); tryStatus(u, u, "BRN", false); }
+    const up = u.alive;   // (its residuals come after its turn: endTurn)
     if (up && commanding(u)) { ev({ k: "end", u: u.uid }); endTurn(u); return "acted"; }   // (Commander: inside Dondozo, it doesn't act)
     if (!up || !canMove(u)) { if (u.flags.semi) { u.flags.semi = null; ev({ k: "semi", u: u.uid, on: 0 }); } ev({ k: "end", u: u.uid }); endTurn(u); return "acted"; }
     if (u.flags.semi) { const s = u.flags.semi; u.flags.semi = null; act(u, s.slot, B.byId(s.t), s); return "acted"; }
