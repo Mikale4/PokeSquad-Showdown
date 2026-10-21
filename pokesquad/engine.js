@@ -28886,5 +28886,33 @@ globalThis.PokeSquad = (() => {
       this.hz[s] = { ...now };
     }
   }
-  return { Battle, validateTeam, readTeam, setNames, toID };
+  // what /dt says on the server (the fork's server/chat-plugins/pokesquad-data.ts): the game's own numbers and text for a Pokémon, a
+  // move, an Ability or a held item, by Showdown's name or id; null for what the game doesn't have (Showdown's own row then)
+  const CAT_NAME = { P: "Physical", S: "Special", X: "Status" };
+  // (who a move can be aimed at: any opposing Pokémon, never a partner, for an attack; no "adjacent" on PokeSquad's field)
+  const TARGET_TEXT = { enemy: "Any opposing Pokémon", aoe_enemies: "Every opposing Pokémon", self: "The user", team: "The user's whole team",
+    partners: "The user's partners", field: "The whole field", ally_single: "One of the user's partners" };
+  let AB_KEYS = null;
+  const dataOf = (kind, q) => {
+    const id = toID(q);
+    if (kind === "pokemon") {
+      const k = SD.key(q) || (OPS[id] ? id : null); if (!k || !OPS[k]) return null;
+      const o = OPS[k];
+      return { name: o.n, types: o.types.slice(), stats: o.b.slice(), abilities: o.abs.map(a => ({ name: abilityOf(a.k).name, hidden: !!a.h })) };
+    }
+    if (kind === "move") {
+      const k = MOVES[id] ? id : null; if (!k) return null;
+      const M = MOVES[k], s = slotOf(k), sk = skillFor(k, s);
+      return { name: M.n, type: M.t, category: CAT_NAME[M.c] || "Status", power: M.c === "X" ? "" : (powText(k) || String(sk.pow || M.p || "")), accuracy: M.a ? `${M.a}%` : "—",
+        slot: s, cooldown: s > 1 ? (sk.cd || 0) : 0, priority: M.pri || 0, text: sk.desc || "", target: TARGET_TEXT[sk.target] || TARGET_TEXT.enemy };
+    }
+    if (kind === "ability") {
+      AB_KEYS = AB_KEYS || Object.fromEntries([...new Set(Object.values(OPS).flatMap(o => o.abs.map(a => a.k)))].map(k => [toID(k), k]));
+      const k = AB_KEYS[id]; if (!k) return null;
+      const A = abilityOf(k); return { name: A.name, text: A.id === "NONE" ? `No effect in PokeSquad Battler. ${A.text || ""}` : A.text || "" };
+    }
+    if (kind === "item") { const H = HELD[id]; return H ? { name: H.n, text: H.d || "" } : null; }
+    return null;
+  };
+  return { Battle, validateTeam, readTeam, setNames, toID, dataOf };
 })();

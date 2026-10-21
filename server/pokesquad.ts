@@ -111,6 +111,11 @@ export function newBattle(options: AnyObject) {
 	return b;
 }
 
+/** The game's own data for /dt (server/chat-plugins/pokesquad-data.ts): a Pokémon, move, Ability or held item, or null */
+export function dataOf(kind: 'pokemon' | 'move' | 'ability' | 'item', q: string): AnyObject | null {
+	return engine().PokeSquad.dataOf(kind, q) || null;
+}
+
 /** The Stadium's rules (the game's team config), one move per slot: problems, or null. */
 export function validateTeam(team: PokemonSet[] | null) {
 	if (!team) return null;

@@ -12,6 +12,7 @@ import * as net from 'net';
 import { YouTube, Twitch } from '../chat-plugins/youtube';
 import { Net, Utils } from '../../lib';
 import { RoomSections } from './room-settings';
+import * as PokeSquad from '../pokesquad';
 
 const ONLINE_SYMBOL = ` \u25C9 `;
 const OFFLINE_SYMBOL = ` \u25CC `;
@@ -744,12 +745,14 @@ export const commands: Chat.ChatCommands = {
 					item, { dex, language: this.language, hideShortDescription: showDetails }
 				)}\n`;
 				if (showDetails) {
-					description = dex.text.get(item, textLanguage).desc;
+					// (PokeSquad Battler: the game's own text: server/chat-plugins/pokesquad-data.ts)
+					description = PokeSquad.dataOf('item', item.id)?.text || dex.text.get(item, textLanguage).desc;
 					details = {
 						[TL`Generation`]: String(item.gen),
 					};
 
-					if (dex.gen >= 4) {
+					// (PokeSquad Battler's items fling by the game's own rules)
+					if (dex.gen >= 4 && !PokeSquad.dataOf('item', item.id)) {
 						if (item.fling) {
 							details[TL`Fling base power`] = String(item.fling.basePower);
 							if (item.fling.status) details[TL`Fling effect`] = TL.status[item.fling.status] || item.fling.status;
@@ -781,11 +784,17 @@ export const commands: Chat.ChatCommands = {
 					move, { dex, language: this.language, hideShortDescription: showDetails }
 				)}\n`;
 				if (showDetails) {
-					description = dex.text.get(move, textLanguage).desc;
+					// (PokeSquad Battler: the game's own text, priority, slot and cooldown: server/chat-plugins/pokesquad-data.ts)
+					const psMove = PokeSquad.dataOf('move', move.id);
+					description = psMove?.text || dex.text.get(move, textLanguage).desc;
 					details = {
-						[TL.tag.priority]: String(move.priority),
+						[TL.tag.priority]: String(psMove ? psMove.priority : move.priority),
 						[TL`Generation`]: String(move.gen) || 'CAP',
 					};
+					if (psMove) {
+						details['Slot'] = `S${psMove.slot}`;
+						if (psMove.cooldown) details['Cooldown'] = String(psMove.cooldown);
+					}
 
 					const pastGensOnly = (move.isNonstandard === "Past" && dex.gen >= 8) ||
 						(move.isNonstandard === "Gmax" && dex.gen !== 8);
@@ -814,7 +823,8 @@ export const commands: Chat.ChatCommands = {
 					if (move.flags['slicing'] && dex.gen >= 9) details[`&#10003; ${TL.tag.slicing}`] = "";
 					if (move.flags['wind'] && dex.gen >= 9) details[`&#10003; ${TL.tag.wind}`] = "";
 
-					if (dex.gen >= 7) {
+					// (PokeSquad Battler has no Z-Moves)
+					if (dex.gen >= 7 && !psMove) {
 						if (move.gen >= 8 && move.isMax) {
 							// Don't display Z-Power for Max/G-Max moves
 						} else if (move.zMove?.basePower) {
@@ -856,7 +866,7 @@ export const commands: Chat.ChatCommands = {
 						details[TL`Dynamax power`] = String(move.maxMove.basePower);
 					}
 
-					details[TL`Target`] = TL.target[move.target] || "Unknown";
+					details[TL`Target`] = psMove ? psMove.target : TL.target[move.target] || "Unknown";
 
 					if (move.id === 'snatch' && dex.gen >= 3) {
 						const nonsnatchableMoves = TL.ui.tagMoves.replace('{TAG}', TL.tag.nonsnatchable);
@@ -877,7 +887,8 @@ export const commands: Chat.ChatCommands = {
 					ability, { dex, language: this.language, hideShortDescription: showDetails }
 				)}\n`;
 				if (showDetails) {
-					description = dex.text.get(ability, textLanguage).desc;
+					// (PokeSquad Battler: the game's own text: server/chat-plugins/pokesquad-data.ts)
+					description = PokeSquad.dataOf('ability', ability.id)?.text || dex.text.get(ability, textLanguage).desc;
 					details = {
 						[TL`Generation`]: String(ability.gen) || 'CAP',
 					};
